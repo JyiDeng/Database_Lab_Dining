@@ -1,9 +1,7 @@
 package com.example.pj.dao;
 
-import com.example.pj.po.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import com.example.pj.entity.User;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -12,8 +10,17 @@ public interface UserMapper {
     void insertUser(User user);
 
     @Select("SELECT * FROM user")
-    List<User> list();
+    List<User> findAll();
 
-    int save(@Param("user") User user);
+    @Select("SELECT * FROM user WHERE UserID = #{id}")
+    User findById(Long id);
 
+    @Insert("INSERT INTO user (UserID,UsrName,Gender,EcardID,Role,Age) VALUES (#{userID},#{usrName},#{gender},#{ecardID},#{role},#{age})")
+    void insert(User user);
+
+    @Update("UPDATE user SET Usrname = #{name}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age} WHERE UserID = #{id}")
+    void update(User user);
+
+    @Delete("DELETE FROM user WHERE UserID = #{userID}")
+    void delete(Long id);
 }

@@ -6,15 +6,23 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="test">
-    <select id="findAll" resultType="com.example.pj.po.User">
+    <select id="findAll" resultType="com.example.pj.entity.User">
         SELECT * FROM user;
     </select>
 
-    <insert id="insert" parameterType="com.example.pj.po.User">
+    <insert id="insert" parameterType="com.example.pj.entity.User">
         INSERT INTO user (UserID,UsrName,Gender,EcardID,Role,Age) VALUES (#{userID},#{usrName},#{gender},#{ecardID},#{role},#{age});
     </insert>
+
+    <select id="findById" parameterType="long" resultType="com.example.entity.User">
+        SELECT * FROM user WHERE UserID = #{id};
+    </select>
 
     <delete id="delete" parameterType="int">
         DELETE FROM user WHERE UserID = #{userID};
     </delete>
+
+    <update id="update" parameterType="com.example.entity.User">
+        UPDATE user SET Usrname = #{name}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age} WHERE UserID = #{id};
+    </update>
 </mapper>

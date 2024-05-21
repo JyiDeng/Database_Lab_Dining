@@ -1,14 +1,12 @@
 package com.example.pj.controller;
 
 import com.example.pj.dao.UserMapper;
-import com.example.pj.po.User;
+import com.example.pj.entity.User;
 import com.example.pj.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -19,23 +17,51 @@ public class UserController {
     @Autowired
     UserMapper userMapper;
 
-    @GetMapping({"", "/", "index"})
-    public List<User> index() {
-        return userMapper.list();
+    @GetMapping({"/allUserList"})
+    public List<User> userList() {
+        return userMapper.findAll();
     }
 
-    
-    @RequestMapping("{page}")
-    public String showPage(@PathVariable String page){
-        return page;
+    // 显示特定用户
+    @GetMapping("/id={id}")
+    public User getUserById(@PathVariable Long id) {
+        return userMapper.findById(id);
     }
-    
-    //添加用户
-    @RequestMapping("/addUser")
-    public String addUser(User user){
-        this.userServiceImpl.addUser(user);
-        return "ok";
-    }
+
+//    // 添加新用户
+//    @PostMapping("/add")
+//    public String addUser(@RequestBody User user) {
+//        userMapper.addUser(user);
+//        return "User added successfully";
+//    }
+//
+//    // 更新用户信息
+//    @PutMapping("/update")
+//    public String updateUser(@RequestBody User user) {
+//        userService.updateUser(user);
+//        return "User updated successfully";
+//    }
+//
+//    // 删除用户
+//    @DeleteMapping("/delete/{id}")
+//    public String deleteUser(@PathVariable Long id) {
+//        userService.deleteUser(id);
+//        return "User deleted successfully";
+//    }
+
+//
+//
+//    @RequestMapping("{page}")
+//    public String showPage(@PathVariable String page){
+//        return page;
+//    }
+//
+//    //添加用户
+//    @RequestMapping("/addUser")
+//    public String addUser(User user){
+//        this.userServiceImpl.addUser(user);
+//        return "ok";
+//    }
 
 //    @GetMapping("/add/{name}/{age}")
 //    public String add(HttpServletRequest request, @PathVariable String name, @PathVariable Integer age) {

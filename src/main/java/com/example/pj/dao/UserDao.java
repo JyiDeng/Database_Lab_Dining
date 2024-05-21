@@ -1,6 +1,6 @@
 package com.example.pj.dao;
 
-import com.example.pj.po.User;
+import com.example.pj.entity.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+/**
+ * DAO（Data Access Object）模式就是写一个类，把访问数据库的代码封装起来。DAO在数据库与业务逻辑（Service）之间
+ */
 public class UserDao {
 
     private SqlSessionFactory sqlSessionFactory;

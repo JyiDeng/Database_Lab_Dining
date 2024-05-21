@@ -1,16 +1,22 @@
 package com.example.pj.service;
 
-import com.example.pj.po.User;
+import com.example.pj.entity.User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 public interface UserService {
-//    User checkLogin(String userID, String password);
-    public void addUser(User users);
 
-//    List<User> user();
+    List<User> findAllUsers();
+
+    User findUserById(Long id);
+
+//    void addUser(User user);
+
+    void updateUser(User user);
+
+    void deleteUser(Long id);
 
 
 }

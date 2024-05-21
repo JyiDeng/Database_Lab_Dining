@@ -1,7 +1,6 @@
-package com.example.pj.po;
+package com.example.pj.entity;
 
 import lombok.*;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 //@Getter
@@ -11,7 +10,7 @@ import org.springframework.stereotype.Component;
 //@ToString
 @Data
 @Component
-@ConfigurationProperties(prefix = "demo.student")
+//@ConfigurationProperties(prefix = "demo.student")
 public class User {
 
     private Integer userID;
