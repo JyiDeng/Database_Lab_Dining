@@ -1,8 +1,11 @@
 package com.example.pj.controller;
 
 import com.example.pj.dao.UserMapper;
+import com.example.pj.entity.Merchant;
 import com.example.pj.entity.User;
+import com.example.pj.service.MerchantService;
 import com.example.pj.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +13,20 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@RequestMapping("/user")
 public class UserController {
 
     @Autowired
-    private UserService userServiceImpl;
+    private UserService userService;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    private MerchantService merchantService;
+
+    @GetMapping({"", "/", "index"})
+    public String index() {
+        return "Welcome to **User** Page!\nEnter in the url \"allUserList\" to see all users and \"id=k\" to see the kth user.";
+    }
 
     @GetMapping({"/allUserList"})
     public List<User> userList() {
@@ -28,7 +39,22 @@ public class UserController {
         return userMapper.findById(id);
     }
 
+    @GetMapping("/searchMerchants")
+    public List<Merchant> searchMerchant(@RequestParam String keyword) {
+        return merchantService.searchMerchant(keyword);
+    }
 //    // 添加新用户
+    @GetMapping("/add/{name}/{age}")
+    public String add(HttpServletRequest request,
+                        @PathVariable String name,
+                        @PathVariable Integer age) {
+        User model = new User();
+        model.setUsrName(name);
+        model.setAge(age);
+
+        int result = userService.save(model);
+        return String.valueOf(result);
+    }
 //    @PostMapping("/add")
 //    public String addUser(@RequestBody User user) {
 //        userMapper.addUser(user);
@@ -42,12 +68,12 @@ public class UserController {
 //        return "User updated successfully";
 //    }
 //
-//    // 删除用户
-//    @DeleteMapping("/delete/{id}")
-//    public String deleteUser(@PathVariable Long id) {
-//        userService.deleteUser(id);
-//        return "User deleted successfully";
-//    }
+    // 删除用户
+    @DeleteMapping("/delete/{id}")
+    public String deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return "User deleted successfully";
+    }
 
 //
 //
