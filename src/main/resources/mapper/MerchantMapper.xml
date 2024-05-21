@@ -9,5 +9,12 @@
         WHERE MerchantName LIKE CONCAT('%', #{keyword}, '%')
            OR Address LIKE CONCAT('%', #{keyword}, '%')
     </select>
+    <select id="getMerchantById" resultType="com.example.pj.entity.Merchant">
+        SELECT * FROM merchant WHERE MerchantId = #{merchantId}
+    </select>
+
+    <select id="getDishesByMerchantId" resultType="com.example.pj.entity.Dish">
+        SELECT * FROM dish WHERE MerchantId = #{merchantId}
+    </select>
 
 </mapper>

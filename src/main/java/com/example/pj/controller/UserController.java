@@ -1,10 +1,12 @@
 package com.example.pj.controller;
 
+import com.example.pj.entity.Dish;
 import com.example.pj.mapper.UserMapper;
 import com.example.pj.entity.Merchant;
 import com.example.pj.entity.User;
 import com.example.pj.service.MerchantService;
 import com.example.pj.service.UserService;
+import com.example.pj.service.DishService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -22,7 +24,8 @@ public class UserController {
     UserMapper userMapper;
     @Autowired
     private MerchantService merchantService;
-
+    @Autowired
+    private DishService dishService;
     @GetMapping({"", "/", "index"})
     public String index() {
         return "Welcome to **User** Page!\nEnter in the url \"allUserList\" to see all users and \"id=k\" to see the kth user.";
@@ -43,31 +46,35 @@ public class UserController {
     public List<Merchant> searchMerchant(@RequestParam String keyword) {
         return merchantService.searchMerchant(keyword);
     }
-//    // 添加新用户
-//    @GetMapping("/add/{name}/{age}")
-//    public String add(HttpServletRequest request,
-//                        @PathVariable String name,
-//                        @PathVariable Integer age) {
-//        User model = new User();
-//        model.setUsrName(name);
-//        model.setAge(age);
-//
-//        int result = userService.save(model);
-//        return String.valueOf(result);
-//    }
-//    @PostMapping("/add")
-//    public String addUser(@RequestBody User user) {
-//        userMapper.addUser(user);
-//        return "User added successfully";
-//    }
-//
-//    // 更新用户信息
-//    @PutMapping("/update")
-//    public String updateUser(@RequestBody User user) {
-//        userService.updateUser(user);
-//        return "User updated successfully";
-//    }
-//
+
+    @GetMapping("/merchantDetails")
+    public String getMerchantDetails(@RequestParam Long id, Model model) {
+        Merchant merchant = merchantService.getMerchantById(id);
+        List<Dish> dishes = merchantService.getDishesByMerchantId(id);
+        model.addAttribute("merchant", merchant);
+        model.addAttribute("dishes", dishes);
+        return "merchant_details";
+    }
+
+    @GetMapping("/searchDishes")
+    public String searchDishes(@RequestParam Long merchantId, @RequestParam String keyword, Model model) {
+        List<Dish> dishes = dishService.searchDishes(merchantId, keyword);
+        model.addAttribute("dishes", dishes);
+        return "dish_search_result";
+    }
+
+    @GetMapping("/dishDetails")
+    public String getDishDetails(@RequestParam Long id, Model model) {
+        Dish dish = dishService.getDishById(id);
+        model.addAttribute("dish", dish);
+        return "dish_details";
+    }
+
+    @GetMapping("/searchPage")
+    public String searchPage() {
+        return "user_search";
+    }
+
     // 删除用户
     @DeleteMapping("/delete/{id}")
     public String delete(@PathVariable Long id) {
@@ -75,49 +82,6 @@ public class UserController {
         return "User deleted successfully";
     }
 
-//
-//
-//    @RequestMapping("{page}")
-//    public String showPage(@PathVariable String page){
-//        return page;
-//    }
-//
-//    //添加用户
-//    @RequestMapping("/addUser")
-//    public String addUser(User user){
-//        this.userServiceImpl.addUser(user);
-//        return "ok";
-//    }
-
-//    @GetMapping("/add/{name}/{age}")
-//    public String add(HttpServletRequest request, @PathVariable String name, @PathVariable Integer age) {
-//        User model = new User();
-//        model.setName(name);
-//        model.setAge(age);
-//
-//        int res = userService.save(model);
-//        return String.valueOf(res);
-//    }
-
-//    @PostMapping("/loginCheck.do")
-//    @ResponseBody
-//    public String login(String userID,String password, HttpServletRequest request) throws IOException {
-//        User user=userService.checkLogin(userID,password);
-//        if(user!=null){
-//            if(user.getIsadmin()==0){
-//                request.getSession().setAttribute("user",user);
-//                System.out.println("user login!");
-//                return "/index";
-//            }
-//            else if(user.getIsadmin()==1){
-//                request.getSession().setAttribute("admin",user);
-//                System.out.println("admin login!");
-//                return "/admin_index";
-//            }
-//        }
-//        return "false";
-//
-//    }
     @PostMapping("/hello")
     @ResponseBody
     public String hello(Model model){

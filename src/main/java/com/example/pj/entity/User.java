@@ -5,9 +5,9 @@ import org.springframework.stereotype.Component;
 
 //@Getter
 //@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@ToString
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Data
 @Component
 //@ConfigurationProperties(prefix = "demo.student")

@@ -1,5 +1,6 @@
 package com.example.pj.service;
 
+import com.example.pj.entity.Dish;
 import com.example.pj.entity.Merchant;
 import org.springframework.stereotype.Service;
 
@@ -12,5 +13,8 @@ public interface MerchantService {
 
     public List<Merchant> searchMerchant(String keyword);
 
+    public Merchant getMerchantById(Long id);
+
+    public List<Dish> getDishesByMerchantId(Long merchantId);
 
 }

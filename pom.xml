@@ -118,6 +118,7 @@
                     <include>**/*.yml</include>
                     <include>**/*.properties</include>
                     <include>**/*.xml</include>
+                    <include>**/*.*</include>
                 </includes>
 <!--                <filtering>false</filtering>-->
             </resource>

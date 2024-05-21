@@ -6,23 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
-
 @Data
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 
-public class Merchant {
-
-    private Integer merchantID;
-
-    private String merchantName;
-
-    private String address;
-
-    private Float avgRating;
-
-
-
+public class Review {
+    private Long id;
+    private Long merchantId;
+    private Long userId;
+    private String comment;
+    private Double rating;
+    // getters and setters
 }

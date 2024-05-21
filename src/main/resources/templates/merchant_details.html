@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Merchant Details</title>
+</head>
+<body>
+<h1 th:text="${merchant.name}"></h1>
+<p>Main Dish: <span th:text="${merchant.mainDish}"></span></p>
+<p>Address: <span th:text="${merchant.address}"></span></p>
+
+<h2>Dishes</h2>
+<ul>
+  <th:block th:each="dish : ${dishes}">
+    <li>
+      <a th:href="@{/users/dishDetails(id=${dish.id})}">
+        <span th:text="${dish.name}"></span> -
+        <span th:text="${dish.price}"></span>
+      </a>
+    </li>
+  </th:block>
+</ul>
+<a href="/users/searchPage">Back to Search</a>
+</body>
+</html>
