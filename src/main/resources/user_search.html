@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Search Page</title>
+</head>
+<body>
+<h1>Search for Merchants</h1>
+<form id="searchForm" action="/user/searchMerchant" method="GET">
+    <input type="text" id="keyword" name="keyword" placeholder="Enter keyword">
+    <button type="submit">Search</button>
+</form>
+
+<script>
+    document.getElementById("searchForm").addEventListener("submit", function(event) {
+        var keyword = document.getElementById("keyword").value;
+        if (!keyword) {
+            alert("Please enter a keyword.");
+            event.preventDefault();
+        }
+    });
+</script>
+</body>
+</html>

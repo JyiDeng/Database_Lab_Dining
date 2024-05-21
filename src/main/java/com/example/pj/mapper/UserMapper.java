@@ -1,4 +1,4 @@
-package com.example.pj.dao;
+package com.example.pj.mapper;
 
 import com.example.pj.entity.User;
 import org.apache.ibatis.annotations.*;

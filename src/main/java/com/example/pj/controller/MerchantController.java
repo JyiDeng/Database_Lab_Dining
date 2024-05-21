@@ -1,11 +1,7 @@
 package com.example.pj.controller;
 
-import com.example.pj.dao.UserMapper;
 import com.example.pj.entity.Merchant;
-import com.example.pj.entity.User;
 import com.example.pj.service.MerchantService;
-import com.example.pj.service.UserService;
-import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;

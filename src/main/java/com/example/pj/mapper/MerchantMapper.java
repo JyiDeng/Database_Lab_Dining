@@ -1,7 +1,6 @@
-package com.example.pj.dao;
+package com.example.pj.mapper;
 
 import com.example.pj.entity.Merchant;
-import com.example.pj.entity.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;

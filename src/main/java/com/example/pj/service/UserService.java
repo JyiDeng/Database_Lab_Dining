@@ -8,18 +8,18 @@ import java.util.List;
 @Service
 public interface UserService {
 
-    List<User> index();
-    List<User> findAllUsers();
+//    List<User> index();
+    List<User> findAll();
 
-    User findUserById(Long id);
+    User findById(Long id);
 
 //    void addUser(User user);
 
-    void updateUser(User user);
+//    void updateUser(User user);
 
-    void deleteUser(Long id);
+    void delete(Long id);
 
-    Integer save(User user);
+//    Integer save(User user);
 
 
 }

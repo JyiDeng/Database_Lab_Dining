@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!-- UserMapper.xml -->
 
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="test">
+<mapper namespace="mapper.UserMapper">
     <select id="findAll" resultType="com.example.pj.entity.User">
         SELECT * FROM user;
     </select>
@@ -14,7 +13,7 @@
         INSERT INTO user (UserID,UsrName,Gender,EcardID,Role,Age) VALUES (#{userID},#{usrName},#{gender},#{ecardID},#{role},#{age});
     </insert>
 
-    <select id="findById" parameterType="long" resultType="com.example.entity.User">
+    <select id="findById" parameterType="long" resultType="com.example.pj.entity.User">
         SELECT * FROM user WHERE UserID = #{id};
     </select>
 
@@ -22,7 +21,7 @@
         DELETE FROM user WHERE UserID = #{userID};
     </delete>
 
-    <update id="update" parameterType="com.example.entity.User">
+    <update id="update" parameterType="com.example.pj.entity.User">
         UPDATE user SET Usrname = #{name}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age} WHERE UserID = #{id};
     </update>
 </mapper>

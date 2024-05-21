@@ -1,6 +1,6 @@
 package com.example.pj.controller;
 
-import com.example.pj.dao.UserMapper;
+import com.example.pj.mapper.UserMapper;
 import com.example.pj.entity.Merchant;
 import com.example.pj.entity.User;
 import com.example.pj.service.MerchantService;
@@ -39,22 +39,22 @@ public class UserController {
         return userMapper.findById(id);
     }
 
-    @GetMapping("/searchMerchants")
+    @GetMapping("/searchMerchant")
     public List<Merchant> searchMerchant(@RequestParam String keyword) {
         return merchantService.searchMerchant(keyword);
     }
 //    // 添加新用户
-    @GetMapping("/add/{name}/{age}")
-    public String add(HttpServletRequest request,
-                        @PathVariable String name,
-                        @PathVariable Integer age) {
-        User model = new User();
-        model.setUsrName(name);
-        model.setAge(age);
-
-        int result = userService.save(model);
-        return String.valueOf(result);
-    }
+//    @GetMapping("/add/{name}/{age}")
+//    public String add(HttpServletRequest request,
+//                        @PathVariable String name,
+//                        @PathVariable Integer age) {
+//        User model = new User();
+//        model.setUsrName(name);
+//        model.setAge(age);
+//
+//        int result = userService.save(model);
+//        return String.valueOf(result);
+//    }
 //    @PostMapping("/add")
 //    public String addUser(@RequestBody User user) {
 //        userMapper.addUser(user);
@@ -70,8 +70,8 @@ public class UserController {
 //
     // 删除用户
     @DeleteMapping("/delete/{id}")
-    public String deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+    public String delete(@PathVariable Long id) {
+        userService.delete(id);
         return "User deleted successfully";
     }
 

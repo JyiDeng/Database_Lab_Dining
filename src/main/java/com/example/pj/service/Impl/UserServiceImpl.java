@@ -1,6 +1,6 @@
 package com.example.pj.service.Impl;
 
-import com.example.pj.dao.UserMapper;
+import com.example.pj.mapper.UserMapper;
 import com.example.pj.entity.User;
 import com.example.pj.service.UserService;
 import jakarta.transaction.Transactional;
@@ -17,32 +17,32 @@ public class UserServiceImpl implements UserService {
     @Mapper
     private UserMapper userMapper;
 
+//    @Override
+//    public List<User> index() {
+//        return userMapper.findAll();
+//    }
     @Override
-    public List<User> index() {
-        return userMapper.findAll();
-    }
-    @Override
-    public List<User> findAllUsers() {
+    public List<User> findAll() {
         return userMapper.findAll();
     }
 
-    @Override
-    public Integer save(User user) {
-        return userMapper.save(user);
-    }
+//    @Override
+//    public Integer save(User user) {
+//        return userMapper.save(user);
+//    }
 
     @Override
-    public User findUserById(Long id) {
+    public User findById(Long id) {
         return userMapper.findById(id);
     }
 
-    @Override
-    public void updateUser(User user) {
-        userMapper.update(user);
-    }
+//    @Override
+//    public void updateUser(User user) {
+//        userMapper.update(user);
+//    }
 
     @Override
-    public void deleteUser(Long id) {
+    public void delete(Long id) {
         userMapper.delete(id);
     }
 

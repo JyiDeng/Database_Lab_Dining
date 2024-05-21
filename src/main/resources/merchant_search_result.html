@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Merchant Search Result</title>
+</head>
+<body>
+<h1>Search Results</h1>
+<ul>
+    <th:block th:each="merchant : ${merchant}">
+        <li th:text="${merchant.name} + ' - ' + ${merchant.address}"></li>
+    </th:block>
+</ul>
+<a href="/user/searchPage">Back to Search</a>
+</body>
+</html>
