@@ -1,6 +1,7 @@
 package com.example.pj.controller;
 
-import com.example.pj.entity.User;
+import com.example.pj.dao.UserMapper;
+import com.example.pj.po.User;
 import com.example.pj.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,36 @@ public class UserController {
 
     @Autowired
     private UserService userServiceImpl;
+    @Autowired
+    UserMapper userMapper;
 
+    @GetMapping({"", "/", "index"})
+    public List<User> index() {
+        return userMapper.list();
+    }
+
+    
     @RequestMapping("{page}")
     public String showPage(@PathVariable String page){
         return page;
     }
+    
     //添加用户
     @RequestMapping("/addUser")
     public String addUser(User user){
         this.userServiceImpl.addUser(user);
         return "ok";
     }
+
+//    @GetMapping("/add/{name}/{age}")
+//    public String add(HttpServletRequest request, @PathVariable String name, @PathVariable Integer age) {
+//        User model = new User();
+//        model.setName(name);
+//        model.setAge(age);
+//
+//        int res = userService.save(model);
+//        return String.valueOf(res);
+//    }
 
 //    @PostMapping("/loginCheck.do")
 //    @ResponseBody

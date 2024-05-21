@@ -17,8 +17,8 @@ public class MyBatis001 {
 
         SqlSession sqlSession = sqlSessionFactory.openSession();
 
+//        在UserMapper.xml里实现这个函数；UserDao的是给Test用的，不是这个
         List<User> user = sqlSession.selectList("test.findAll");
-//
         System.out.println(user);
     }
 }

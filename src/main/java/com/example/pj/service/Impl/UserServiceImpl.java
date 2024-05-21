@@ -2,7 +2,7 @@ package com.example.pj.service.Impl;
 
 import com.example.pj.controller.UserController;
 import com.example.pj.dao.UserMapper;
-import com.example.pj.entity.User;
+import com.example.pj.po.User;
 import com.example.pj.service.UserService;
 import jakarta.transaction.Transactional;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,10 +16,10 @@ public class UserServiceImpl implements UserService {
     @Mapper
     private UserMapper userMapper;
 
-    @Override
-    public User checkLogin(String userID, String password) {
-        return null;
-    }
+//    @Override
+//    public User checkLogin(String userID, String password) {
+//        return null;
+//    }
 
     @Override
     public void addUser(User user){

@@ -1,8 +1,15 @@
 spring:
   datasource:
-#    driver-class-name: com.mysql.cj.jdbc.Driver
+    name: test
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3307/db_pj_dining?useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_To_NULL&serverTimezone=Asia/Shanghai
     username: root
     password: mysql573512345!
-mybatis:
-  mapper-locations: classpath:mapper/*.xml
+#  application:
+#    name: microserver-product #这个很重要，这在以后的服务与服务之间相互调用一般都是根据这个name
+#
+#mybatis:
+#  mapper-locations: classpath:mapper/*.xml
+#  config-location: classpath:mybatis/mybatis.cfg.xml #mybatis 配置文件路径
+#  type-aliases-package: com.example.pj.po # entity别名类所在包
+#

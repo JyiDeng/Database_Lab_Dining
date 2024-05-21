@@ -11,7 +11,7 @@
     </select>
 
     <insert id="insert" parameterType="com.example.pj.po.User">
-        INSERT INTO user (UserID,UsrName,Gender,EcardID,Role,Age) VALUES (#{userID},#{userName},#{gender},#{ecardID},#{role},#{age});
+        INSERT INTO user (UserID,UsrName,Gender,EcardID,Role,Age) VALUES (#{userID},#{usrName},#{gender},#{ecardID},#{role},#{age});
     </insert>
 
     <delete id="delete" parameterType="int">
