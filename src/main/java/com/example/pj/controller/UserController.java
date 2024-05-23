@@ -1,6 +1,7 @@
 package com.example.pj.controller;
 
 import com.example.pj.entity.Dish;
+import com.example.pj.mapper.MerchantMapper;
 import com.example.pj.mapper.UserMapper;
 import com.example.pj.entity.Merchant;
 import com.example.pj.entity.User;
@@ -25,6 +26,8 @@ public class UserController {
     @Autowired
     private MerchantService merchantService;
     @Autowired
+    MerchantMapper merchantMapper;
+    @Autowired
     private DishService dishService;
     @GetMapping({"", "/", "index"})
     public String index() {
@@ -44,7 +47,7 @@ public class UserController {
 
     @GetMapping("/searchMerchant")
     public List<Merchant> searchMerchant(@RequestParam String keyword) {
-        return merchantService.searchMerchant(keyword);
+        return merchantMapper.searchMerchant(keyword);
     }
 
     @GetMapping("/merchantDetails")

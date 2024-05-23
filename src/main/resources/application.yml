@@ -1,6 +1,6 @@
 spring:
   datasource:
-    name: test
+#    name: test
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3307/db_pj_dining?useSSL=false&characterEncoding=utf8&zeroDateTimeBehavior=CONVERT_To_NULL&serverTimezone=Asia/Shanghai
     username: root

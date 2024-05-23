@@ -23,6 +23,7 @@
         <!-- 加载前面编写的SQL语句的文件 -->
         <mapper resource="mapper/UserMapper.xml"/>
         <mapper resource="mapper/MerchantMapper.xml"/>
+        <mapper resource="mapper/DishMapper.xml"/>
     </mappers>
 
 </configuration>
