@@ -12,14 +12,17 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class Dish {
-    private Long id;
-    private String name;
-    private Double price;
-    private String imageUrl;
+    private Long DishId;
+    private String dishName;
+    private Float price;
+    private String category;
     private String description;
+    private String picture;
+    private String flavor;
     private String ingredients;
-    private String nutrition;
     private String allergens;
+    private String nutritionInfo;
+    private Float avgRating;
     private Long merchantId;
 
 }

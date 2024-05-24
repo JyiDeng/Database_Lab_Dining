@@ -4,14 +4,14 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.pj.mapper.DishMapper">
 
-    <select id="searchDishes" resultType="com.example.pj.entity.Dish">
-        SELECT * FROM dish
-        WHERE merchantId = #{merchantId}
-          AND dishname LIKE CONCAT('%', #{keyword}, '%')
-    </select>
+<!--    <select id="searchDishes" resultType="com.example.pj.entity.Dish">-->
+<!--        SELECT * FROM dish-->
+<!--        WHERE merchantId = #{merchantId}-->
+<!--          AND dishname LIKE CONCAT('%', #{keyword}, '%')-->
+<!--    </select>-->
 
-    <select id="getDishById" resultType="com.example.pj.entity.Dish">
-        SELECT * FROM dish WHERE dishid = #{dishid}
-    </select>
+<!--    <select id="getDishByID" resultType="com.example.pj.entity.Dish">-->
+<!--        SELECT * FROM dish WHERE dishid = #{dishid}-->
+<!--    </select>-->
 
 </mapper>

@@ -13,7 +13,7 @@
         INSERT INTO user (UserID,UsrName,Gender,EcardID,Role,Age) VALUES (#{userID},#{usrName},#{gender},#{ecardID},#{role},#{age});
     </insert>
 
-    <select id="findById" parameterType="long" resultType="com.example.pj.entity.User">
+    <select id="findByID" parameterType="long" resultType="com.example.pj.entity.User">
         SELECT * FROM user WHERE UserID = #{id};
     </select>
 

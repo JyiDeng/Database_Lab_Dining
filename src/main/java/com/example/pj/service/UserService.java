@@ -11,7 +11,7 @@ public interface UserService {
 //    List<User> index();
     List<User> findAll();
 
-    User findById(Long id);
+    User findByID(Long id);
 
 //    void addUser(User user);
 

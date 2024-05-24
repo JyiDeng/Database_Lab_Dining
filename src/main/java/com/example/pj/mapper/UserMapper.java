@@ -13,7 +13,7 @@ public interface UserMapper {
     List<User> findAll();
 
     @Select("SELECT * FROM user WHERE UserID = #{id}")
-    User findById(Long id);
+    User findByID(Long id);
 
     @Insert("INSERT INTO user (UserID,UsrName,Gender,EcardID,Role,Age) VALUES (#{userID},#{usrName},#{gender},#{ecardID},#{role},#{age})")
     void insert(User user);

@@ -5,16 +5,16 @@
 <mapper namespace="mapper.MerchantMapper">
 
     <select id="searchMerchant" resultType="com.example.pj.entity.Merchant" parameterType="java.lang.String">
-        SELECT * FROM merchant
+        SELECT  MerchantID, MainDishes  FROM merchant
         WHERE MerchantName LIKE CONCAT('%', #{keyword}, '%')
            OR Address LIKE CONCAT('%', #{keyword}, '%')
     </select>
-    <select id="getMerchantById" resultType="com.example.pj.entity.Merchant">
-        SELECT * FROM merchant WHERE MerchantId = #{merchantId}
+    <select id="getMerchantByID" resultType="com.example.pj.entity.Merchant">
+        SELECT  MerchantID, MainDishes  FROM merchant WHERE MerchantID = #{merchantId}
     </select>
 
-    <select id="getDishesByMerchantId" resultType="com.example.pj.entity.Dish">
-        SELECT * FROM dish WHERE MerchantId = #{merchantId}
+    <select id="getDishesByMerchantID" resultType="com.example.pj.entity.Dish">
+        SELECT * FROM dish WHERE MerchantID = #{merchantId}
     </select>
 
 </mapper>

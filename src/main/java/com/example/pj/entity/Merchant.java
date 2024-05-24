@@ -15,11 +15,15 @@ import org.springframework.stereotype.Component;
 
 public class Merchant {
 
-    private Integer merchantID;
+    private Integer merchantId;
 
     private String merchantName;
 
+    private String mainDishes;
+
     private String address;
+
+    private String menu;
 
     private Float avgRating;
 

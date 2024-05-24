@@ -32,8 +32,8 @@ public class UserServiceImpl implements UserService {
 //    }
 
     @Override
-    public User findById(Long id) {
-        return userMapper.findById(id);
+    public User findByID(Long id) {
+        return userMapper.findByID(id);
     }
 
 //    @Override

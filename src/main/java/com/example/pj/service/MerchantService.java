@@ -13,8 +13,8 @@ public interface MerchantService {
 
     public List<Merchant> searchMerchant(String keyword);
 
-    public Merchant getMerchantById(Long id);
+    public Merchant getMerchantByID(Long id);
 
-    public List<Dish> getDishesByMerchantId(Long merchantId);
+    public List<Dish> getDishesByMerchantID(Long merchantId);
 
 }

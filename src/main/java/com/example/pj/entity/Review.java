@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class Review {
     private Long id;
     private Long merchantId;
-    private Long userId;
+    private Long userID;
     private String comment;
     private Double rating;
     // getters and setters

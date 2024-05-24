@@ -10,5 +10,5 @@ public interface DishService {
 
     public List<Dish> searchDishes(Long merchantId, String keyword);
 
-    public Dish getDishById(Long id);
+//    public Dish getDishByID(Long id);
 }

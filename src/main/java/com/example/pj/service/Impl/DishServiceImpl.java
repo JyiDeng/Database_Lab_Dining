@@ -21,8 +21,8 @@ public class DishServiceImpl implements DishService {
         return dishMapper.searchDishes(merchantId, keyword);
     }
 
-    @Override
-    public Dish getDishById(Long id) {
-        return dishMapper.getDishById(id);
-    }
+//    @Override
+//    public Dish getDishByID(Long id) {
+//        return dishMapper.getDishDetails(id);
+//    }
 }

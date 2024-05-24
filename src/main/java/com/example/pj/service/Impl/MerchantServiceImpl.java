@@ -24,13 +24,13 @@ public class MerchantServiceImpl implements MerchantService {
 
 
     @Override
-    public Merchant getMerchantById(Long id) {
-        return merchantMapper.getMerchantById(id);
+    public Merchant getMerchantByID(Long id) {
+        return merchantMapper.getMerchantByID(id);
     }
 
     @Override
-    public List<Dish> getDishesByMerchantId(Long merchantId) {
-        return merchantMapper.getDishesByMerchantId(merchantId);
+    public List<Dish> getDishesByMerchantID(Long merchantId) {
+        return merchantMapper.getDishesByMerchantID(merchantId);
     }
 
 }
