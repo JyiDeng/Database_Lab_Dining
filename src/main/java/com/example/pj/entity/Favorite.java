@@ -6,18 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
-@Data
-@Component
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-
-public class Review {
-    private Integer reviewId;
+@Data
+@Component
+public class Favorite {
     private Integer userId;
     private Integer merchantId;
     private Integer dishId;
-    private Double rating;
-    private String content;
-    private String reviewDate;
+    private String favoriteDate;
 }

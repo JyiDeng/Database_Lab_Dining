@@ -22,7 +22,12 @@ public class MerchantController {
 
     @GetMapping({"", "/", "index"})
     public String index() {
-        return "Welcome to **Merchant** Page!\nEnter in the url \"search\" to let user search merchant...(Strange logic).";
+        return "欢迎来到商家索引页！<br>以下为操作示例：<br>-------------------<br>" +
+                "TODO" +
+                "<br>-------------------<br>" +
+                "用户索引页：`http://localhost:8080/user/`<br>" +
+                "管理员索引页：`http://localhost:8080/admin/`<br>";
+
     }
 
     @GetMapping("/hello")

@@ -10,7 +10,7 @@
     </select>
 
     <insert id="insert" parameterType="com.example.pj.entity.User">
-        INSERT INTO user (UserID,UsrName,Gender,EcardID,Role,Age) VALUES (#{userID},#{usrName},#{gender},#{ecardID},#{role},#{age});
+        INSERT INTO user (UserID,UserName,Gender,EcardID,Role,Age) VALUES (#{userID},#{userName},#{gender},#{ecardID},#{role},#{age});
     </insert>
 
     <select id="findByID" parameterType="long" resultType="com.example.pj.entity.User">
@@ -22,6 +22,6 @@
     </delete>
 
     <update id="update" parameterType="com.example.pj.entity.User">
-        UPDATE user SET Usrname = #{name}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age} WHERE UserID = #{id};
+        UPDATE user SET Username = #{name}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age} WHERE UserID = #{id};
     </update>
 </mapper>

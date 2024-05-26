@@ -6,18 +6,17 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
-@Data
-@Component
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Data
+@Component
+public class OrderItem {
+    private Long orderId;
+    private Long dishId;
+    private Long quantity;
+    private Float price;
 
-public class Review {
-    private Integer reviewId;
-    private Integer userId;
-    private Integer merchantId;
-    private Integer dishId;
-    private Double rating;
-    private String content;
-    private String reviewDate;
+
+
 }

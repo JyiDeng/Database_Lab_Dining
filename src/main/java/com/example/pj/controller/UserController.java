@@ -33,7 +33,17 @@ public class UserController {
     DishMapper dishMapper;
     @GetMapping({"", "/", "index"})
     public String index() {
-        return "Welcome to **User** Page!\nEnter in the url \"allUserList\" to see all users and \"id=k\" to see the kth user.";
+        return "欢迎来到用户索引页！<br>以下为操作示例：<br>-------------------<br>" +
+                "用户索引页：`http://localhost:8080/user/`<br>" +
+                "用户查询所有用户列表：`http://localhost:8080/user/allUserList`<br>" +
+                "查询第1个用户信息：`http://localhost:8080/user/id=1`<br>" +
+                "查询所有商家列表（简略）：`http://localhost:8080/user/searchMerchant?keyword=`<br>" +
+                "查询第2个商家列表（简略）：`http://localhost:8080/user/searchMerchant?keyword=2`<br>" +
+                "查询第3个商家列表（详细）：`http://localhost:8080/user/searchMerchantDetails?id=3`<br>" +
+                "查询第3个商家的关于`p`的菜品：`http://localhost:8080/user/searchDishes?merchantId=3&keyword=p`<br>" +
+                "<br>-------------------<br>" +
+                "商家索引页：`http://localhost:8080/merchant/`<br>" +
+                "管理员索引页：`http://localhost:8080/admin/`<br>";
     }
 
     @GetMapping({"/allUserList"})
@@ -83,18 +93,16 @@ public class UserController {
 //        return "user_search";
 //    }
 
-    // 删除用户
-    @DeleteMapping("/delete/{id}")
-    // There was an unexpected error (type=Method Not Allowed, status=405). Method 'GET' is not supported.
-    public String delete(@PathVariable Long id) {
-        userMapper.delete(id);
-        return "User" + id + " deleted successfully!";
-    }
 
-//    @PostMapping("/hello")
-//    @ResponseBody
-//    public String hello(Model model){
-//        model.addAttribute("str","hello!");
-//        return "hello";
+    // 删除用户
+//    @RequestMapping("/delete/{id}")
+//    public String delete(@PathVariable Long id) {
+//        if (userMapper.findByID(id) != null){
+//            userMapper.delete(id);
+//            return "User" + id + " is deleted successfully!";
+//        }else{
+//            return "User" + id + " does not exist!";
+//        }
 //    }
+
 }

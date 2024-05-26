@@ -10,6 +10,9 @@ public class IndexController {
 
     @GetMapping({"", "/"})
     public String index() {
-        return "Welcome to **Index** Page! --------- Enter in the url \"user\" to see user index and \"merchant\" to see merchant index.";
+        return  "欢迎来到主索引页！<br>-------------------<br>" +
+                "商家索引页：`http://localhost:8080/merchant/`<br>" +
+                "用户索引页：`http://localhost:8080/user/`<br>" +
+                "管理员索引页：`http://localhost:8080/admin/`<br>";
     }
 }
