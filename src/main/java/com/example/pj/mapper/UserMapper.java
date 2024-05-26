@@ -14,10 +14,10 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE UserID = #{userId}")
     User findByID(Long id);
 
-    @Insert("INSERT INTO user (UserId,UserName,Gender,EcardId,Role,Age) VALUES (#{userId},#{userName},#{gender},#{ecardId},#{role},#{age})")
+    @Insert("INSERT INTO user (UserId,UserName,Gender,EcardId,Role,Age) VALUES (#{userID},#{userName},#{gender},#{ecardID},#{role},#{age})")
     void insert(User user);
 
-    @Update("UPDATE user SET UserName = #{userName}, Gender = #{gender}, EcardID = #{ecardId}, Role = #{role}, Age = #{age} WHERE UserID = #{userId}")
+    @Update("UPDATE user SET UserName = #{userName}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age} WHERE UserID = #{userID}")
     void update(User user);
 
     @Delete("DELETE FROM user WHERE UserID = #{userId}")
