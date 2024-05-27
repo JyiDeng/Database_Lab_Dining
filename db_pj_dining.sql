@@ -26,9 +26,9 @@ CREATE TABLE if not exists Merchant(
     Menu VARCHAR(50) NOT NULL,
     AvgRating FLOAT
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-insert into `Merchant` VALUES (1,'南苑','黄焖鸡','国年路200号','黄焖鸡，铁板饭',3.9);
-insert into `Merchant` VALUES (2,'全家','八喜','政肃路60号西面','八喜，关东煮',4);
-insert into `Merchant` VALUES (3,'幻想食堂Topolino pizzeria','PESTO E PATATE','昌平路888-5号','PESTO E PATATE, SPRING SALAD',4.1);
+insert into `Merchant` VALUES (1,' Nanyuan ',' Braised Chicken ',' No. 200 Guonian Road ',' Braised Chicken, Tippan-pan rice ',3.9);
+insert into `Merchant` VALUES (2,' Family ',' Hachii ',' West of No. 60, Minsu Road ',' Hachii, Kanto Cook ',4);
+insert into `Merchant` VALUES (3,' Fantasy Canteen Topolino pizzeria','PESTO E PATATE',' 888-5 Changping Road ','PESTO E PATATE, SPRING SALAD',4.1);
 
 DROP TABLE IF EXISTS `Dish`;
 CREATE TABLE if not exists Dish (
@@ -39,16 +39,16 @@ CREATE TABLE if not exists Dish (
     Description VARCHAR(200),
     Picture VARCHAR(50),
     Flavor VARCHAR(50),
-    Ingredients VARCHAR(50),
+    Ingredients VARCHAR(100),
     Allergens VARCHAR(50),
     NutritionInfo VARCHAR(50),
     AvgRating FLOAT,
     MerchantID INT,
     FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-insert into `Dish` VALUES (1,'黄焖鸡',18,'中餐','酱很香','examplePic1.com','原味','鸡肉、青椒、土豆、姜','' ,'鸡肉鲜美，青椒维生素高',4.5,1);
-insert into `Dish` VALUES (2,'八喜',13.8,'甜品','经典、小贵','examplePic2.com','巧克力味','牛乳、可可粉、白砂糖、添加剂','牛乳','钙含量高',4.3,2);
-insert into `Dish` VALUES (3,'PESTO E PATATE',68,'西餐','经典青酱披萨','examplePic3.com','青酱口味','马苏里拉芝士，青酱，烤甜土豆，迷迭香，大蒜，油浸番茄干','大蒜','营养均衡',4.5,3);
+Insert into `Dish` VALUES (1, 'conger chicken', 18,'Chinese food', 'sauce delicious','examplePic1.com','original', 'chicken, green pepper, potatoes, ginger', ' ', 'delicious chicken, green pepper vitamin high', 4.5, 1);
+Insert into `Dish` VALUES (2, 'the baxi', 13.8,'sweet', 'classic, small expensive', 'examplePic2.com', 'chocolate', 'milk, cocoa, sugar, additives','milk', 'high calcium content', 4.3, 2);
+Insert into `Dish` VALUES (3,'PESTO E PATATE',68,'Western food','classic pesto pizza','examplePic3.com','pesto flavor','Mozzarella cheese, pesto sauce, baked sweet potato, rosemary, garlic, Dried tomatoes in oil','garlic','balanced nutrition',4.5,3);
 
 DROP TABLE IF EXISTS `Favorite`;
 CREATE TABLE Favorite (
@@ -79,9 +79,9 @@ CREATE TABLE Review (
     FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID),
     FOREIGN KEY (DishID) REFERENCES Dish(DishID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `Review` VALUES (1,3,2,2,4.5,'好味下次还来','2024-5-3 0:25:34');
-INSERT INTO `Review` VALUES (2,1,1,1,4,'不错，有点咸','2024-5-16 8:39:10');
-INSERT INTO `Review` VALUES (3,2,3,3,5,'非常好披萨，爱来自幻想','2024-5-24 0:39:19');
+INSERT INTO `Review` VALUES (1,3,2,2,4.5,'Good taste, will come again next time','2024-5-3 0:25:34');
+INSERT INTO `Review` VALUES (2,1,1,1,4,'Nice. A little salty','2024-5-16 8:39:10');
+INSERT INTO `Review` VALUES (3,2,3,3,5,'Very good pizza, love from Fantasy','2024-5-24 0:39:19');
 
 DROP TABLE IF EXISTS `MyOrder`; # 以免和Order保留字重复
 CREATE TABLE MyOrder (
@@ -129,9 +129,9 @@ CREATE TABLE Message (
     FOREIGN KEY (UserID) REFERENCES User(UserID),
     FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `message` VALUES(1,1,1,'您的餐品已做好，请取餐！','2024-5-15 22:39:10');
-INSERT INTO `message` VALUES(2,2,1,'亲，对于用餐体验如何？点击填写用餐体验->','2024-5-19 21:32:12');
-INSERT INTO `message` VALUES(3,3,1,'感谢您的反馈，我们竭诚为您服务。','2024-5-21 19:35:19');
+INSERT INTO `message` VALUES(1,1,1,'Your meal is ready, please take it!','2024-5-15 22:39:10');
+INSERT INTO `message` VALUES(2,2,1,'How was your dining experience, dear? Click to fill in the Dining Experience->','2024-5-19 21:32:12');
+INSERT INTO `message` VALUES(3,3,1,'Thank you for your feedback, we are happy to serve you.','2024-5-21 19:35:19');
 
 DROP TABLE IF EXISTS `AdminActionLog`;
 CREATE TABLE AdminActionLog (
