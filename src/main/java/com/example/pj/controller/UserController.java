@@ -35,7 +35,6 @@ public class UserController {
     public String index() {
         return "欢迎来到用户索引页！<br>以下为操作示例：<br>-------------------<br>" +
                 "用户索引页：`http://localhost:8080/user/`<br>" +
-                "用户查询所有用户列表：`http://localhost:8080/user/allUserList`<br>" +
                 "查询第1个用户信息：`http://localhost:8080/user/id=1`<br>" +
                 "查询所有商家列表（简略）：`http://localhost:8080/user/searchMerchant?keyword=`<br>" +
                 "查询第2个商家列表（简略）：`http://localhost:8080/user/searchMerchant?keyword=2`<br>" +
@@ -46,10 +45,6 @@ public class UserController {
                 "管理员索引页：`http://localhost:8080/admin/`<br>";
     }
 
-    @GetMapping({"/allUserList"})
-    public List<User> userList() {
-        return userMapper.findAll();
-    }
 
     // 显示特定用户
     @GetMapping("/id={id}")
@@ -64,7 +59,7 @@ public class UserController {
 
     @GetMapping("/searchMerchantDetails")
     public Merchant getMerchantDetails(@RequestParam Long id, Model model) {
-        return merchantMapper.getMerchantByID(id);
+        return merchantMapper.getMerchantDetails(id);
 //        Merchant merchant = merchantMapper.getMerchantByID(id);
 ////        List<Dish> dishes = merchantMapper.getDishesByMerchantID(id);
 //        model.addAttribute("merchant", merchant);

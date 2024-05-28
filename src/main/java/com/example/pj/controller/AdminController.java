@@ -8,6 +8,8 @@ import com.example.pj.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
@@ -24,6 +26,7 @@ public class AdminController {
     @GetMapping({"", "/", "index"})
     public String index() {
         return "欢迎来到管理员索引页！<br>以下为操作示例：<br>-------------------<br>" +
+                "查询所有用户列表：`http://localhost:8080/admin/allUserList`<br>" +
                 "增加id为4的用户，名字为jill，性别为Female，学工号为12321，角色为Student，年龄为20（如果已有这个id的用户会给出提示信息）：`http://localhost:8080/admin/addUser?id=4&userName=Jill&gender=Female&ecardId=12321&role=Student&age=20`<br>" +
                 "更新id为1的用户的名字为JohnDoe，性别为Male，学工号为12345，角色为Staff，年龄为30（如果不存在这个id的用户会给出提示信息）：`http://localhost:8080/admin/updateUser?id=1&userName=JohnDoe&gender=Male&ecardId=12345&role=Staff&age=30`<br>" +
                 "删除id为4的用户（如果不存在这个id的用户会给出提示信息）：`http://localhost:8080/admin/deleteUser/4`<br>" +
@@ -33,6 +36,10 @@ public class AdminController {
 
     }
 
+    @GetMapping({"/allUserList"})
+    public List<User> userList() {
+        return userMapper.findAll();
+    }
 
 
     @RequestMapping("/addUser")
