@@ -44,6 +44,10 @@ public class UserController {
                 "商家索引页：`http://localhost:8080/merchant/`<br>" +
                 "管理员索引页：`http://localhost:8080/admin/`<br>";
     }
+//    @RequestMapping("/login")
+//    private String index2() {
+//        return "Login2.html";
+//    }
 
 
     // 显示特定用户
@@ -55,6 +59,11 @@ public class UserController {
     @GetMapping("/searchMerchant")
     public List<Merchant> searchMerchant(@RequestParam String keyword) {
         return merchantMapper.searchMerchant(keyword);
+    }
+
+    @GetMapping("/searchMerchant2")
+    public String searchMerchant2(@RequestParam String keyword) {
+        return "user_search";
     }
 
     @GetMapping("/searchMerchantDetails")
