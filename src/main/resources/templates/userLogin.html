@@ -6,7 +6,6 @@
     <title>Login</title>
     <script>
         async function login() {
-            const type = document.getElementById('type').value;
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
@@ -16,17 +15,11 @@
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify({ type, username, password })
+                    body: JSON.stringify({ username, password })
                 });
 
-                // if (response.status === 302) {
-                //     // 重定向到新的URL，浏览器会自动处理
-                //     console.log('Redirecting...');
-                // }
-                // else
                 if (response.ok) {
                     const redirectUrl = response.headers.get('Location');
-                    // const redirectUrl = await response.text(); // 获取重定向URL
                     if (redirectUrl) {
                         window.location.href = redirectUrl;
                     } else {
@@ -43,12 +36,7 @@
     </script>
 </head>
 <body>
-<label for="type">登录类型：</label>
-<select id="type">
-    <option value="admin">admin</option>
-    <option value="user">user</option>
-    <option value="merchant">merchant</option>
-</select>
+
 <label for="username">账号:</label>
 <input type="text" id="username" required>
 <br><br>

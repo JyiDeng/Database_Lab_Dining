@@ -4,42 +4,62 @@ import com.example.pj.entity.LoginRequest;
 import com.example.pj.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
 
-@RestController
-@RequestMapping("/login")
+@Controller
+@RequestMapping("/")
 public class LoginController {
 
     @Autowired
     private LoginService loginService;
 
-    @PostMapping("")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
-        boolean isAuthenticated = loginService.authenticate(loginRequest.getType(), loginRequest.getUsername(), loginRequest.getPassword());
 
-        if (isAuthenticated) {
-//            return ResponseEntity.ok("Login successful");
-            String redirectUrl;
-            switch (loginRequest.getType()) {
-                case "admin":
-                    redirectUrl = "/admin/success";
-                    break;
-                case "user":
-                    redirectUrl = "/user/success";
-                    break;
-                case "merchant":
-                    redirectUrl = "/merchant/success";
-                    break;
-                default:
-                    return ResponseEntity.status(400).body("Invalid login type");
-            }
-            return ResponseEntity.ok().header("Location", redirectUrl).build();
-        } else {
-            return ResponseEntity.status(401).body("Invalid credentials");
-        }
+    @GetMapping("/adminLogin")
+    public String adminLogin() {
+        return "adminLogin"; // 返回页面名称，会自动在 templates 目录下寻找 adminLogin.html
     }
+
+    @GetMapping("/userLogin")
+    public String userLogin() {
+        return "login2"; // 返回页面名称，会自动在 templates 目录下寻找 userLogin.html
+    }
+
+    @GetMapping("/merchantLogin")
+    public String merchantLogin() {
+        return "merchantLogin"; // 返回页面名称，会自动在 templates 目录下寻找 merchantLogin.html
+    }
+
+
+
+
+//    @PostMapping("")
+//    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+//        boolean isAuthenticated = loginService.authenticate(loginRequest.getType(), loginRequest.getUsername(), loginRequest.getPassword());
+//
+//        if (isAuthenticated) {
+//            String redirectUrl;
+//            switch (loginRequest.getType()) {
+//                case "admin":
+//                    redirectUrl = "/admin/" + loginRequest.getUsername();
+//                    break;
+//                case "user":
+//                    redirectUrl = "/user/" + loginRequest.getUsername();
+////                    redirectUrl = loginRequest.getUsername();
+//                    break;
+//                case "merchant":
+//                    redirectUrl = "/merchant/" + loginRequest.getUsername();
+//                    break;
+//                default:
+//                    return ResponseEntity.status(400).body(null);
+//            }
+//            return ResponseEntity.status(302).header("Location", redirectUrl).build();
+//        } else {
+//            return ResponseEntity.status(401).body("Invalid credentials");
+//        }
+//    }
 }
 
 
