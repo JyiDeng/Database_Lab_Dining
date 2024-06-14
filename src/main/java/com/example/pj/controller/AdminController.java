@@ -43,9 +43,9 @@ public class AdminController {
 
 
     @RequestMapping("/addUser")
-    public String addUser(@RequestParam Long id, String userName, String gender, Long ecardId, String role, Integer age) {
+    public String addUser(@RequestParam Long id, String userName, String gender, Long ecardId, String role, Integer age,String password) {
         if (userMapper.findByID(id) == null){
-            User newUser = new User(id,userName,gender,ecardId,role,age);
+            User newUser = new User(id,userName,gender,ecardId,role,age,password);
             userMapper.insert(newUser);
             return "User" + id + " is added successfully!";
         }else{
