@@ -11,11 +11,12 @@ CREATE TABLE if not exists User (
     Gender ENUM('Male','Female','Other') NOT NULL,
     EcardID INT NOT NULL,
     Role ENUM('Student','Staff') NOT NULL,
-    Age INT
+    Age INT,
+    Password VARCHAR(50) NOT NULL
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `user` VALUES (1,'Alice1','Female',75,'Student',20);
-INSERT INTO `user` VALUES (2,'Tom1','Male',50,'Student',25);
-INSERT INTO `user` VALUES (3,'Octpus1','Other',25,'Staff',1);
+INSERT INTO `user` VALUES (1,'Alice1','Female',75,'Student',20,'12345');
+INSERT INTO `user` VALUES (2,'Tom1','Male',50,'Student',25,'54321');
+INSERT INTO `user` VALUES (3,'Octpus1','Other',25,'Staff',1,'11111');
 
 DROP TABLE IF EXISTS `Merchant`;
 CREATE TABLE if not exists Merchant(
@@ -25,14 +26,15 @@ CREATE TABLE if not exists Merchant(
     Address VARCHAR(50) NOT NULL,
     MenuID INT,
     AvgRating FLOAT,
+    Password VARCHAR(50),
     FOREIGN KEY (menuID) REFERENCES menu(menuID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 # insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road','Braised Chicken, Tippan-pan rice',3.9);
 # insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road','Hachii, Kanto Cook',4);
 # insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road','PESTO E PATATE, SPRING SALAD',4.1);
-insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', 1, 3.9);
-insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road', 2, 4);
-insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road', 3, 4.1);
+insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', 1, 3.9, '12345');
+insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road', 2, 4,'54321');
+insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road', 3, 4.1,'11111');
 
 DROP TABLE IF EXISTS `Dish`;
 CREATE TABLE if not exists Dish (
@@ -176,7 +178,7 @@ DROP TABLE IF EXISTS `Admin`;
 CREATE TABLE Admin (
     AdminID INT PRIMARY KEY,
     Name VARCHAR(100),
-    PasswordHash VARCHAR(255)
+    Password VARCHAR(255)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `Admin` VALUES (1,'root','root');
 

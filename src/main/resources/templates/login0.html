@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>登录选择</title>
+</head>
+<body>
+<div style="text-align: center; margin-top: 50px;">
+    <h2>欢迎登录，请选择登录方式</h2>
+    <button onclick="adminLogin()">admin登录</button>
+    <button onclick="userLogin()">user登录</button>
+    <button onclick="merchantLogin()">merchant登录</button>
+</div>
+
+<script>
+    function adminLogin() {
+        window.location.href = 'http://localhost:8080/adminLogin';
+    }
+
+    function userLogin() {
+        window.location.href = 'http://localhost:8080/userLogin';
+    }
+
+    function merchantLogin() {
+        window.location.href = 'http://localhost:8080/merchantLogin';
+    }
+</script>
+</body>
+</html>

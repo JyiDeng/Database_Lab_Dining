@@ -10,12 +10,15 @@ import com.example.pj.service.MerchantService;
 import com.example.pj.service.UserService;
 import com.example.pj.service.DishService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+//@RestController
+// 如果用Controller才能用html加载，如果用RestController才能用文字加载
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
@@ -44,10 +47,10 @@ public class UserController {
                 "商家索引页：`http://localhost:8080/merchant/`<br>" +
                 "管理员索引页：`http://localhost:8080/admin/`<br>";
     }
-//    @RequestMapping("/login")
-//    private String index2() {
-//        return "Login2.html";
-//    }
+    @RequestMapping("/login")
+    private String index2() {
+        return "login.html";
+    }
 
 
     // 显示特定用户

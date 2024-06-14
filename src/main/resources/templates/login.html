@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <title>简易登录界面</title>
+  欢迎来到主索引页！<br>-------------------<br>
+  <!--商家索引页：`http://localhost:8080/merchant/`<br>-->
+  <!--用户索引页：`http://localhost:8080/user/`<br>-->
+  <!--管理员索引页：`http://localhost:8080/admin/`<br>-->
+  <script>
+    function login() {
+      var username = document.getElementById("username").value;
+      var password = document.getElementById("password").value;
+
+      // 使用Ajax发送登录请求
+      var xhr = new XMLHttpRequest();
+      xhr.open("POST", "/login", true);
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            try {
+              var response = JSON.parse(xhr.responseText);
+              if (response.success) {
+                window.location.href = response.redirect;
+              } else {
+                alert(response.message || "用户名或密码错误");
+              }
+            } catch (e) {
+              console.error("解析JSON响应时出错:", e);
+              console.error("响应内容:", xhr.responseText);
+              alert("服务器返回无效响应");
+            }
+          } else {
+            console.error("请求失败，状态码:", xhr.status);
+            alert("登录请求失败");
+          }
+        }
+      };
+      xhr.send("username=" + username + "&password=" + password);
+    }
+  </script>
+</head>
+<body>
+<h2>登录界面</h2>
+<label for="type">登录类型：</label>
+<select id="type">
+  <option value="admin">admin</option>
+  <option value="user">user</option>
+  <option value="merchant">merchant</option>
+</select>
+<label for="username">用户名:</label>
+<input type="username" id="username" required>
+<br><br>
+<label for="password">密码:</label>
+<input type="password" id="password" required>
+<br><br>
+<button onclick="login()">登录</button>
+</body>
+</html>

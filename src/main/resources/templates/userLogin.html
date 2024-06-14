@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script>
+        async function login() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            try {
+                const response = await fetch('/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                });
+
+                if (response.ok) {
+                    const redirectUrl = response.headers.get('Location');
+                    if (redirectUrl) {
+                        window.location.href = redirectUrl;
+                    } else {
+                        alert('Login successful, but no redirect URL found');
+                    }
+                } else {
+                    const errorText = await response.text();
+                    alert('Login failed: ' + errorText);
+                }
+            } catch (error) {
+                alert('An error occurred: ' + error.message);
+            }
+        }
+    </script>
+</head>
+<body>
+
+<label for="username">账号:</label>
+<input type="text" id="username" required>
+<br><br>
+<label for="password">密码:</label>
+<input type="password" id="password" required>
+<br><br>
+<button onclick="login()">登录</button>
+</body>
+</html>
