@@ -36,11 +36,15 @@ public class AdminController {
 
     }
 
-    @GetMapping({"/allUserList"})
-    public List<User> userList() {
+//    @GetMapping({"/allUserList"})
+//    public List<User> userList() {
+//        return userMapper.findAll();
+//    }
+
+    @GetMapping("/{path}/allUserList")
+    public List<User> userList(@PathVariable String path) {
         return userMapper.findAll();
     }
-
 
     @RequestMapping("/addUser")
     public String addUser(@RequestParam Long id, String userName, String gender, Long ecardId, String role, Integer age,String password) {
