@@ -15,6 +15,7 @@
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
+                        // 'content-type' : 'application/x-www-form-urlencoded'
                     },
                     body: JSON.stringify({ type, username, password })
                 });
@@ -25,8 +26,10 @@
                 // }
                 // else
                 if (response.ok) {
-                    const redirectUrl = response.headers.get('Location');
+                    // const redirectUrl = response.headers.get('Location');
                     // const redirectUrl = await response.text(); // 获取重定向URL
+                    const responseBody = await response.json();
+                    const redirectUrl = responseBody.redirectUrl;
                     if (redirectUrl) {
                         window.location.href = redirectUrl;
                     } else {
@@ -50,10 +53,10 @@
     <option value="merchant">merchant</option>
 </select>
 <label for="username">账号:</label>
-<input type="text" id="username" required>
+<input type="text" id="username" required value="root">
 <br><br>
 <label for="password">密码:</label>
-<input type="password" id="password" required>
+<input type="password" id="password" required value="root">
 <br><br>
 <button onclick="login()">登录</button>
 </body>
