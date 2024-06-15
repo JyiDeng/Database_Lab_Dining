@@ -18,7 +18,7 @@ import java.util.List;
 
 //@RestController
 // 如果用Controller才能用html加载，如果用RestController才能用文字加载
-@RestController
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
@@ -34,24 +34,21 @@ public class UserController {
     private DishService dishService;
     @Autowired
     DishMapper dishMapper;
-//    @GetMapping({"", "/", "index"})
-//    public String index() {
-//        return "欢迎来到用户索引页！<br>以下为操作示例：<br>-------------------<br>" +
-//                "用户索引页：`http://localhost:8080/user/`<br>" +
-//                "查询第1个用户信息：`http://localhost:8080/user/id=1`<br>" +
-//                "查询所有商家列表（简略）：`http://localhost:8080/user/searchMerchant?keyword=`<br>" +
-//                "查询第2个商家列表（简略）：`http://localhost:8080/user/searchMerchant?keyword=2`<br>" +
-//                "查询第3个商家列表（详细）：`http://localhost:8080/user/searchMerchantDetails?id=3`<br>" +
-//                "查询第3个商家的关于`p`的菜品：`http://localhost:8080/user/searchDishes?merchantId=3&keyword=p`<br>" +
-//                "<br>-------------------<br>" +
-//                "商家索引页：`http://localhost:8080/merchant/`<br>" +
-//                "管理员索引页：`http://localhost:8080/admin/`<br>";
-//    }
-//    @RequestMapping("/login")
-//    private String index2() {
-//        return "login.html";
-//    }
 
+
+    // 收藏菜品
+    @RequestMapping("/{userId}/favoriteDish")
+    public String favoriteDish(@PathVariable Long userId, @RequestParam Long dishId) {
+        userMapper.favoriteDish(userId, dishId);
+        return "菜品已收藏";
+    }
+
+    // 收藏商户
+    @RequestMapping("/{userId}/favoriteMerchant")
+    public String favoriteMerchant(@PathVariable Long userId, @RequestParam Long merchantId) {
+        userMapper.favoriteMerchant(userId, merchantId);
+        return "商户已收藏";
+    }
 
     // 显示特定用户
     @RequestMapping("/id={id}")
@@ -69,14 +66,21 @@ public class UserController {
         return merchantMapper.searchMerchant(keyword);
     }
 
-    @RequestMapping("/searchMerchant2")
-    public String searchMerchant2(@RequestParam String keyword) {
-        return "user_search";
+    @RequestMapping("/{path}/searchMerchant2")
+    public String searchMerchant2(@RequestParam String keyword,@PathVariable Long path, Model model) {
+        List<Merchant> merchants = merchantMapper.searchMerchant(keyword);
+//        model.addAttribute("merchantId", merchants);
+        model.addAttribute("merchants", merchants);
+        return "searchMerchant"; // 返回模板文件名
+//        return "user_search";
     }
 
     @RequestMapping("/{path}/searchMerchantDetails")
-    public Merchant getMerchantDetails(@RequestParam Long id, Model model,@PathVariable Long path) {
-        return merchantMapper.getMerchantDetails(id);
+    public String getMerchantDetails(@RequestParam Long id, Model model,@PathVariable Long path) {
+        Merchant merchant = merchantMapper.getMerchantDetails(id);
+        model.addAttribute("merchant",merchant);
+        return "merchantDetail";
+//        return merchantMapper.getMerchantDetails(id);
 //        Merchant merchant = merchantMapper.getMerchantByID(id);
 ////        List<Dish> dishes = merchantMapper.getDishesByMerchantID(id);
 //        model.addAttribute("merchant", merchant);

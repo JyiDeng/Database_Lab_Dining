@@ -16,24 +16,6 @@ public class LoginController {
 
     @Autowired
     private LoginService loginService;
-//
-//
-//    @GetMapping("/adminLogin")
-//    public String adminLogin() {
-//        return "adminLogin"; // 返回页面名称，会自动在 templates 目录下寻找 adminLogin.html
-//    }
-//
-//    @GetMapping("/userLogin")
-//    public String userLogin() {
-//        return "login2"; // 返回页面名称，会自动在 templates 目录下寻找 userLogin.html
-//    }
-//
-//    @GetMapping("/merchantLogin")
-//    public String merchantLogin() {
-//        return "merchantLogin"; // 返回页面名称，会自动在 templates 目录下寻找 merchantLogin.html
-//    }
-
-
 
 //
     @PostMapping("")
@@ -64,42 +46,3 @@ public class LoginController {
     }
 }
 
-
-//@RestController
-//public class LoginController {
-//
-//    @Autowired
-//    private UserService userService;
-//
-//    @Autowired
-//    UserMapper userMapper;
-//    @PostMapping("/login")
-//    public Map<String, Object> login(@RequestParam String username, @RequestParam String password, HttpSession session) {
-//        Map<String, Object> response = new HashMap<>();
-//        User user = userMapper.findByUsername(username);
-//
-//        if (user != null && user.getPassword().equals(password)) {
-//            session.setAttribute("username", username);
-//            response.put("success", true);
-//            switch (username) {
-//                case "admin":
-//                    response.put("redirect", "/admin_page");
-//                    break;
-//                case "Alice1":
-//                case "user2":
-//                    response.put("redirect", "/user_page");
-//                    break;
-//                case "merchant1":
-//                case "merchant2":
-//                    response.put("redirect", "/merchant_page");
-//                    break;
-//                default:
-//                    response.put("redirect", "/error");
-//            }
-//        } else {
-//            response.put("success", false);
-//        }
-//
-//        return response;
-//    }
-//}

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Merchant Search Results</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Merchant Search Results</h1>
+    <!--<div th:if="${#lists.isEmpty(merchants)}">-->
+    <!--    <p>No merchants found for the given keyword.</p>-->
+    <!--</div>-->
+    <table>
+        <thead>
+        <tr>
+            <th>商户ID</th>
+            <th>商户名称</th>
+            <th>主打菜品</th>
+            <th>进入商户</th>
+
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="merchant : ${merchants}">
+            <td th:text="${merchant.merchantId}">商户ID</td>
+            <td th:text="${merchant.merchantName}">商户名称</td>
+            <td th:text="${merchant.mainDishes}">主打菜品</td>
+            <!--<td>-->
+            <!--    <a  th:data-id="merchant?.merchantId">-->
+            <!--    <button th:onclick="redirectTo(this.getAttribute('data-id'))">进入商户</button>-->
+            <!--    </a>-->
+            <!--</td>-->
+            <td>
+                <button data-merchant-id="${merchant.merchantID}" onclick="redirectTo(this)">进入商户</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+    <div th:if="${#lists.isEmpty(merchants)}">
+        <p>No merchants found for the given keyword.</p>
+    </div>
+</div>
+<script>
+    // Function to append the given path to the current URL and redirect
+    // setTimeout(
+    //     function redirectTo(path) {
+    //     const currentUrl = window.location.href;
+    //     const baseUrl = currentUrl.split('/searchMerchant2')[0];
+    //     const newUrl = baseUrl + "\/searchMerchantDetails?id=" + path;
+    //     window.location.href = newUrl;
+    // }
+    // ,2000);
+    function redirectTo(button) {
+        const merchantId = button.getAttribute('data-merchant-id');
+        const currentUrl = window.location.href;
+        const baseUrl = currentUrl.split('/searchMerchant2')[0];
+        const newUrl = baseUrl + '/' + merchantId;
+        window.location.href = newUrl;
+    }
+</script>
+</body>
+</html>

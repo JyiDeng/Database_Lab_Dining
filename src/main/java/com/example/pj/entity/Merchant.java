@@ -23,7 +23,7 @@ public class Merchant {
 
     private String address;
 
-    private String menu;
+    private String menuId;
 
     private Float avgRating;
 

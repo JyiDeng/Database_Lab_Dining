@@ -27,4 +27,12 @@ public interface UserMapper {
     void delete(Long id);
 
     int save(@Param("user") User user);
+
+    // 收藏菜品
+    @Insert("INSERT INTO FavoriteDish (userID, dishID, FavoriteDate) VALUES (#{userId}, #{dishId}, NOW())")
+    void favoriteDish(@Param("userId") Long userId, @Param("dishId") Long dishId);
+
+    // 收藏商户
+    @Insert("INSERT INTO FavoriteMerchant (userID, merchantID, FavoriteDate) VALUES (#{userId}, #{merchantId}, NOW())")
+    void favoriteMerchant(@Param("userId") Long userId, @Param("merchantId") Long merchantId);
 }

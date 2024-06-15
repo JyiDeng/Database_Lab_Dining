@@ -14,7 +14,7 @@ public interface MerchantMapper {
     @Select("SELECT * FROM merchant")
     List<User> findAll();
 
-    @Select("SELECT MerchantID, MainDishes FROM merchant WHERE MerchantName LIKE CONCAT('%', #{keyword}, '%') OR Address LIKE CONCAT('%', #{keyword}, '%')")
+    @Select("SELECT MerchantId, MerchantName, MainDishes FROM merchant WHERE MerchantName LIKE CONCAT('%', #{keyword}, '%') OR Address LIKE CONCAT('%', #{keyword}, '%')")
     List<Merchant> searchMerchant(@Param("keyword") String keyword);
 
 
