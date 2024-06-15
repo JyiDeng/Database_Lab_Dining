@@ -21,5 +21,6 @@ public interface UserService {
 
 //    Integer save(User user);
 
-
+    void favoriteDish(Long userId, Long dishId);
+    void favoriteMerchant(Long userId, Long merchantId);
 }

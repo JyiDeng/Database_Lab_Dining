@@ -100,5 +100,18 @@ public class UserController {
 ////        return "dish_details";
 //    }
 
+    // 收藏菜品
+    @PostMapping("/{userId}/favoriteDish")
+    public String favoriteDish(@PathVariable Long userId, @RequestParam Long dishId) {
+        userService.favoriteDish(userId, dishId);
+        return "菜品已收藏";
+    }
+
+    // 收藏商户
+    @PostMapping("/{userId}/favoriteMerchant")
+    public String favoriteMerchant(@PathVariable Long userId, @RequestParam Long merchantId) {
+        userService.favoriteMerchant(userId, merchantId);
+        return "商户已收藏";
+    }
 
 }
