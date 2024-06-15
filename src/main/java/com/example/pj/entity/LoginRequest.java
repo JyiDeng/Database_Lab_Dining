@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class LoginRequest {
     private String type;
-    private String username;
+    private String userId;
     private String password;
 
     // getters and setters

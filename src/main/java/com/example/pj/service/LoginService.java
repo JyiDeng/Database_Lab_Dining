@@ -11,14 +11,14 @@ public class LoginService {
     @Autowired
     private LoginMapper loginMapper;
 
-    public boolean authenticate(String type, String username, String password) {
+    public boolean authenticate(String type, String userId, String password) {
         switch (type) {
             case "admin":
-                return loginMapper.validateAdmin(username, password);
+                return loginMapper.validateAdmin(Long.parseLong(userId), password);
             case "user":
-                return loginMapper.validateUser(username, password);
+                return loginMapper.validateUser(Long.parseLong(userId), password);
             case "merchant":
-                return loginMapper.validateMerchant(username, password);
+                return loginMapper.validateMerchant(Long.parseLong(userId), password);
             default:
                 throw new IllegalArgumentException("Invalid login type");
         }

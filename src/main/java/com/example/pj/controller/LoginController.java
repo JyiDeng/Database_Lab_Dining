@@ -38,20 +38,20 @@ public class LoginController {
 //
     @PostMapping("")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
-        boolean isAuthenticated = loginService.authenticate(loginRequest.getType(), loginRequest.getUsername(), loginRequest.getPassword());
+        boolean isAuthenticated = loginService.authenticate(loginRequest.getType(), loginRequest.getUserId(), loginRequest.getPassword());
 
         if (isAuthenticated) {
             String redirectUrl;
             switch (loginRequest.getType()) {
                 case "admin":
-                    redirectUrl = "/admin/" + loginRequest.getUsername();
+                    redirectUrl = "/admin/" + loginRequest.getUserId();
                     break;
                 case "user":
-                    redirectUrl = "/user/" + loginRequest.getUsername();
+                    redirectUrl = "/user/" + loginRequest.getUserId();
 //                    redirectUrl = loginRequest.getUsername();
                     break;
                 case "merchant":
-                    redirectUrl = "/merchant/" + loginRequest.getUsername();
+                    redirectUrl = "/merchant/" + loginRequest.getUserId();
                     break;
                 default:
                     return ResponseEntity.status(400).body(null);

@@ -7,7 +7,7 @@
     <script>
         async function login() {
             const type = document.getElementById('type').value;
-            const username = document.getElementById('username').value;
+            const userId = document.getElementById('userId').value;
             const password = document.getElementById('password').value;
 
             try {
@@ -17,7 +17,7 @@
                         'Content-Type': 'application/json'
                         // 'content-type' : 'application/x-www-form-urlencoded'
                     },
-                    body: JSON.stringify({ type, username, password })
+                    body: JSON.stringify({ type, userId, password })
                 });
 
                 // if (response.status === 302) {
@@ -52,8 +52,8 @@
     <option value="user">user</option>
     <option value="merchant">merchant</option>
 </select>
-<label for="username">账号:</label>
-<input type="text" id="username" required value="root">
+<label for="userId">ID:</label>
+<input type="text" id="userId" required value="root">
 <br><br>
 <label for="password">密码:</label>
 <input type="password" id="password" required value="root">

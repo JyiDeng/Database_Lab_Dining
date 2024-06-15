@@ -8,13 +8,13 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface LoginMapper {
 
-    @Select("SELECT COUNT(*) FROM admin WHERE name = #{username} AND password = #{password}")
-    boolean validateAdmin(@Param("username") String username, @Param("password") String password);
+    @Select("SELECT COUNT(*) FROM admin WHERE adminId = #{adminId} AND password = #{password}")
+    boolean validateAdmin(@Param("adminId") Long adminId, @Param("password") String password);
 
-    @Select("SELECT COUNT(*) FROM user WHERE username = #{username} AND password = #{password}")
-    boolean validateUser(@Param("username") String username, @Param("password") String password);
+    @Select("SELECT COUNT(*) FROM user WHERE userId = #{userId} AND password = #{password}")
+    boolean validateUser(@Param("userId") Long userId, @Param("password") String password);
 
-    @Select("SELECT COUNT(*) FROM merchant WHERE username = #{username} AND password = #{password}")
-    boolean validateMerchant(@Param("username") String username, @Param("password") String password);
+    @Select("SELECT COUNT(*) FROM merchant WHERE merchantId = #{merchantId} AND password = #{password}")
+    boolean validateMerchant(@Param("merchantId") Long merchantId, @Param("password") String password);
 }
 

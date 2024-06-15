@@ -17,10 +17,10 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE UserName = #{userName}")
     User findByUsername(String userName);
 
-    @Insert("INSERT INTO user (UserId,UserName,Gender,EcardId,Role,Age) VALUES (#{userID},#{userName},#{gender},#{ecardID},#{role},#{age})")
+    @Insert("INSERT INTO user (UserId,UserName,Gender,EcardId,Role,Age,Password) VALUES (#{userID},#{userName},#{gender},#{ecardID},#{role},#{age},#{password})")
     void insert(User user);
 
-    @Update("UPDATE user SET UserName = #{userName}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age} WHERE UserID = #{userID}")
+    @Update("UPDATE user SET UserName = #{userName}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age}, Password = #{password} WHERE UserID = #{userID}")
     void update(User user);
 
     @Delete("DELETE FROM user WHERE UserID = #{userId}")
