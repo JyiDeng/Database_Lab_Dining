@@ -11,14 +11,9 @@ import org.springframework.stereotype.Component;
 @ToString
 @Data
 @Component
-public class MyOrder {
-    private Long orderId;
+public class UserFavoriteDish {
     private Long userId;
-    private Long merchantId;
-    private String orderDate;
-    private String status;
-    private String orderType;
-    private Float totalAmount;
-
+    private Long dishId;
+    private String favoriteDate;
 
 }

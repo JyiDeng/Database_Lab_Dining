@@ -11,9 +11,8 @@ import org.springframework.stereotype.Component;
 @ToString
 @Data
 @Component
-public class Favorite {
-    private Integer userId;
-    private Integer merchantId;
-    private Integer dishId;
+public class UserFavoriteMerchant {
+    private Long userId;
+    private Long merchantId;
     private String favoriteDate;
 }

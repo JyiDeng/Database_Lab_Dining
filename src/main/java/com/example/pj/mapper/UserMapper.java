@@ -1,6 +1,7 @@
 package com.example.pj.mapper;
 
 import com.example.pj.entity.User;
+import com.example.pj.entity.MyOrder;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -27,6 +28,10 @@ public interface UserMapper {
     void delete(Long id);
 
     int save(@Param("user") User user);
+
+    // 查询订单
+    @Select("SELECT * FROM MyOrder WHERE UserID = #{userId}")
+    List<MyOrder> findOrdersByUserId(Long userId);
 
     // 收藏菜品
     @Insert("INSERT INTO FavoriteDish (userID, dishID, FavoriteDate) VALUES (#{userId}, #{dishId}, NOW())")

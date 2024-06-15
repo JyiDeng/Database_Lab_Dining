@@ -1,11 +1,12 @@
 package com.example.pj.controller;
 
 import com.example.pj.entity.Dish;
+import com.example.pj.entity.Merchant;
+import com.example.pj.entity.User;
+import com.example.pj.entity.MyOrder;
 import com.example.pj.mapper.DishMapper;
 import com.example.pj.mapper.MerchantMapper;
 import com.example.pj.mapper.UserMapper;
-import com.example.pj.entity.Merchant;
-import com.example.pj.entity.User;
 import com.example.pj.service.MerchantService;
 import com.example.pj.service.UserService;
 import com.example.pj.service.DishService;
@@ -35,20 +36,6 @@ public class UserController {
     @Autowired
     DishMapper dishMapper;
 
-
-    // 收藏菜品
-    @RequestMapping("/{userId}/favoriteDish")
-    public String favoriteDish(@PathVariable Long userId, @RequestParam Long dishId) {
-        userMapper.favoriteDish(userId, dishId);
-        return "菜品已收藏";
-    }
-
-    // 收藏商户
-    @RequestMapping("/{userId}/favoriteMerchant")
-    public String favoriteMerchant(@PathVariable Long userId, @RequestParam Long merchantId) {
-        userMapper.favoriteMerchant(userId, merchantId);
-        return "商户已收藏";
-    }
 
     // 显示特定用户
     @RequestMapping("/id={id}")
@@ -104,5 +91,24 @@ public class UserController {
 ////        return "dish_details";
 //    }
 
+    // 收藏菜品
+    @PostMapping("/{userId}/favoriteDish")
+    public String favoriteDish(@PathVariable Long userId, @RequestParam Long dishId) {
+        userMapper.favoriteDish(userId, dishId);
+        return "菜品已收藏";
+    }
+
+    // 收藏商户
+    @PostMapping("/{userId}/favoriteMerchant")
+    public String favoriteMerchant(@PathVariable Long userId, @RequestParam Long merchantId) {
+        userMapper.favoriteMerchant(userId, merchantId);
+        return "商户已收藏";
+    }
+
+    // 查询用户订单
+    @GetMapping("/{userId}/orders")
+    public List<MyOrder> getOrdersByUserId(@PathVariable Long userId) {
+        return userMapper.findOrdersByUserId(userId);
+    }
 
 }
