@@ -82,6 +82,20 @@ Insert into `menuItem` VALUES (1,1,3,18);
 Insert into `menuItem` VALUES (2,2,2,13.8);
 Insert into `menuItem` VALUES (3,3,1,68);
 
+DROP TABLE IF EXISTS `menuPrice`;
+CREATE TABLE menuPrice (
+    menuPriceID INT AUTO_INCREMENT PRIMARY KEY,
+    menuItemID INT,
+    price DECIMAL(10, 2) NOT NULL,
+    effectiveDate DATETIME NOT NULL,
+    endDate DATETIME DEFAULT NULL,
+    FOREIGN KEY (menuItemID) REFERENCES menuItem(menuItemID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `menuPrice` (menuItemID, price, effectiveDate) VALUES
+(1, 18, '2024-05-01 00:00:00'),
+(2, 13.8, '2024-05-01 00:00:00'),
+(3, 68, '2024-05-01 00:00:00');
+
 # 拆分为收藏商家和收藏菜品
 # DROP TABLE IF EXISTS `Favorite`;
 # CREATE TABLE Favorite (

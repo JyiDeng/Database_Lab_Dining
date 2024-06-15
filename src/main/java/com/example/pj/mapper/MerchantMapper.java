@@ -9,8 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface MerchantMapper {
-
-
     @Select("SELECT * FROM merchant")
     List<User> findAll();
 

@@ -5,27 +5,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
+import java.time.LocalDateTime;
 
 @Data
 @Component
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-
-public class Merchant {
-
-    private Integer merchantId;
-
-    private String merchantName;
-
-    private String mainDishes;
-
-    private String address;
-
-    private String menuId;
-
-    private Float avgRating;
-
-
-
+public class MenuPrice {
+    private Long menuPriceId;
+    private Long menuItemId;
+    private Float price;
+    private LocalDateTime effectiveDate;
+    private LocalDateTime endDate;
 }

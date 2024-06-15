@@ -11,21 +11,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-
-public class Merchant {
-
-    private Integer merchantId;
-
-    private String merchantName;
-
-    private String mainDishes;
-
-    private String address;
-
-    private String menuId;
-
-    private Float avgRating;
-
-
-
+public class Menu {
+    private Long menuId;
+    private Long merchantId;
 }
