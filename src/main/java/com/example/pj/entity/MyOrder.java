@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 public class MyOrder {
     private Long orderId;
     private Long userId;
+    private Long merchantId;
     private String orderDate;
     private String status;
     private String orderType;
