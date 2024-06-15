@@ -4,22 +4,52 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Merchant Details</title>
+  <!--<link rel="stylesheet" href="/static/mycss.css">-->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
 </head>
 <body>
 <h1 th:text="${merchant.merchantName}"></h1>
-<p>Main Dish: <span th:text="${merchant.mainDishes}"></span></p>
-<p>Address: <span th:text="${merchant.address}"></span></p>
 
-<h2>Dishes</h2>
-<ul>
-  <!--<th:block th:each="dish : ${dishes}">-->
-  <!--  <li>-->
-  <!--    <a th:href="@{/users/dishDetails(id=${dish.id})}">-->
-  <!--      <span th:text="${dish.name}"></span> - -->
-  <!--      <span th:text="${dish.price}"></span>-->
-  <!--    </a>-->
-  <!--  </li>-->
-  <!--</th:block>-->
 </ul>
 <table>
   <thead>
@@ -43,17 +73,29 @@
     <td th:text="${merchant.avgRating}">商户星级</td>
     <!--TODO-->
     <td>
-      <button th:onclick="'redirectTo(' + ${merchant?.menuId} + ')'">查看菜单</button>
+      <button th:onclick="'redirectTo([[${merchant?.menuId}]])'">查看菜单</button>
       </a>
     </td>
     <td>
-      <button th:onclick="'redirectTo(' + ${merchant?.menuId} + ')'">查看评价</button>
+      <button th:onclick="'redirectTo([[${merchant?.menuId}]])'">查看评价</button>
       </a>
     </td>
 
   <!--</tr>-->
   </tbody>
+
 </table>
-<a href="/users/searchPage">Back to Search</a>
+<!--<a href="/users/searchPage">Back to Search</a>-->
+<script>
+  // setTimeout(
+  function redirectTo(path) {
+    const currentUrl = window.location.href;
+    // const newUrl = currentUrl + "\/searchMerchantDetails?id=" + path ;
+    const baseUrl = currentUrl.split('/searchMerchant2')[0];
+    const newUrl = baseUrl + "\/searchMerchantDetails?id=" + path;
+    window.location.href = newUrl;
+  }
+  // ,2000);
+</script>
 </body>
 </html>

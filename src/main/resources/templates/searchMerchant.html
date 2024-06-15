@@ -65,14 +65,11 @@
             <td th:text="${merchant.merchantId}">商户ID</td>
             <td th:text="${merchant.merchantName}">商户名称</td>
             <td th:text="${merchant.mainDishes}">主打菜品</td>
-            <!--<td>-->
-            <!--    <a  th:data-id="merchant?.merchantId">-->
-            <!--    <button th:onclick="redirectTo(this.getAttribute('data-id'))">进入商户</button>-->
-            <!--    </a>-->
-            <!--</td>-->
             <td>
-                <button data-merchant-id="${merchant.merchantID}" onclick="redirectTo(this)">进入商户</button>
+                <button th:onclick="'redirectTo( [[${merchant?.merchantId}]])'">进入商户</button>
+                </a>
             </td>
+            <!--<td th:text="${merchant.address}">Address</td>-->
         </tr>
         </tbody>
     </table>
@@ -83,20 +80,13 @@
 <script>
     // Function to append the given path to the current URL and redirect
     // setTimeout(
-    //     function redirectTo(path) {
-    //     const currentUrl = window.location.href;
-    //     const baseUrl = currentUrl.split('/searchMerchant2')[0];
-    //     const newUrl = baseUrl + "\/searchMerchantDetails?id=" + path;
-    //     window.location.href = newUrl;
-    // }
-    // ,2000);
-    function redirectTo(button) {
-        const merchantId = button.getAttribute('data-merchant-id');
+        function redirectTo(path) {
         const currentUrl = window.location.href;
         const baseUrl = currentUrl.split('/searchMerchant2')[0];
-        const newUrl = baseUrl + '/' + merchantId;
+        const newUrl = baseUrl + "\/searchMerchantDetails?id=" + path;
         window.location.href = newUrl;
     }
+    // ,2000);
 </script>
 </body>
 </html>
