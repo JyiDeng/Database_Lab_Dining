@@ -2,7 +2,9 @@ package com.example.pj.controller;
 
 import com.example.pj.entity.Merchant;
 import com.example.pj.entity.User;
+import com.example.pj.entity.Dish;
 import com.example.pj.mapper.UserMapper;
+import com.example.pj.mapper.DishMapper;
 import com.example.pj.service.MerchantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -13,9 +15,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/merchant")
 public class MerchantController {
-
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    DishMapper dishMapper;
 
     @RequestMapping("/{path}/selfInfo")
     public User getMerchantSelfInfo(@PathVariable Long path) {
@@ -39,5 +42,21 @@ public class MerchantController {
 //                "管理员索引页：`http://localhost:8080/admin/`<br>";
 //
 //    }
+    // 更新菜品分类
+    @PutMapping("/dish/{dishId}/category")
+    public void updateDishCategory(@PathVariable Long dishId, @RequestParam String category) {
+        dishMapper.updateDishCategory(dishId, category);
+    }
 
+    // 添加新菜品
+    @PostMapping("/dish")
+    public void addDish(@RequestBody Dish dish) {
+        dishMapper.addDish(dish);
+    }
+
+    // 删除菜品
+    @DeleteMapping("/dish/{dishId}")
+    public void deleteDish(@PathVariable Long dishId) {
+        dishMapper.deleteDish(dishId);
+    }
 }
