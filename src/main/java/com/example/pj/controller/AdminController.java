@@ -46,7 +46,7 @@ public class AdminController {
             User currentUser = userMapper.findByID(id);
             currentUser.setUserName(userName);
             currentUser.setGender(gender);
-            currentUser.setEcardID(ecardId);
+            currentUser.setEcardId(ecardId);
             currentUser.setRole(role);
             currentUser.setAge(age);
             userMapper.update(currentUser);

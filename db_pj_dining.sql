@@ -147,7 +147,26 @@ CREATE TABLE Review (
 INSERT INTO `Review` VALUES (1,3,2,2,4.5,'Good taste, will come again next time','2024-5-3 0:25:34');
 INSERT INTO `Review` VALUES (2,1,1,1,4,'Nice. A little salty','2024-5-16 8:39:10');
 INSERT INTO `Review` VALUES (3,2,3,3,5,'Very good pizza, love from Fantasy','2024-5-24 0:39:19');
-
+INSERT INTO `Review`VALUES (4, 1, 2, 3,3.5, 'Average taste, nothing special', '2024-6-1 12:34:56');
+INSERT INTO `Review`VALUES (5, 2, 3, 2,4.2, 'Quite good, will recommend', '2024-6-2 14:22:10');
+INSERT INTO `Review`VALUES (6, 3, 1, 1,4.8, 'Delicious! Best in town!', '2024-6-3 16:10:45');
+INSERT INTO `Review`VALUES (7, 1, 3, 3,3.9, 'Good but a bit pricey', '2024-6-4 18:55:20');
+INSERT INTO `Review`VALUES (8, 2, 1, 2,4.0, 'Tasty and fresh', '2024-6-5 20:12:30');
+INSERT INTO `Review`VALUES (9, 3, 2, 1,4.6, 'Excellent, highly recommended', '2024-6-6 22:05:15');
+INSERT INTO `Review`VALUES (10, 1, 2, 3,3.7, 'Not bad, but could be better', '2024-6-7 9:45:50');
+INSERT INTO `Review`VALUES (11, 2, 3, 2,4.3, 'Very tasty, good value for money', '2024-6-8 11:30:25');
+INSERT INTO `Review`VALUES (12, 3, 1, 1,4.9, 'Superb! Will definitely come back', '2024-6-9 13:20:40');
+INSERT INTO `Review`VALUES (13, 1, 3, 3,3.6, 'Decent, but expected more', '2024-6-10 15:05:55');
+INSERT INTO `Review`VALUES (14, 2, 1, 2,4.1, 'Good food, nice ambiance', '2024-6-11 17:50:30');
+INSERT INTO `Review`VALUES (15, 3, 2, 1,4.7, 'Loved it, will visit again', '2024-6-12 19:35:45');
+INSERT INTO `Review`VALUES (16, 1, 2, 3,3.8, 'Satisfactory, but room for improvement', '2024-6-13 21:25:20');
+INSERT INTO `Review`VALUES (17, 2, 3, 3,4.4, 'Great taste, nice presentation', '2024-6-14 23:10:35');
+INSERT INTO `Review`VALUES (18, 3, 1, 2,5.0, 'Absolutely perfect!', '2024-6-15 10:55:50');
+INSERT INTO `Review`VALUES (19, 1, 3, 1,3.5, 'Just okay, nothing memorable', '2024-6-16 12:40:15');
+INSERT INTO `Review`VALUES (20, 2, 1, 3,4.2, 'Pretty good, enjoyed the meal', '2024-6-17 14:25:30');
+INSERT INTO `Review`VALUES (21, 3, 2, 2,4.8, 'Fantastic! Will tell friends', '2024-6-18 16:10:45');
+INSERT INTO `Review`VALUES (22, 1, 2, 1,3.9, 'Decent food, slow service', '2024-6-19 18:55:20');
+INSERT INTO `Review`VALUES (23, 2, 3, 2,4.0, 'Good quality, fair price', '2024-6-20 20:12:30');
 
 DROP TABLE IF EXISTS `MyOrder`; # 以免和Order保留字重复
 CREATE TABLE MyOrder (

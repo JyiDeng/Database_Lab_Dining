@@ -36,27 +36,23 @@ public class UserController {
 
     // 显示特定用户
     @RequestMapping("/id={id}")
-    public User getUserByID(@PathVariable Long id) {
+    public User getUserById(@PathVariable Long id) {
         return userMapper.findByID(id);
     }
 
-    @RequestMapping("/{path}/selfInfo")
-    public User getUserSelfInfo(@PathVariable Long path) {
-        return userMapper.findByID(path);
+    @RequestMapping("/{path}/userSelfInfo")
+    public String getUserSelfInfo(@PathVariable Long path,Model model) {
+        User user = userMapper.findByID(path);
+        model.addAttribute(user);
+        return "userSelfInfo";
     }
-
-//    @RequestMapping("/{path}/searchMerchant")
-//    public List<Merchant> searchMerchant(@RequestParam String keyword,@PathVariable Long path) {
-//        return merchantMapper.searchMerchant(keyword);
-//    }
 
     @RequestMapping("/{path}/searchMerchant2")
     public String searchMerchant2(@RequestParam String keyword,@PathVariable Long path, Model model) {
         List<Merchant> merchants = merchantMapper.searchMerchant(keyword);
-//        model.addAttribute("merchantId", merchants);
         model.addAttribute("merchants", merchants);
         return "searchMerchant"; // 返回模板文件名
-//        return "user_search";
+
     }
 
     @RequestMapping("/{path}/searchMerchantDetails")
@@ -95,9 +91,11 @@ public class UserController {
     }
 
     // 查询用户订单
-    @RequestMapping("/{userId}/orders")
-    public List<MyOrder> getOrdersByUserId(@PathVariable Long userId) {
-        return userMapper.findOrdersByUserId(userId);
+    @RequestMapping("/{userId}/viewOrders")
+    public String getOrdersByUserId(@PathVariable Long userId,Model model) {
+        List<MyOrder> orders = userMapper.findOrdersByUserId(userId);
+        model.addAttribute("orders",orders);
+        return "viewOrders";
     }
 
     @RequestMapping("/review/{dishId}")

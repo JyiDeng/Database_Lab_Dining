@@ -9,7 +9,7 @@
 欢迎来到用户索引页！<br>以下为操作示例：
 <br>-------------------<br>
 查询该用户用户信息：<br>
-<button onclick="redirectTo('/selfInfo')">View Self Info</button>
+<button onclick="redirectTo('/userSelfInfo')">View Self Info</button>
 <br>-------------------<br>
 查询所有商家列表（简略）：<br>
 <button onclick="redirectTo('/searchMerchant2?keyword=')">View All Merchants (Concise)</button>
@@ -33,8 +33,12 @@
 <button onclick="redirectTo('/favoriteMerchant?merchantId=3')">收藏id为3的商户</button>
 <br>-------------------<br>
 查询订单：<br>
-<button onclick="redirectTo('/orders')">收藏id为3的商户</button>
+<button onclick="redirectTo('/viewOrders')">收藏id为3的商户</button>
 <br>-------------------<br>
+查询菜单单品id为3的菜品的最新价格：<br>
+<button onclick="redirectTo('/latestPrice/3')">查询商品的最新价格</button>
+<br>-------------------<br>
+
 
 <script>
     // Function to append the given path to the current URL and redirect

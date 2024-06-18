@@ -24,7 +24,6 @@ public class Merchant {
 
     private String menuId;
 
-    private Float avgRating;
 
 
 

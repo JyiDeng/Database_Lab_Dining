@@ -30,45 +30,55 @@ public class MerchantController {
 
     // 更新菜品分类
     @RequestMapping("/{path}/updateDishCategory/{dishId}")
-    public void updateDishCategory(@PathVariable Long path, @PathVariable Long dishId, @RequestParam String category) {
-// TODO 增加报错判断
-        dishMapper.updateDishCategory(dishId, category);
+    public String updateDishCategory(@PathVariable Long path, @PathVariable Long dishId, @RequestParam String category) {
+
+        if (dishMapper.getDishById(dishId) != null) {
+            dishMapper.updateDishCategory(dishId, category);
+            return "Dish" + dishId + " updated!";
+        }else{
+            return "Dish" + dishId + " does not exist!";
+        }
     }
 
+    // 查看所有菜品
+    @RequestMapping("/{path}/allDishes")
+    public List<Dish> viewAllDishes(@PathVariable Long path){
+        return dishMapper.getAllDishes();
+    }
     // 添加新菜品
     @RequestMapping("/{path}/addDish")
     public String addDish(@PathVariable Long path, @RequestParam Long dishId, String dishName, String category, String description, String picture, String flavor, String ingredients, String allergens, String nutritionInfo, Long merchantId) {
-        if (dishMapper.findById(dishId) == null) {
+        if (dishMapper.getDishById(dishId) == null) {
             Dish newDish = new Dish(dishId, dishName, category, description, picture, flavor, ingredients, allergens, nutritionInfo, merchantId);
             dishMapper.insertDish(newDish);
-            return "Dish" + dishId + " is added successfully!";
+            return "Dish " + dishId + " is added successfully!";
         } else {
-            return "Dish" + dishId + " already exists!";
+            return "Dish " + dishId + " already exists!";
         }
     }
 
     // 删除菜品
-    @RequestMapping("/{path}/deleteDish/{dishId}")
-    public String deleteDish(@PathVariable Long path, @PathVariable Long dishId) {
-        if (dishMapper.findById(dishId) != null) {
+    @RequestMapping("/{path}/deleteDish")
+    public String deleteDish(@PathVariable Long path,@RequestParam Long dishId) {
+        if (dishMapper.getDishById(dishId) != null) {
             dishMapper.deleteDish(dishId);
-            return "Dish" + dishId + "deleted!";
+            return "Dish " + dishId + " deleted!";
         }else{
-            return "Dish" + dishId + "does not exist!";
+            return "Dish " + dishId + " does not exist!";
         }
 
     }
 
     // 新建菜单
     @RequestMapping("/{path}/createMenu")
-    public Menu createMenu(@PathVariable Long path, @RequestParam Long menuId, Long merchantId) {
+//    RequestParam似乎会去找哪个html，但是PathVariable会正常返回字符串
+    public String createMenu(@PathVariable Long path,@RequestParam Long menuId) {
         if (menuMapper.findMenuById(menuId) == null) {
-            return menuMapper.insertMenu(menuId, merchantId);
+            menuMapper.insertMenu(menuId, path);
+            return "Menu " + menuId + " created!";
         } else {
-            return null;
+            return "Menu " + menuId + " already exists!";
         }
-//        等前端界面有了，试试看这样能不能返回Menu
-
     }
 
 
@@ -80,27 +90,47 @@ public class MerchantController {
 //    }
     @RequestMapping("/{path}/addMenuItem")
     public String addMenuItem(@PathVariable Long path, @RequestParam Long menuId, Long dishId,Long menuItemId,Float price) {
-        if (menuMapper.findMenuById(menuItemId) == null) {
-            MenuItem menuItem = new MenuItem(menuItemId,menuId,dishId,price);
-            menuMapper.insertMenuItem(menuItem);
-            return "MenuItem" + menuItemId + " is created successfully!";
-        }else{
-            return "MenuItem" + menuItemId + " already exists!";
+        if(menuMapper.findMenuById(menuId) == null){
+            return "Menu " + menuId + "does not exist!";
         }
 
+        if (menuMapper.findMenuItemById(menuItemId) == null) {
+            MenuItem menuItem = new MenuItem(menuItemId,menuId,dishId,price);
+            menuMapper.insertMenuItem(menuItem);
+            return "MenuItem " + menuItemId + " is added successfully!";
+        }else{
+            return "MenuItem " + menuItemId + " already exists!";
+        }
+
+    }
+
+    // 查询菜单
+    @RequestMapping("/{path}/allMenus")
+    public List<Menu> getMenuItems(@PathVariable Long path) {
+        return menuMapper.findAllMenus(path);
     }
 
     // 删除菜单中的菜品
     @RequestMapping("/{path}/deleteMenuItem/{menuItemId}")
     public String deleteMenuItem(@PathVariable Long path, @PathVariable Long menuItemId) {
-        // TODO 增加报错判断
-        menuMapper.delete(menuItemId);
-        return "MenuItem deleted successfully!";
+    // 注意外键，需要先删除MenuPrice
+        if (menuMapper.findMenuItemById(menuItemId) != null ) {
+            menuMapper.deleteMenuPrice(menuItemId);
+            menuMapper.deleteMenuItemId(menuItemId);
+            return "MenuItem " + menuItemId + " deleted!";
+        }else{
+            return "MenuItem " + menuItemId + " does not exist!";
+        }
+
     }
 
     // 修改菜品价格
     @RequestMapping("/{path}/updateMenuItemPrice/{menuItemId}")
     public String updateMenuItemPrice(@PathVariable Long path, @PathVariable Long menuItemId, @RequestParam Float newPrice) {
+        if(menuMapper.findMenuItemById(menuItemId) == null){
+            return "Menu " + menuItemId + " does not exist!";
+        }
+
         // TODO 增加报错判断
         // 获取当前时间作为生效日期
         LocalDateTime now = LocalDateTime.now();
@@ -120,14 +150,9 @@ public class MerchantController {
         // 更新 menuItem 表中的价格
         menuMapper.updatePrice(menuItemId, newPrice);
 
-        return "Price updated successfully";
+        return "Price updated successfully!";
     }
 
-    // 查询菜单
-    @RequestMapping("/{path}/allMenus")
-    public List<Menu> getMenuItems(@PathVariable Long path) {
-        return menuMapper.findAllMenus(path);
-    }
 
 
 

@@ -21,7 +21,7 @@ public interface MenuMapper {
     Menu findMenuById(Long menuId);
 
     @Insert("INSERT INTO menu (menuId,merchantId) VALUES (#{menuId},#{merchantId})")
-    Menu insertMenu(Long menuId, Long merchantId);
+    void insertMenu(Long menuId, Long merchantId);
 
     @Delete("DELETE FROM menu WHERE menuID = #{menuId}")
     void deleteMenu(Long menuId);
@@ -37,16 +37,20 @@ public interface MenuMapper {
 //    void insertMenuItem(MenuItem menuItem);
 
     @Insert("INSERT INTO MenuItem(menuItemId, menuId, dishId,price) VALUES (#{menuItemId}, #{menuId}, #{dishId}, #{price})")
+//    @Options(useGeneratedKeys = true, keyProperty = "menuItemId")
     void insertMenuItem(MenuItem menuItem);
 
     @Update("UPDATE menuItem SET price = #{price} WHERE menuItemID = #{menuItemId}")
     void updatePrice(@Param("menuItemId") Long menuItemId, @Param("price") Float price);
 
+    @Delete("DELETE FROM menuPrice WHERE menuItemId = #{menuItemId}")
+    void deleteMenuPrice(Long menuItemId);
+
     @Delete("DELETE FROM menuItem WHERE menuItemID = #{menuItemId}")
-    void delete(Long menuItemId);
+    void deleteMenuItemId(Long menuItemId);
 
     @Select("SELECT * FROM menuPrice WHERE menuPriceID = #{menuPriceId}")
-    MenuPrice findmenuPriceById(Long menuPriceId);
+    MenuPrice findMenuPriceById(Long menuPriceId);
 
     @Select("SELECT * FROM menuPrice WHERE menuItemID = #{menuItemId} ORDER BY effectiveDate DESC LIMIT 1")
     MenuPrice findLatestByMenuItemId(Long menuItemId);

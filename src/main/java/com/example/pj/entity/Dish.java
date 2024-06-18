@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class Dish {
-    private Long DishId;
+    private Long dishId;
     private String dishName;
     private String category;
     private String description;

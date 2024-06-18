@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>viewOrders</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>订单编号</th>
+        <th>顾客id</th>
+        <th>商家id</th>
+        <th>订单时间</th>
+        <th>订单状态</th>
+        <th>订单类型</th>
+        <th>订单总价</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td th:text="${order.OrderId}">订单编号</td>
+        <td th:text="${order.UserId}">顾客id</td>
+        <td th:text="${order.merchantId}">商家id</td>
+        <td th:text="${order.orderDate}">订单时间</td>
+        <td th:text="${order.status}">订单状态</td>
+        <td th:text="${order.orderType}">订单类型</td>
+
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

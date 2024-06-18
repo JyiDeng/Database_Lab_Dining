@@ -20,11 +20,11 @@ public interface UserMapper {
     @Select("SELECT * FROM user WHERE UserName = #{userName}")
     User findByUsername(String userName);
 
-    @Insert("INSERT INTO user (UserId,UserName,Gender,EcardId,Role,Age,Password) VALUES (#{userID},#{userName},#{gender},#{ecardID},#{role},#{age},#{password})")
+    @Insert("INSERT INTO user (UserId,UserName,Gender,EcardId,Role,Age,Password) VALUES (#{userId},#{userName},#{gender},#{ecardID},#{role},#{age},#{password})")
     void insert(User user);
     // 为了让数据库真的加进去这个人，既可以传user又可以传参数吗
 
-    @Update("UPDATE user SET UserName = #{userName}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age}, Password = #{password} WHERE UserID = #{userID}")
+    @Update("UPDATE user SET UserName = #{userName}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age}, Password = #{password} WHERE UserID = #{userId}")
     void update(User user);
 
     @Delete("DELETE FROM user WHERE UserID = #{userId}")
@@ -37,11 +37,11 @@ public interface UserMapper {
     List<MyOrder> findOrdersByUserId(Long userId);
 
     // 收藏菜品
-    @Insert("INSERT INTO FavoriteDish (userID, dishID, FavoriteDate) VALUES (#{userId}, #{dishId}, NOW())")
+    @Insert("INSERT INTO FavoriteDish (userId, dishID, FavoriteDate) VALUES (#{userId}, #{dishId}, NOW())")
     void favoriteDish(@Param("userId") Long userId, @Param("dishId") Long dishId);
 
     // 收藏商户
-    @Insert("INSERT INTO FavoriteMerchant (userID, merchantID, FavoriteDate) VALUES (#{userId}, #{merchantId}, NOW())")
+    @Insert("INSERT INTO FavoriteMerchant (userId, merchantID, FavoriteDate) VALUES (#{userId}, #{merchantId}, NOW())")
     void favoriteMerchant(@Param("userId") Long userId, @Param("merchantId") Long merchantId);
 
     @Select("SELECT * FROM Review WHERE dishId = #{dishId}")

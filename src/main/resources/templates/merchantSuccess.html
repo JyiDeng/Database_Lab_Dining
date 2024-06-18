@@ -12,32 +12,35 @@
 <button onclick="redirectTo('/merchantSelfInfo')">查询商家自己信息</button>
 <br>-------------------<br>
 增加新菜品（草莓，id=20，隶属于餐厅2，分类为蔬菜...）：<br>
-<button onclick="redirectTo('/addDish?dishId=20&dishName=strawberry&category=vegetable&description=fresh&picture=strawberry&flavor=sweet&ingredients=strawberry&allergens-strawberry&nutritionInfo=strawberry&merchantId=2')">增加商品id=20</button>
+<button onclick="redirectTo('/addDish?dishId=20&dishName=strawberry&category=vegetable&description=fresh&picture=strawberry&flavor=sweet&ingredients=strawberry&allergens=strawberry&nutritionInfo=strawberry&merchantId=2')">增加商品id=20</button>
+<br>-------------------<br>
+查看该商家所有菜品：：<br>
+<button onclick="redirectTo('/allDishes')">查看该商家所有菜品</button>
 <br>-------------------<br>
 更新菜品20分类为水果：<br>
 <button onclick="redirectTo('/updateDishCategory/20?category=fruit')">更新菜品分类</button>
 <br>-------------------<br>
 删除菜品20：<br>
-<button onclick="redirectTo('/deleteDish/20')">删除商品id=20</button>
+<button onclick="redirectTo('/deleteDish?dishId=20')">删除商品id=20</button>
 <br>
 <br>-------------------<br>
 发布新的菜单（menuId=5）：<br>
-<button onclick="redirectTo('/createMenu/5')">发布新的菜单id=5</button>
+<button onclick="redirectTo('/createMenu?menuId=5')">发布新的菜单id=5</button>
 <br>-------------------<br>
-查询已有的菜单：<br>
+查询所有的菜单：<br>
+<button onclick="redirectTo('/allMenus')">查询已有的菜单</button>
+<br>-------------------<br>
+查询menuId=1下有哪些菜：<br>
 <button onclick="redirectTo('/allMenus')">查询已有的菜单</button>
 <br>-------------------<br>
 添加dishId为2的菜品到菜单1，设定价格为20，使这个菜单单品的id为5：<br>
-<button onclick="redirectTo('/addMenuItem?menuId=1&dishId=2&menuItemId=10&price=20')">添加菜品到菜单</button>
+<button onclick="redirectTo('/addMenuItem?menuId=1&dishId=2&menuItemId=5&price=20')">添加菜品到菜单</button>
 <br>-------------------<br>
 从菜单中删除菜品5：<br>
 <button onclick="redirectTo('/deleteMenuItem/5')">删除菜单中的菜品</button>
 <br>-------------------<br>
 修改菜品5的价格为18：<br>
 <button onclick="redirectTo('/updateMenuItemPrice/5?newPrice=18')">修改菜品价格</button>
-<br>-------------------<br>
-查询商品的最新价格：<br>
-<button onclick="redirectTo('/searchMerchantDetails?id=3')">查询商品的最新价格</button>
 <br>-------------------<br>
 
 <script>

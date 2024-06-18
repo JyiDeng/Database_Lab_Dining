@@ -13,13 +13,13 @@ import org.springframework.stereotype.Component;
 //@ConfigurationProperties(prefix = "demo.student")
 public class User {
 
-    private Long userID;
+    private Long userId;
 
     private String userName;
 
     private String gender;
 
-    private Long ecardID;
+    private Long ecardId;
 
     private String role;
 
