@@ -36,6 +36,7 @@ DROP TABLE IF EXISTS `Dish`;
 CREATE TABLE if not exists Dish (
     DishID INT AUTO_INCREMENT PRIMARY KEY,
     DishName VARCHAR(50) NOT NULL,
+#     Price FLOAT NOT NULL,  # price 或许应该在菜单里
     Category VARCHAR(50) NOT NULL,
     Description VARCHAR(200),
     Picture VARCHAR(50),
@@ -72,6 +73,36 @@ CREATE TABLE menuItem (
 Insert into `menuItem` VALUES (1,1,3,18);
 Insert into `menuItem` VALUES (2,2,2,13.8);
 Insert into `menuItem` VALUES (3,3,1,68);
+
+DROP TABLE IF EXISTS `menuPrice`;
+CREATE TABLE menuPrice (
+    menuPriceID INT AUTO_INCREMENT PRIMARY KEY,
+    menuItemID INT,
+    price DECIMAL(10, 2) NOT NULL,
+    effectiveDate DATETIME NOT NULL,
+    endDate DATETIME DEFAULT NULL,
+    FOREIGN KEY (menuItemID) REFERENCES menuItem(menuItemID)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+INSERT INTO `menuPrice` (menuItemID, price, effectiveDate) VALUES
+(1, 18, '2024-05-01 00:00:00'),
+(2, 13.8, '2024-05-01 00:00:00'),
+(3, 68, '2024-05-01 00:00:00');
+
+# 拆分为收藏商家和收藏菜品
+# DROP TABLE IF EXISTS `Favorite`;
+# CREATE TABLE Favorite (
+#     UserID INT,
+#     MerchantID INT,
+#     DishID INT,
+#     FavoriteDate DATETIME NOT NULL,
+#     PRIMARY KEY (UserID, MerchantID, DishID),
+#     FOREIGN KEY (UserID) REFERENCES User(UserID),
+#     FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID),
+#     FOREIGN KEY (DishID) REFERENCES Dish(DishID)
+# )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+# INSERT INTO `Favorite` VALUES (1,2,2,'2024-4-30 5:30:25');
+# INSERT INTO `Favorite` VALUES (2,1,1,'2024-5-6 7:30:00');
+# INSERT INTO `Favorite` VALUES (3,3,3,'2024-5-15 23:59:58');
 
 DROP TABLE IF EXISTS `FavoriteMerchant`;
 CREATE TABLE FavoriteMerchant (
