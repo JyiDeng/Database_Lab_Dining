@@ -23,6 +23,18 @@
 查询第3个商家的关于`p`的菜品：<br>
 <button onclick="redirectTo('/searchDishes?merchantId=3&keyword=p')">Search Dish "p" in Merchant Id=3</button>
 <br>-------------------<br>
+查询id=2的菜品的最新价格：<br>
+<button onclick="redirectTo('/latestPrice/2')">查询id=2的菜品的最新价格</button>
+<br>-------------------<br>
+收藏id为2的菜品：<br>
+<button onclick="redirectTo('/favoriteDish?dishId=2')">收藏id为2的菜品</button>
+<br>-------------------<br>
+收藏id为3的商户：<br>
+<button onclick="redirectTo('/favoriteMerchant?merchantId=3')">收藏id为3的商户</button>
+<br>-------------------<br>
+查询订单：<br>
+<button onclick="redirectTo('/orders')">收藏id为3的商户</button>
+<br>-------------------<br>
 
 <script>
     // Function to append the given path to the current URL and redirect

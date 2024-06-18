@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 public class Dish {
     private Long DishId;
     private String dishName;
-    private Float price;
     private String category;
     private String description;
     private String picture;
@@ -22,7 +21,6 @@ public class Dish {
     private String ingredients;
     private String allergens;
     private String nutritionInfo;
-    private Float avgRating;
     private Long merchantId;
 
 }

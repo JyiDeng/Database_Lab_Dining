@@ -2,6 +2,7 @@ package com.example.pj.controller;
 
 import com.example.pj.entity.*;
 import com.example.pj.mapper.DishMapper;
+import com.example.pj.mapper.MenuMapper;
 import com.example.pj.mapper.MerchantMapper;
 import com.example.pj.mapper.UserMapper;
 import com.example.pj.service.MerchantService;
@@ -20,18 +21,17 @@ import java.util.List;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+
     @Autowired
     UserMapper userMapper;
-    @Autowired
-    private MerchantService merchantService;
+
     @Autowired
     MerchantMapper merchantMapper;
-    @Autowired
-    private DishService dishService;
+
     @Autowired
     DishMapper dishMapper;
+    @Autowired
+    MenuMapper menuMapper;
 
 
     // 显示特定用户
@@ -45,10 +45,10 @@ public class UserController {
         return userMapper.findByID(path);
     }
 
-    @RequestMapping("/{path}/searchMerchant")
-    public List<Merchant> searchMerchant(@RequestParam String keyword,@PathVariable Long path) {
-        return merchantMapper.searchMerchant(keyword);
-    }
+//    @RequestMapping("/{path}/searchMerchant")
+//    public List<Merchant> searchMerchant(@RequestParam String keyword,@PathVariable Long path) {
+//        return merchantMapper.searchMerchant(keyword);
+//    }
 
     @RequestMapping("/{path}/searchMerchant2")
     public String searchMerchant2(@RequestParam String keyword,@PathVariable Long path, Model model) {
@@ -81,32 +81,38 @@ public class UserController {
     }
 
     // 收藏菜品
-    @PostMapping("/{userId}/favoriteDish")
-    public String favoriteDish(@PathVariable Long userId, @RequestParam Long dishId) {
+    @RequestMapping("/{userId}/favoriteDish")
+    public void favoriteDish(@PathVariable Long userId, @RequestParam Long dishId) {
         userMapper.favoriteDish(userId, dishId);
-        return "菜品已收藏";
+//        return "菜品"+ dishId +"已收藏!";
     }
 
     // 收藏商户
-    @PostMapping("/{userId}/favoriteMerchant")
-    public String favoriteMerchant(@PathVariable Long userId, @RequestParam Long merchantId) {
+    @RequestMapping("/{userId}/favoriteMerchant")
+    public void favoriteMerchant(@PathVariable Long userId, @RequestParam Long merchantId) {
         userMapper.favoriteMerchant(userId, merchantId);
-        return "商户已收藏";
+//        return "商户"+ merchantId +"已收藏!";
     }
 
     // 查询用户订单
-    @GetMapping("/{userId}/orders")
+    @RequestMapping("/{userId}/orders")
     public List<MyOrder> getOrdersByUserId(@PathVariable Long userId) {
         return userMapper.findOrdersByUserId(userId);
     }
 
-    @GetMapping("/review/{dishId}")
-    public String getDishReview(@PathVariable Long dishId,Model model){
+    @RequestMapping("/review/{dishId}")
+    public String getDishReview(@PathVariable Long dishId,Model model,@PathVariable Long path){
         List<Review> reviews = userMapper.dishReview(dishId);
         model.addAttribute("reviews", reviews);
         Float rating = dishMapper.getAvgRating(dishId);
         model.addAttribute("rating", rating);
         return "dishReview"; // 返回模板文件名
+    }
+
+    // 查询菜品的最新价格
+    @RequestMapping("{path}/latestPrice/{menuItemId}")
+    public MenuPrice getLatestPriceByMenuItemId(@PathVariable Long menuItemId,@PathVariable Long path) {
+        return menuMapper.findLatestPriceByMenuItemId(menuItemId);
     }
 
 }

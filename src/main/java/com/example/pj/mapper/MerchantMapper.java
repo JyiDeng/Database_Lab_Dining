@@ -12,11 +12,13 @@ public interface MerchantMapper {
     @Select("SELECT * FROM merchant")
     List<User> findAll();
 
+
+
     @Select("SELECT MerchantId, MerchantName, MainDishes FROM merchant WHERE MerchantName LIKE CONCAT('%', #{keyword}, '%') OR Address LIKE CONCAT('%', #{keyword}, '%')")
     List<Merchant> searchMerchant(@Param("keyword") String keyword);
 
 
-    @Select("SELECT MerchantID, MainDishes FROM merchant WHERE MerchantID = #{id}")
+    @Select("SELECT * FROM merchant WHERE MerchantID = #{id}")
     Merchant getMerchantByID(@Param("id") Long id);
 
     @Select("SELECT * FROM merchant WHERE MerchantID = #{merchantId}")

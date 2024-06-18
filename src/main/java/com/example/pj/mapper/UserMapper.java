@@ -22,6 +22,7 @@ public interface UserMapper {
 
     @Insert("INSERT INTO user (UserId,UserName,Gender,EcardId,Role,Age,Password) VALUES (#{userID},#{userName},#{gender},#{ecardID},#{role},#{age},#{password})")
     void insert(User user);
+    // 为了让数据库真的加进去这个人，既可以传user又可以传参数吗
 
     @Update("UPDATE user SET UserName = #{userName}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age}, Password = #{password} WHERE UserID = #{userID}")
     void update(User user);
