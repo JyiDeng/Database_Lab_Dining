@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>merchantReview</title>
+  <link rel="stylesheet" href="/css/mycss.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+
+<body>
+
+<table>
+  <thead>
+  <tr>
+    <th>商户ID</th>
+    <th>评价ID</th>
+    <th>菜品名称</th>
+    <th>评价星级</th>  <!--经过平均值计算得出-->
+    <th>评价内容</th>
+    <th>评价日期</th>
+
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="review : ${reviews}">
+    <td th:text="${review.merchantId}">商户ID</td>
+    <td th:text="${review.reviewId}">评价ID</td>
+    <td th:text="${review.dishId}">菜品名称</td>
+    <td th:text="${rating}">评价星级</td>
+    <td th:text="${review.content}">评价内容</td>
+    <td th:text="${review.reviewDate}">评价日期</td>
+
+  </tr>
+  </tbody>
+
+</table>
+</body>
+</html>

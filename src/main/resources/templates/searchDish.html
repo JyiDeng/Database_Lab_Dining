@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+      <html xmlns:th="http://www.thymeleaf.org">
+      <head>
+      <title>Dish Search Results</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+  <script>
+    function redirectToDishDetails(dishId) {
+      const currentUrl = window.location.href;
+      const baseUrl = currentUrl.split('?')[0];
+      const newUrl = baseUrl.replace('/searchDishes', '/searchDishDetails') + '?dishId=' + dishId;
+      window.location.href = newUrl;
+    }
+  </script>
+</head>
+<body>
+<div class="container">
+  <h1>Dish Search Results</h1>
+  <div th:if="${#lists.isEmpty(dishes)}">
+    <p>No dishes found for the given keyword.</p>
+  </div>
+  <div th:if="${!#lists.isEmpty(dishes)}">
+    <table>
+      <thead>
+      <tr>
+        <th>菜品名称</th>
+        <th>价格</th>
+        <th>查看详情</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="dish : ${dishes}">
+        <td th:text="${dish.dishName}">菜品名称</td>
+        <td th:text="${dish.price}">价格</td>
+        <td>
+          <button data-dish-id="${dish.dishId}" onclick="redirectToDishDetails(${dish.dishId})">查看详情</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,9 +1,6 @@
 package com.example.pj.controller;
 
-import com.example.pj.entity.Dish;
-import com.example.pj.entity.Merchant;
-import com.example.pj.entity.User;
-import com.example.pj.entity.MyOrder;
+import com.example.pj.entity.*;
 import com.example.pj.mapper.DishMapper;
 import com.example.pj.mapper.MerchantMapper;
 import com.example.pj.mapper.UserMapper;
@@ -67,29 +64,21 @@ public class UserController {
         Merchant merchant = merchantMapper.getMerchantDetails(id);
         model.addAttribute("merchant",merchant);
         return "merchantDetail";
-//        return merchantMapper.getMerchantDetails(id);
-//        Merchant merchant = merchantMapper.getMerchantByID(id);
-////        List<Dish> dishes = merchantMapper.getDishesByMerchantID(id);
-//        model.addAttribute("merchant", merchant);
-////        model.addAttribute("dishes", dishes);
-//        return "merchant_details";
     }
 
     @RequestMapping("/{path}/searchDishes")
-    public List<Dish> searchDishes(@RequestParam Long merchantId, @RequestParam String keyword/*, Model model*/,@PathVariable Long path) {
-        return dishMapper.searchDishes(merchantId, keyword);
-//        List<Dish> dishes = dishMapper.searchDishes(merchantId, keyword);
-//        model.addAttribute("dishes", dishes);
-//        return "dish_search_result";
+    public String searchDishes(@RequestParam String dishName, @RequestParam String keyword, Model model,@PathVariable Long path) {
+        Dish dish = dishMapper.getDishByName(dishName);
+        model.addAttribute("dish", dish);
+        return "searchDish";
     }
-//
-//    @GetMapping("/dishDetails")
-//    public Dish getDishDetails(@RequestParam Long merchantId, @RequestParam Long id, Model model) {
-//        return dishMapper.getDishDetails(merchantId, id);
-////        Dish dish = dishMapper.getDishByID(id);
-////        model.addAttribute("dish", dish);
-////        return "dish_details";
-//    }
+
+    @RequestMapping("/{path}/searchDishDetails")
+    public String getDishDetails(@RequestParam Long dishId, Model model,@PathVariable Long path) {
+        Dish dish = dishMapper.getDishDetails(dishId);
+        model.addAttribute("dish",dish);
+        return "dishDetail";
+    }
 
     // 收藏菜品
     @PostMapping("/{userId}/favoriteDish")
@@ -109,6 +98,15 @@ public class UserController {
     @GetMapping("/{userId}/orders")
     public List<MyOrder> getOrdersByUserId(@PathVariable Long userId) {
         return userMapper.findOrdersByUserId(userId);
+    }
+
+    @GetMapping("/review/{dishId}")
+    public String getDishReview(@PathVariable Long dishId,Model model){
+        List<Review> reviews = userMapper.dishReview(dishId);
+        model.addAttribute("reviews", reviews);
+        Float rating = dishMapper.getAvgRating(dishId);
+        model.addAttribute("rating", rating);
+        return "dishReview"; // 返回模板文件名
     }
 
 }

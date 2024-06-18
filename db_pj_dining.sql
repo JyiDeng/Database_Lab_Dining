@@ -25,22 +25,17 @@ CREATE TABLE if not exists Merchant(
     MainDishes VARCHAR(50) NOT NULL,
     Address VARCHAR(50) NOT NULL,
     MenuID INT,
-    AvgRating FLOAT,
     Password VARCHAR(50),
     FOREIGN KEY (menuID) REFERENCES menu(menuID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-# insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road','Braised Chicken, Tippan-pan rice',3.9);
-# insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road','Hachii, Kanto Cook',4);
-# insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road','PESTO E PATATE, SPRING SALAD',4.1);
-insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', 1, 3.9, '12345');
-insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road', 2, 4,'54321');
-insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road', 3, 4.1,'11111');
+insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', 1, '12345');
+insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road', 2,'54321');
+insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road', 3,'11111');
 
 DROP TABLE IF EXISTS `Dish`;
 CREATE TABLE if not exists Dish (
     DishID INT AUTO_INCREMENT PRIMARY KEY,
     DishName VARCHAR(50) NOT NULL,
-#     Price FLOAT NOT NULL,  # price 或许应该在菜单里
     Category VARCHAR(50) NOT NULL,
     Description VARCHAR(200),
     Picture VARCHAR(50),
@@ -48,16 +43,12 @@ CREATE TABLE if not exists Dish (
     Ingredients VARCHAR(100),
     Allergens VARCHAR(50),
     NutritionInfo VARCHAR(50),
-    AvgRating FLOAT,
     MerchantID INT,
     FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-# Insert into `Dish` VALUES (1,'conger chicken', 18,'Chinese food','sauce delicious','examplePic1.com','original','chicken, green pepper, potatoes, ginger','','delicious chicken, green pepper vitamin high', 4.5, 1);
-# Insert into `Dish` VALUES (2,'the baxi', 13.8,'sweet','classic, small expensive','examplePic2.com','chocolate','milk, cocoa, sugar, additives','milk','high calcium content', 4.3, 2);
-# Insert into `Dish` VALUES (3,'PESTO E PATATE',68,'Western food','classic pesto pizza','examplePic3.com','pesto flavor','Mozzarella cheese, pesto sauce, baked sweet potato, rosemary, garlic, Dried tomatoes in oil','garlic','balanced nutrition',4.5,3);
-Insert into `Dish` VALUES (1,'Braised Chicken','Chinese food','sauce delicious','examplePic1.com','original','chicken, green pepper, potatoes, ginger','','delicious chicken, green pepper vitamin high', 4.5, 1);
-Insert into `Dish` VALUES (2,'Hachii','sweet','classic, small expensive','examplePic2.com','chocolate','milk, cocoa, sugar, additives','milk','high calcium content', 4.3, 2);
-Insert into `Dish` VALUES (3,'PESTO E PATATE','Western food','classic pesto pizza','examplePic3.com','pesto flavor','Mozzarella cheese, pesto sauce, baked sweet potato, rosemary, garlic, Dried tomatoes in oil','garlic','balanced nutrition',4.5,3);
+Insert into `Dish` VALUES (1,'Braised Chicken','Chinese food','sauce delicious','examplePic1.com','original','chicken, green pepper, potatoes, ginger','','delicious chicken, green pepper vitamin high',  1);
+Insert into `Dish` VALUES (2,'Hachii','sweet','classic, small expensive','examplePic2.com','chocolate','milk, cocoa, sugar, additives','milk','high calcium content', 2);
+Insert into `Dish` VALUES (3,'PESTO E PATATE','Western food','classic pesto pizza','examplePic3.com','pesto flavor','Mozzarella cheese, pesto sauce, baked sweet potato, rosemary, garlic, Dried tomatoes in oil','garlic','balanced nutrition',3);
 
 DROP TABLE IF EXISTS `menu`;
 CREATE TABLE menu (
@@ -81,22 +72,6 @@ CREATE TABLE menuItem (
 Insert into `menuItem` VALUES (1,1,3,18);
 Insert into `menuItem` VALUES (2,2,2,13.8);
 Insert into `menuItem` VALUES (3,3,1,68);
-
-# 拆分为收藏商家和收藏菜品
-# DROP TABLE IF EXISTS `Favorite`;
-# CREATE TABLE Favorite (
-#     UserID INT,
-#     MerchantID INT,
-#     DishID INT,
-#     FavoriteDate DATETIME NOT NULL,
-#     PRIMARY KEY (UserID, MerchantID, DishID),
-#     FOREIGN KEY (UserID) REFERENCES User(UserID),
-#     FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID),
-#     FOREIGN KEY (DishID) REFERENCES Dish(DishID)
-# )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-# INSERT INTO `Favorite` VALUES (1,2,2,'2024-4-30 5:30:25');
-# INSERT INTO `Favorite` VALUES (2,1,1,'2024-5-6 7:30:00');
-# INSERT INTO `Favorite` VALUES (3,3,3,'2024-5-15 23:59:58');
 
 DROP TABLE IF EXISTS `FavoriteMerchant`;
 CREATE TABLE FavoriteMerchant (

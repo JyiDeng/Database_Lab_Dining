@@ -24,5 +24,8 @@ public interface MerchantMapper {
     @Select("SELECT * FROM merchant WHERE MerchantID = #{merchantId}")
     Merchant getMerchantDetails(@Param("merchantId") Long merchantId);
 
+    @Select("SELECT * FROM dish WHERE MerchantID = #{merchantId}")
     List<Dish> getDishesByMerchantID(@Param("merchantId") Long merchantId);
+
+
 }

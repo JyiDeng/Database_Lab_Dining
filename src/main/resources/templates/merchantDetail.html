@@ -50,7 +50,6 @@
 <body>
 <h1 th:text="${merchant.merchantName}"></h1>
 
-</ul>
 <table>
   <thead>
   <tr>
@@ -58,9 +57,7 @@
     <th>商户名称</th>
     <th>主打菜品</th>
     <th>商户地址</th>
-    <th>商户星级</th>
     <th>查看菜单</th>
-    <th>查看评价</th>
 
   </tr>
   </thead>
@@ -70,30 +67,51 @@
     <td th:text="${merchant.merchantName}">商户名称</td>
     <td th:text="${merchant.mainDishes}">主打菜品</td>
     <td th:text="${merchant.address}">商户地址</td>
-    <td th:text="${merchant.avgRating}">商户星级</td>
     <!--TODO-->
     <td>
+      <a>
       <button th:onclick="'redirectTo([[${merchant?.menuId}]])'">查看菜单</button>
       </a>
     </td>
-    <td>
-      <button th:onclick="'redirectTo([[${merchant?.menuId}]])'">查看评价</button>
-      </a>
-    </td>
+
 
   <!--</tr>-->
   </tbody>
 
 </table>
 <!--<a href="/users/searchPage">Back to Search</a>-->
+<div class="container">
+  <!--<form th:action="@{/user/{path}/searchDishes}" method="get">-->
+  <form  method="get">
+    <label>
+      <input type="text" id="dishName" placeholder="Enter dish name" required>
+    </label>
+    <!--<button type="submit">Search Dishes</button>-->
+    <!--<button th:onclick="'redirectTo(' + ${dish.dishId} + ')'">搜索菜品</button>-->
+    <!--<button data-dish-id="${dish.dishId}" onclick="redirectToDishDetails(${dish.dishId})">查看详情</button>-->
+    <button th:onclick="'redirectToSearchDish()'">进入商户</button>
+  </form>
+
+</div>
 <script>
   // setTimeout(
-  function redirectTo(path) {
+  async function redirectToSearchDish() {
+    const keyword = document.getElementById('dishName').value;
+    console.log(keyword);
     const currentUrl = window.location.href;
-    // const newUrl = currentUrl + "\/searchMerchantDetails?id=" + path ;
-    const baseUrl = currentUrl.split('/searchMerchant2')[0];
-    const newUrl = baseUrl + "\/searchMerchantDetails?id=" + path;
+    const newUrl = currentUrl.replace('/searchMerchantDetails', '/searchDishes') + '?dishId=' + encodeURIComponent(keyword);
     window.location.href = newUrl;
+    // const currentUrl = new URL(window.location.href);
+    // const pathSegments = currentUrl.pathname.split('/');
+    // // 替换路径中的searchMerchantDetails为searchDishes
+    // pathSegments[pathSegments.length - 1] = 'searchDishes';
+    // currentUrl.pathname = pathSegments.join('/');
+    // // 移除旧的查询参数
+    // currentUrl.searchParams.delete('id');
+    // // 添加新的查询参数
+    // currentUrl.searchParams.set('dishId', keyword);
+    // // 跳转到新的URL
+    // window.location.href = currentUrl.toString();
   }
   // ,2000);
 </script>

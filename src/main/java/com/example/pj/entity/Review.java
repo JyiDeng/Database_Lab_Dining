@@ -17,7 +17,7 @@ public class Review {
     private Integer userId;
     private Integer merchantId;
     private Integer dishId;
-    private Double rating;
+    private Float rating;
     private String content;
     private String reviewDate;
 }
