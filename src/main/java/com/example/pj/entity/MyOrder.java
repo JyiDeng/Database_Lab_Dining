@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
@@ -19,6 +21,7 @@ public class MyOrder {
     private String status;
     private String orderType;
     private Float totalAmount;
+    private List<OrderItem> orderItems;
 
 
 }

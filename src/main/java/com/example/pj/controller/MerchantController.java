@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/merchant")
@@ -160,7 +161,10 @@ public class MerchantController {
         return "Price updated successfully!";
     }
 
-
-
+    // 查询所有菜品的收藏量
+    @GetMapping("/{merchantId}/favoriteCounts")
+    public List<Map<String, Object>> getFavoriteCounts(@PathVariable Long merchantId) {
+        return dishMapper.getFavoriteCountsByMerchantId(merchantId);
+    }
 
 }
