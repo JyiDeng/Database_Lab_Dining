@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>菜单详情</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <h1>菜单详情</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>菜单项目ID</th>
+      <th>菜品名称</th>
+      <th>价格</th>
+      <th>已选数量</th>
+      <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="menuItem : ${menuItems}">
+      <td th:text="${menuItem.menuItemId}">菜单项目ID</td>
+      <td th:text="${menuItem.dishName}">菜品名称</td>
+      <td th:text="${menuItem.price}">价格</td>
+      <!--<td id="quantity-${menuItem.menuItemId}">0</td>-->
+      <td id="quantity-[[${menuItem.menuItemId}]]">0</td>
+      <td>
+        <button type="button" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]], 1)|">增加1份</button>
+        <button type="button" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]], -1)|">减少1份</button>
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
+  <div>
+    <h2>当前订单</h2>
+    <div id="cartItems">
+      <!-- 动态更新购物车内容 -->
+    </div>
+  </div>
+</div>
+
+<script>
+  const cart = {}; // 记录已选数量
+
+  function updateQuantity(menuItemID, change) {
+    const quantityElement = document.getElementById(`quantity-${menuItemID}`);
+    let currentQuantity = parseInt(quantityElement?.innerText);
+
+    // 更新数量
+    currentQuantity += change;
+    if (currentQuantity < 0) {
+      currentQuantity = 0;
+    }
+
+    // 更新DOM中的数量显示
+    quantityElement.innerText = currentQuantity;
+
+    // 更新购物车
+    if (currentQuantity > 0) {
+      cart[menuItemID] = currentQuantity;
+    } else {
+      delete cart[menuItemID];
+    }
+
+    updateCart();
+  }
+
+  function updateCart() {
+    const cartItemsDiv = document.getElementById("cartItems");
+    cartItemsDiv.innerHTML = "";
+
+    for (const menuItemID in cart) {
+      const quantity = cart[menuItemID];
+      const menuItemRow = document.querySelector(`tr:${menuItemID}`).closest('tr');
+      const dishName = menuItemRow.querySelector('td:nth-child(2)')?.innerText;
+
+      const cartItem = document.createElement("p");
+      cartItem.innerText = `${dishName}: ${quantity}`;
+      cartItemsDiv.appendChild(cartItem);
+    }
+  }
+</script>
+</body>
+</html>

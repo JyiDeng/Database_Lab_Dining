@@ -70,7 +70,7 @@
     <!--TODO-->
     <td>
       <a>
-      <button th:onclick="'redirectTo([[${merchant?.menuId}]])'">查看菜单</button>
+      <button th:onclick="'redirectToMenu()'">查看菜单</button>
       </a>
     </td>
 
@@ -95,11 +95,11 @@
 </div>
 <script>
   // setTimeout(
-  async function redirectToSearchDish() {
+    function redirectToMenu() {
     const keyword = document.getElementById('dishName').value;
     console.log(keyword);
     const currentUrl = window.location.href;
-    const newUrl = currentUrl.replace('/searchMerchantDetails', '/searchDishes') + '?dishId=' + encodeURIComponent(keyword);
+    var newUrl = currentUrl.replace('/searchMerchantDetails', '/menuItems') + encodeURIComponent(keyword);
     window.location.href = newUrl;
     // const currentUrl = new URL(window.location.href);
     // const pathSegments = currentUrl.pathname.split('/');
@@ -114,6 +114,11 @@
     // window.location.href = currentUrl.toString();
   }
   // ,2000);
+  async function redirectToSearchDish() {
+    const currentUrl = window.location.href;
+    const newUrl = currentUrl + "${merchant.merchantId}";
+    window.location.href = newUrl;
+  }
 </script>
 </body>
 </html>

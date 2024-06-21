@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+
+不再使用本页面
+
+<!---->
+<!---->
+<!---->
+<!---->
+<!---->
+
+<head>
+    <title>商家所有菜单</title>
+    <script type="text/javascript">
+        function redirectToMenuItems(menuId) {
+            // 获取当前URL
+            var currentUrl = window.location.href;
+            // 去掉最后的 "allMenus"
+            var baseUrl = currentUrl.replace(/allMenus$/, '');
+            // 构建新的URL
+            var newUrl = baseUrl + 'menuItems?menuId=' + menuId;
+            // 跳转到新的URL
+            window.location.href = newUrl;
+        }
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+<h1>商家菜单列表</h1>
+<table>
+    <thead>
+    <tr>
+        <th>商家ID</th>
+        <th>菜单ID</th>
+        <th>进入菜单</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="menu : ${menus}">
+        <td th:text="${menu.merchantId}"></td>
+        <td th:text="${menu.menuId}">菜单ID</td>
+        <td>
+            <!--<a th:href="@{/menuItems(menuId=${menu.menuId})}">进入菜单</a>-->
+            <!--<a th:attr="href=${'?' + 'menuId=' + menu.menuId}">进入菜单</a>-->
+            <button type="button" th:onclick="'redirectToMenuItems(' + ${menu.menuId} + ')'">进入菜单</button>
+
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div>
+    <h2>当前订单</h2>
+
+    <div th:each="orderItem : ${orderItems}">
+        <p th:text="${orderItem.dishId + ': ' + orderItem.quantity}"></p>
+    </div>
+</div>
+
+
+</body>
+</html>

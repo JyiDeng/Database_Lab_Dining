@@ -34,12 +34,13 @@ public class UserController {
     MenuMapper menuMapper;
 
 
-    // 显示特定用户
-    @RequestMapping("/id={id}")
-    public User getUserById(@PathVariable Long id) {
-        return userMapper.findByID(id);
-    }
 
+//    @RequestMapping("/id={id}")
+//    public User getUserById(@PathVariable Long id) {
+//        return userMapper.findByID(id);
+//    }
+
+    // 显示特定用户个人信息
     @RequestMapping("/{path}/userSelfInfo")
     public String getUserSelfInfo(@PathVariable Long path,Model model) {
         User user = userMapper.findByID(path);
@@ -111,6 +112,24 @@ public class UserController {
     @RequestMapping("{path}/latestPrice/{menuItemId}")
     public MenuPrice getLatestPriceByMenuItemId(@PathVariable Long menuItemId,@PathVariable Long path) {
         return menuMapper.findLatestPriceByMenuItemId(menuItemId);
+    }
+
+
+    @RequestMapping("/{path}/allMenus")
+    public String getMenus(@PathVariable Long path, Model model) {
+        List<Menu> menus = menuMapper.findAllMenus(path);
+        model.addAttribute("menus",menus);
+        return "menuIntro";
+    }
+    @RequestMapping("/{path}/menuItems")
+    public String enterMenu(@PathVariable Long path, Model model,@RequestParam Long id) {
+        List<MenuItem> menuItems = menuMapper.getMenuItemsByMerchantId(id);
+        model.addAttribute("menuItems",menuItems);
+        return "menuItems";
+    }
+
+    public void addOrderItem2Order(){
+
     }
 
 }

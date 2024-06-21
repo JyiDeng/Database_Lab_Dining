@@ -24,13 +24,16 @@ CREATE TABLE if not exists Merchant(
     MerchantName VARCHAR(50) NOT NULL,
     MainDishes VARCHAR(50) NOT NULL,
     Address VARCHAR(50) NOT NULL,
-    MenuID INT,
-    Password VARCHAR(50),
-    FOREIGN KEY (menuID) REFERENCES menu(menuID)
+#     MenuID INT,
+    Password VARCHAR(50)
+#     FOREIGN KEY (menuID) REFERENCES menu(menuID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', 1, '12345');
-insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road', 2,'54321');
-insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road', 3,'11111');
+# insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', 1, '12345');
+# insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road', 2,'54321');
+# insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road', 3,'11111');
+insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', '12345');
+insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road','54321');
+insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road', '11111');
 
 DROP TABLE IF EXISTS `Dish`;
 CREATE TABLE if not exists Dish (
@@ -51,28 +54,28 @@ Insert into `Dish` VALUES (1,'Braised Chicken','Chinese food','sauce delicious',
 Insert into `Dish` VALUES (2,'Hachii','sweet','classic, small expensive','examplePic2.com','chocolate','milk, cocoa, sugar, additives','milk','high calcium content', 2);
 Insert into `Dish` VALUES (3,'PESTO E PATATE','Western food','classic pesto pizza','examplePic3.com','pesto flavor','Mozzarella cheese, pesto sauce, baked sweet potato, rosemary, garlic, Dried tomatoes in oil','garlic','balanced nutrition',3);
 
-DROP TABLE IF EXISTS `menu`;
-CREATE TABLE menu (
-    menuID INT AUTO_INCREMENT PRIMARY KEY,
-    merchantID INT,
-    FOREIGN KEY (merchantID) REFERENCES merchant(merchantID)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8;
-Insert into `menu` VALUES (1,1);
-Insert into `menu` VALUES (2,2);
-Insert into `menu` VALUES (3,3);
+# DROP TABLE IF EXISTS `menu`;
+# CREATE TABLE menu (
+#     menuID INT AUTO_INCREMENT PRIMARY KEY,
+#     merchantID INT,
+#     FOREIGN KEY (merchantID) REFERENCES merchant(merchantID)
+# )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+# Insert into `menu` VALUES (1,1);
+# Insert into `menu` VALUES (2,2);
+# Insert into `menu` VALUES (3,3);
 
 DROP TABLE IF EXISTS `menuItem`;
 CREATE TABLE menuItem (
-    menuItemID INT AUTO_INCREMENT PRIMARY KEY,
-    menuID INT,
+    menuItemId INT AUTO_INCREMENT PRIMARY KEY,
+#     merchantId INT,
     dishID INT,
     price DECIMAL(10, 2),
-    FOREIGN KEY (dishID) REFERENCES dish(dishID),
-    FOREIGN KEY (menuID) REFERENCES menu(menuID)
+    FOREIGN KEY (dishID) REFERENCES dish(dishID)
+#     FOREIGN KEY (merchantId) REFERENCES merchant(merchantId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-Insert into `menuItem` VALUES (1,1,3,18);
-Insert into `menuItem` VALUES (2,2,2,13.8);
-Insert into `menuItem` VALUES (3,3,1,68);
+Insert into `menuItem` VALUES (1,1,18);
+Insert into `menuItem` VALUES (2,2,13.8);
+Insert into `menuItem` VALUES (3,3,68);
 
 DROP TABLE IF EXISTS `menuPrice`;
 CREATE TABLE menuPrice (

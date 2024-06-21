@@ -6,6 +6,7 @@ import com.example.pj.mapper.MerchantMapper;
 import com.example.pj.mapper.UserMapper;
 import com.example.pj.mapper.DishMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -95,7 +96,7 @@ public class MerchantController {
         }
 
         if (menuMapper.findMenuItemById(menuItemId) == null) {
-            MenuItem menuItem = new MenuItem(menuItemId,menuId,dishId,price);
+            MenuItem menuItem = new MenuItem(menuItemId,menuId,dishId,price,null);  //测试dishName，后续查询了可以显示dishName！
             menuMapper.insertMenuItem(menuItem);
             return "MenuItem " + menuItemId + " is added successfully!";
         }else{
@@ -104,11 +105,15 @@ public class MerchantController {
 
     }
 
-    // 查询菜单
-    @RequestMapping("/{path}/allMenus")
-    public List<Menu> getMenuItems(@PathVariable Long path) {
-        return menuMapper.findAllMenus(path);
-    }
+//    // 查询菜单
+//    @RequestMapping("/{path}/allMenus")
+//    public List<Menu> getMenus(@PathVariable Long path) {
+//        return menuMapper.findAllMenus(path);
+//    }
+
+
+
+
 
     // 删除菜单中的菜品
     @RequestMapping("/{path}/deleteMenuItem/{menuItemId}")
@@ -123,6 +128,8 @@ public class MerchantController {
         }
 
     }
+
+
 
     // 修改菜品价格
     @RequestMapping("/{path}/updateMenuItemPrice/{menuItemId}")
