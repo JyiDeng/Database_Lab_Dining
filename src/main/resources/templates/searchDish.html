@@ -5,7 +5,7 @@
     <title><!DOCTYPE html>
       <html xmlns:th="http://www.thymeleaf.org">
       <head>
-      <title>Dish Search Results</title>
+      <title>菜品搜索结果</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -50,15 +50,19 @@
   <script>
     function redirectToDishDetails(dishId) {
       const currentUrl = window.location.href;
-      const baseUrl = currentUrl.split('?')[0];
-      const newUrl = baseUrl.replace('/searchDishes', '/searchDishDetails') + '?dishId=' + dishId;
+      // const baseUrl = currentUrl.split('?')[0];
+      // const newUrl = baseUrl.replace('/searchDishes', '/searchDishDetails') + '?dishId=' + dishId;
+
+      var baseUrl = currentUrl.substring(0, currentUrl.indexOf('/searchDishes'));
+      // var userId = currentUrl.split('/')[4];
+      var newUrl = `${baseUrl}/searchDishDetails?dishId=` + dishId;
       window.location.href = newUrl;
     }
   </script>
 </head>
 <body>
 <div class="container">
-  <h1>Dish Search Results</h1>
+  <h1>菜品搜索结果</h1>
   <div th:if="${#lists.isEmpty(dishes)}">
     <p>No dishes found for the given keyword.</p>
   </div>
@@ -66,28 +70,29 @@
     <table>
       <thead>
       <tr>
+        <th>菜品ID</th>
         <th>菜品名称</th>
-        <th>价格</th>
+        <th>菜品类别</th>
+        <th>菜品描述</th>
+        <th>操作</th>
+
         <th>查看详情</th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="dish : ${dishes}">
+        <td th:text="${dish.dishId}">菜品ID</td>
         <td th:text="${dish.dishName}">菜品名称</td>
-        <td th:text="${dish.price}">价格</td>
+        <td th:text="${dish.category}">菜品类别</td>
+        <td th:text="${dish.description}">菜品描述</td>
+        <td th:text="${dish.picture}">图片</td>
         <td>
-          <button data-dish-id="${dish.dishId}" onclick="redirectToDishDetails(${dish.dishId})">查看详情</button>
+          <button type="button" th:attr="onclick=|redirectToDishDetails([[${dish.dishId}]])|">查看菜品详情</button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
 </div>
-</body>
-</html>
-</title>
-</head>
-<body>
-
 </body>
 </html>

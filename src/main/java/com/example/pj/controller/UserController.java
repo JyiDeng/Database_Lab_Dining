@@ -64,9 +64,9 @@ public class UserController {
     }
 
     @RequestMapping("/{path}/searchDishes")
-    public String searchDishes(@RequestParam String dishName, @RequestParam String keyword, Model model,@PathVariable Long path) {
-        Dish dish = dishMapper.getDishByName(dishName);
-        model.addAttribute("dish", dish);
+    public String searchDishes(@RequestParam Long merchantId, String keyword, Model model,@PathVariable Long path) {
+        List<Dish> dishes = dishMapper.getDishByName(keyword,merchantId);
+        model.addAttribute("dishes", dishes);
         return "searchDish";
     }
 

@@ -63,7 +63,7 @@
   </thead>
   <tbody>
   <!--<tr th:each="merchant : ${merchants}">-->
-    <td th:text="${merchant.merchantId}">商户ID</td>
+    <td id="merchantId"  th:text="${merchant.merchantId}">商户ID</td>
     <td th:text="${merchant.merchantName}">商户名称</td>
     <td th:text="${merchant.mainDishes}">主打菜品</td>
     <td th:text="${merchant.address}">商户地址</td>
@@ -82,43 +82,42 @@
 <!--<a href="/users/searchPage">Back to Search</a>-->
 <div class="container">
   <!--<form th:action="@{/user/{path}/searchDishes}" method="get">-->
-  <form  method="get">
+  <!--<form  method="get">-->
+  <form onsubmit="redirectToSearchDish(event)">
     <label>
       <input type="text" id="dishName" placeholder="Enter dish name" required>
     </label>
     <!--<button type="submit">Search Dishes</button>-->
     <!--<button th:onclick="'redirectTo(' + ${dish.dishId} + ')'">搜索菜品</button>-->
     <!--<button data-dish-id="${dish.dishId}" onclick="redirectToDishDetails(${dish.dishId})">查看详情</button>-->
-    <button th:onclick="'redirectToSearchDish()'">进入商户</button>
+    <button th:onclick="'redirectToSearchDish()'" type="submit">搜索指定菜品</button>
   </form>
 
 </div>
 <script>
   // setTimeout(
     function redirectToMenu() {
-    const keyword = document.getElementById('dishName').value;
-    console.log(keyword);
     const currentUrl = window.location.href;
-    var newUrl = currentUrl.replace('/searchMerchantDetails', '/menuItems') + encodeURIComponent(keyword);
+    var newUrl = currentUrl.replace('/searchMerchantDetails', '/menuItems');
     window.location.href = newUrl;
-    // const currentUrl = new URL(window.location.href);
-    // const pathSegments = currentUrl.pathname.split('/');
-    // // 替换路径中的searchMerchantDetails为searchDishes
-    // pathSegments[pathSegments.length - 1] = 'searchDishes';
-    // currentUrl.pathname = pathSegments.join('/');
-    // // 移除旧的查询参数
-    // currentUrl.searchParams.delete('id');
-    // // 添加新的查询参数
-    // currentUrl.searchParams.set('dishId', keyword);
-    // // 跳转到新的URL
-    // window.location.href = currentUrl.toString();
+
   }
   // ,2000);
-  async function redirectToSearchDish() {
-    const currentUrl = window.location.href;
-    const newUrl = currentUrl + "${merchant.merchantId}";
+
+
+  // setTimeout(
+    async function redirectToSearchDish() {
+      event.preventDefault(); // 防止表单提交导致页面刷新
+    const keyword = document.getElementById('dishName').value;
+    var currentUrl = window.location.href;
+    var baseUrl = currentUrl.substring(0, currentUrl.indexOf('/searchMerchantDetails'));
+    // var userId = currentUrl.split('/')[4];
+      const merchantId = document.getElementById('merchantId').textContent;
+    var newUrl = `${baseUrl}/searchDishes?keyword=${encodeURIComponent(keyword)}&merchantId=${merchantId}`;
     window.location.href = newUrl;
+
   }
+  // ,2000);
 </script>
 </body>
 </html>
