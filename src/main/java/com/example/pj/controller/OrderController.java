@@ -39,4 +39,37 @@ public class OrderController {
         }
         return orders;
     }
+
+    @GetMapping("/dish/{dishId}/sales")
+    public SalesData getSalesDataByDishId(@PathVariable Long dishId) {
+        int onlineSales = orderMapper.getDishSalesByType(dishId, "Online");
+        int queueSales = orderMapper.getDishSalesByType(dishId, "Queue");
+        return new SalesData(onlineSales, queueSales);
+    }
+
+    public static class SalesData {
+        private int onlineSales;
+        private int queueSales;
+
+        public SalesData(int onlineSales, int queueSales) {
+            this.onlineSales = onlineSales;
+            this.queueSales = queueSales;
+        }
+
+        public int getOnlineSales() {
+            return onlineSales;
+        }
+
+        public void setOnlineSales(int onlineSales) {
+            this.onlineSales = onlineSales;
+        }
+
+        public int getQueueSales() {
+            return queueSales;
+        }
+
+        public void setQueueSales(int queueSales) {
+            this.queueSales = queueSales;
+        }
+    }
 }

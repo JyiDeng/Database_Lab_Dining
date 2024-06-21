@@ -28,4 +28,7 @@ public interface OrderMapper {
     @Select("SELECT * FROM OrderItem WHERE OrderID = #{orderId}")
     List<OrderItem> getOrderItemsByOrderId(Long orderId);
 
+    @Select("SELECT SUM(oi.Quantity) FROM OrderItem oi JOIN MyOrder o ON oi.OrderID = o.OrderID WHERE oi.DishID = #{dishId} AND o.OrderType = #{orderType}")
+    int getDishSalesByType(@Param("dishId") Long dishId, @Param("orderType") String orderType);
+
 }

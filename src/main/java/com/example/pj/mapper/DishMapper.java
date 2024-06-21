@@ -53,4 +53,20 @@ public interface DishMapper {
             "WHERE d.MerchantID = #{merchantId} " +
             "GROUP BY d.DishID, d.DishName")
     List<Map<String, Object>> getFavoriteCountsByMerchantId(Long merchantId);
+
+    // 查询各个菜品通过排队点餐和在线点餐的销量
+    @Select("SELECT \n" +
+            "    oi.DishID,\n" +
+            "    d.Name AS DishName,\n" +
+            "    SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END) AS QueueSales,\n" +
+            "    SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END) AS OnlineSales\n" +
+            "FROM \n" +
+            "    Order o\n" +
+            "JOIN \n" +
+            "    OrderItem oi ON o.OrderID = oi.OrderID\n" +
+            "JOIN \n" +
+            "    Dish d ON oi.DishID = d.DishID\n" +
+            "GROUP BY \n" +
+            "    oi.DishID, d.Name;")
+    List<Map<String, Object>> getSalesByDishId(Long dishId);
 }
