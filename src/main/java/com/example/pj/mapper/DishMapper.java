@@ -1,8 +1,6 @@
 package com.example.pj.mapper;
 
 import com.example.pj.entity.*;
-import com.example.pj.entity.Menu;
-import com.example.pj.entity.MenuItem;
 import org.apache.ibatis.annotations.*;
 
 import java.awt.*;
@@ -28,6 +26,9 @@ public interface DishMapper {
 
 //    @Select("SELECT * FROM dish WHERE merchantId = #{merchantId} AND dishName LIKE CONCAT('%', #{keyword}, '%')")
 //    Dish getDishDetails(@Param("merchantId") Long merchantId, @Param("keyword") String keyword);
+
+    @Select("SELECT * FROM dish WHERE merchantId = #{merchantId}")
+    List<Dish> getDishByMerchantId(Long merchantId);
 
     @Update("UPDATE Dish SET Category = #{category} WHERE DishID = #{dishId}")
     void updateDishCategory(@Param("dishId") Long dishId, @Param("category") String category);
