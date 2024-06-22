@@ -46,4 +46,20 @@ public interface OrderMapper {
     @Delete("DELETE FROM OrderItem WHERE OrderID = #{orderId}")
     void deleteOrderItemsByOrderId(@Param("orderId") Long orderId);
 
+    @Select("SELECT dishID, AVG(AvgRating) as avgRating, SUM(quantity) as totalSales " +
+            "FROM Dish d JOIN OrderItem oi ON d.DishID = oi.DishID " +
+            "JOIN MyOrder o ON oi.OrderID = o.OrderID " +
+            "WHERE d.MerchantID = #{merchantId} " +
+            "GROUP BY dishID")
+    List<Map<String, Object>> getDishRatingsAndSalesByMerchantId(Long merchantId);
+
+    @Select("SELECT oi.DishID, o.UserID, COUNT(*) as purchaseCount " +
+            "FROM OrderItem oi " +
+            "JOIN MyOrder o ON oi.OrderID = o.OrderID " +
+            "WHERE oi.DishID = #{dishId} " +
+            "GROUP BY o.UserID " +
+            "ORDER BY purchaseCount DESC " +
+            "LIMIT 1")
+    Map<String, Object> getTopBuyerForDish(Long dishId);
+
 }
