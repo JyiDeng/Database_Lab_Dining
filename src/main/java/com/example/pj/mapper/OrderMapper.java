@@ -12,8 +12,8 @@ public interface OrderMapper {
     @Options(useGeneratedKeys = true, keyProperty = "orderId")
     void createOrder(MyOrder order);
 
-    @Insert("INSERT INTO OrderItem (OrderID, DishID, Quantity, Price) VALUES (#{orderId}, #{dishId}, #{quantity}, #{price})")
-    void insertOrderItem(@Param("orderId") Long orderId, @Param("dishId") Long dishId, @Param("quantity") Long quantity, @Param("price") Float price);
+//    @Insert("INSERT INTO OrderItem (OrderID, DishID, Quantity, Price) VALUES (#{orderId}, #{dishId}, #{quantity}, #{price})")
+//    void insertOrderItem(@Param("orderId") Long orderId, @Param("dishId") Long dishId, @Param("quantity") Long quantity, @Param("price") Float price);
 
     @Select("SELECT COUNT(*) FROM myOrder WHERE merchantID = #{merchantID} AND Status = 'Pending'")
     Long countPendingOrders(@Param("merchantID") Long merchantId);
@@ -61,5 +61,25 @@ public interface OrderMapper {
             "ORDER BY purchaseCount DESC " +
             "LIMIT 1")
     Map<String, Object> getTopBuyerForDish(Long dishId);
+
+    @Select("SELECT dishID FROM menuItem WHERE menuItemId = #{menuItemId}")
+    Long findDishIdByMenuItemId(Long menuItemId);
+
+    @Select("SELECT OrderID FROM MyOrder WHERE merchantID = #{merchantId} AND Status = 'Pending' LIMIT 1")
+    Long findOrderIdByMerchantId(Long merchantId);
+
+    @Select("SELECT * FROM OrderItem WHERE OrderID = #{orderId} AND DishID = #{dishId}")
+    OrderItem findOrderItem(Long orderId, Long dishId);
+
+    @Insert("INSERT INTO OrderItem (OrderID, DishID, Quantity) VALUES (#{orderId}, #{dishId}, #{quantity})")
+    @Options(useGeneratedKeys = true, keyProperty = "orderItemId")
+    void insertOrderItem(Long orderId, Long dishId, Long quantity);
+
+    @Update("UPDATE OrderItem SET Quantity = #{quantity} WHERE OrderID = #{orderId} AND DishID = #{dishId}")
+    void updateOrderItemQuantity(Long orderId, Long dishId, Long quantity);
+
+    @Delete("DELETE FROM OrderItem WHERE OrderID = #{orderId} AND DishID = #{dishId}")
+    void deleteOrderItem(Long orderId, Long dishId);
+
 
 }

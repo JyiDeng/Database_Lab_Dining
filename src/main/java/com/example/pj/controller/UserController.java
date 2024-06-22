@@ -3,6 +3,8 @@ package com.example.pj.controller;
 import com.example.pj.entity.*;
 import com.example.pj.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -117,6 +119,86 @@ public class UserController {
         return "orderCreateSuccess";
 //        return "redirect:/orders/" + merchantID;
     }
+
+//    @PostMapping("/{path}/updateOrder")
+//    public ResponseEntity<?> updateOrder(@RequestBody MyOrder request, @PathVariable String path,@RequestParam Long menuItemId, Long quantity,Long merchantId) {
+//        try {
+//            updateOrder(menuItemId, quantity,merchantId);
+//            return ResponseEntity.ok().body("Order updated successfully");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order: " + e.getMessage());
+//        }
+//    }
+
+    @RequestMapping("/{path}/updateOrder2")
+    public void updateOrder2( @PathVariable String path,@RequestParam Long menuItemId, Long quantity,Long merchantId) {
+//        try {
+//            updateOrder(menuItemId, quantity,merchantId);
+//            return ResponseEntity.ok().body("Order updated successfully");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order: " + e.getMessage());
+//        }
+        Long dishId = orderMapper.findDishIdByMenuItemId(menuItemId);
+        Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
+        OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
+
+        if (orderItem == null) {
+            orderMapper.insertOrderItem(orderId, dishId, quantity);
+        } else {
+            if (quantity > 0) {
+                orderMapper.updateOrderItemQuantity(orderId, dishId, quantity);
+            } else {
+                orderMapper.deleteOrderItem(orderId, dishId);
+            }
+        }
+    }
+
+    @RequestMapping("/{path}/updateOrder3")
+    public String updateOrder3( @PathVariable String path,@RequestParam List<MenuItem> menuItems,Long merchantId) {
+
+        for(MenuItem menuItem: menuItems){
+//            Long menuItemId = menuItem.getMenuItemId();
+            Long dishId = menuItem.getDishId();
+            Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
+            OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
+            Long quantity = orderItem.getQuantity();
+            if (orderItem == null) {
+                orderMapper.insertOrderItem(orderId, dishId, quantity);
+            } else {
+                if (quantity > 0) {
+                    orderMapper.updateOrderItemQuantity(orderId, dishId, quantity);
+                } else {
+                    orderMapper.deleteOrderItem(orderId, dishId);
+                }
+            }
+        }
+        return "orderUpdateSuccess";
+    }
+    //        try {
+//            updateOrder(menuItemId, quantity,merchantId);
+//            return ResponseEntity.ok().body("Order updated successfully");
+//        } catch (Exception e) {
+//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order: " + e.getMessage());
+//        }
+    public void updateOrder(Long menuItemId, Long quantity, Long merchantId) {
+
+        Long dishId = orderMapper.findDishIdByMenuItemId(menuItemId);
+        Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
+        OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
+
+        if (orderItem == null) {
+            orderMapper.insertOrderItem(orderId, dishId, quantity);
+        } else {
+            if (quantity > 0) {
+                orderMapper.updateOrderItemQuantity(orderId, dishId, quantity);
+            } else {
+                orderMapper.deleteOrderItem(orderId, dishId);
+            }
+        }
+    }
+    
+    
+    
     @RequestMapping("/{path}/review/{dishId}")
     public String getDishReview(@PathVariable Long dishId,Model model,@PathVariable Long path){
         List<Review> reviews = userMapper.dishReview(dishId);

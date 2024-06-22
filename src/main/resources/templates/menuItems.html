@@ -76,14 +76,15 @@
       <td th:text="${menuItem.dishName}">菜品名称</td>
       <td th:text="${menuItem.price}">价格</td>
       <!--<td id="quantity-${menuItem.menuItemId}">0</td>-->
-      <td id="quantity"  >0</td>
+      <td id="quantity">0</td>
       <td>
-        <button type="button" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]], 1)|">增加1份</button>
-        <button type="button" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]], -1)|">减少1份</button>
+        <button type="button" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]], 1, [[${userId}]],[[${merchantId}]])|">增加1份</button>
+        <button type="button" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]],-1, [[${userId}]],[[${merchantId}]])|">减少1份</button>
       </td>
     </tr>
     </tbody>
   </table>
+  <button type="button" th:attr="onclick=|updateOrder([[${menuItems}]],[[${merchantId}]])|">确认提交点餐修改</button>
 </div>
 <br><br><br><br><br>
 
@@ -100,11 +101,11 @@
   <h3>当前您在该商家已有订单，请前往订单界面查看。</h3>
   <button id="viewOrders" th:attr="onclick=|viewOrders()|">查看订单</button>
 </div>
-<script>
+<script th:inline="javascript">
   let order = {}; // 记录已选数量
 
 
-  function updateQuantity(menuItemID, change) {
+  function updateQuantity(menuItemId, change,userId,merchantId) {
     var quantityElement = document.getElementById(`quantity`);
     let currentQuantity = parseInt(quantityElement.innerText);
 
@@ -119,12 +120,12 @@
 
     // 更新购物车
     if (currentQuantity > 0) {
-      order[menuItemID] = currentQuantity;
+      order[menuItemId] = currentQuantity;
     } else {
-      delete order[menuItemID];
+      delete order[menuItemId];
     }
     //
-    updateOrder();
+    // updateOrder(menuItemId, currentQuantity,userId,merchantId);
   }
 
   let createOrderUrl;
@@ -144,37 +145,33 @@
   function createOrder(userId, merchantId, status) {
     const orderType = document.getElementById('orderType').value;
     redirectToCreateOrder(userId, merchantId, status,orderType);
-    // fetch(createOrderUrl, {
-    //   method: 'POST',
-    //   headers: {
-    //     'Content-Type': 'application/x-www-form-urlencoded'
-    //   },
-    //   body: `userId=${userId}&merchantId=${merchantId}&status=${status}&totalPrice=0&orderType=${orderType}`
-    // })
-    //         .then(response => {
-    //           if (response.ok) {
-    //             document.getElementById('createOrderButton').style.display = 'none';
-    //             location.reload();
-    //           }
-    //         });
   }
 
-  function updateOrder() {
-    fetch('/updateOrder', {
+
+  function updateOrder(menuItems,merchantId) {
+    // menuItemId, quantity,userId,merchantId
+    var currentUrl = window.location.href;
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/menuItems')) + `/updateOrder3?&merchantId=${merchantId}&menuItems=${JSON.stringify(menuItems)}`;
+    console.log(createOrderUrl);
+    // // redirect
+    // window.location.href = createOrderUrl;
+    fetch(createOrderUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify(order)
+      body: JSON.stringify({
+        menuItems: menuItems,
+        // userId: userId,
+        merchantId: merchantId
+      })
     })
             .then(response => response.json())
             .then(data => {
               console.log('Success:', data);
-              // 可以在这里处理成功的响应
             })
             .catch((error) => {
               console.error('Error:', error);
-              // 可以在这里处理错误
             });
   }
 </script>
