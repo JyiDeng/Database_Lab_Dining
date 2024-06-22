@@ -54,4 +54,7 @@ public interface UserMapper {
 
     @Select("SELECT * FROM Review WHERE dishId = #{dishId}")
     List<Review> dishReview(@Param("dishId") Long dishId);
+
+    @Select("SELECT * FROM message WHERE user_id = #{userId}")
+    List<Message> getMessagesByUserId(int userId);
 }

@@ -41,11 +41,11 @@ insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 Gu
 insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road','54321');
 insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road', '11111');
 INSERT INTO `Merchant` (MerchantName, MainDishes, Address, Password) VALUES
-('Green Garden', 'Vegetarian', '123 Green St', 'gg123'),
-('Sunshine Bakery', 'Pastries', '456 Sunshine Ave', 'sb123'),
-('Ocean Delight', 'Seafood', '789 Ocean Blvd', 'od123'),
-('Mountain Grill', 'BBQ', '321 Mountain Rd', 'mg123'),
-('Spicy Corner', 'Spicy Food', '654 Spicy Ln', 'sc123');
+('Green Garden', 'Veggie Delight', '123 Green St', 'gg123'),
+('Sunshine Bakery', 'Pastry Heaven', '456 Sunshine Ave', 'sb123'),
+('Ocean Delight', 'Shrimp Feast', '789 Ocean Blvd', 'od123'),
+('Mountain Grill', 'BBQ Ribs', '321 Mountain Rd', 'mg123'),
+('Spicy Corner', 'Spicy Tofu', '654 Spicy Ln', 'sc123');
 
 DROP TABLE IF EXISTS `Dish`;
 CREATE TABLE if not exists Dish (
@@ -68,7 +68,7 @@ Insert into `Dish` VALUES (3,'PESTO E PATATE','Western food','classic pesto pizz
 INSERT INTO `Dish` (DishName, Category, Description, Picture, Flavor, Ingredients, Allergens, NutritionInfo, MerchantID) VALUES
 ('Veggie Delight', 'Vegetarian', 'A mix of fresh vegetables', 'examplePic4.com', 'savory', 'broccoli, carrots, bell peppers', '', 'high in fiber', 4),
 ('Pastry Heaven', 'Pastries', 'Assorted pastries', 'examplePic5.com', 'sweet', 'flour, sugar, butter', 'gluten', 'high in calories', 5),
-('Shrimp Delight', 'Seafood', 'Grilled shrimp', 'examplePic6.com', 'savory', 'shrimp, garlic, lemon', 'shellfish', 'high in protein', 6),
+('Shrimp Feast', 'Seafood', 'Grilled shrimp', 'examplePic6.com', 'savory', 'shrimp, garlic, lemon', 'shellfish', 'high in protein', 6),
 ('BBQ Ribs', 'BBQ', 'Slow-cooked ribs', 'examplePic7.com', 'smoky', 'pork, BBQ sauce', '', 'high in protein', 7),
 ('Spicy Tofu', 'Spicy Food', 'Spicy grilled tofu', 'examplePic8.com', 'spicy', 'tofu, chili sauce', '', 'high in protein', 8),
 
