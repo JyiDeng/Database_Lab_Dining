@@ -1,13 +1,7 @@
 package com.example.pj.controller;
 
 import com.example.pj.entity.*;
-import com.example.pj.mapper.DishMapper;
-import com.example.pj.mapper.MenuMapper;
-import com.example.pj.mapper.MerchantMapper;
-import com.example.pj.mapper.UserMapper;
-import com.example.pj.service.MerchantService;
-import com.example.pj.service.UserService;
-import com.example.pj.service.DishService;
+import com.example.pj.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,7 +26,8 @@ public class UserController {
     DishMapper dishMapper;
     @Autowired
     MenuMapper menuMapper;
-
+    @Autowired
+    OrderMapper orderMapper;
 
 
 //    @RequestMapping("/id={id}")
@@ -67,7 +62,7 @@ public class UserController {
     public String searchDishes(@RequestParam Long merchantId, String keyword, Model model,@PathVariable Long path) {
         List<Dish> dishes = dishMapper.getDishByName(keyword,merchantId);
         model.addAttribute("dishes", dishes);
-        return "searchDish";
+        return "dishSearch";
     }
 
     @RequestMapping("/{path}/searchDishDetails")
@@ -96,16 +91,24 @@ public class UserController {
     public String getOrdersByUserId(@PathVariable Long userId,Model model) {
         List<MyOrder> orders = userMapper.findOrdersByUserId(userId);
         model.addAttribute("orders",orders);
-        return "viewOrders";
+        return "orderView";
     }
 
-    @RequestMapping("/review/{dishId}")
+    @RequestMapping("/{path}/orderDetail")
+    public String orderDetail(@PathVariable String path, Model model, @RequestParam Long orderId) {
+        List<OrderItem> orderItems = orderMapper.getOrderItemsByOrderId(path,orderId);
+        model.addAttribute("orderItems", orderItems);
+
+        return "orderDetail";
+    }
+
+    @RequestMapping("/{path}/review/{dishId}")
     public String getDishReview(@PathVariable Long dishId,Model model,@PathVariable Long path){
         List<Review> reviews = userMapper.dishReview(dishId);
         model.addAttribute("reviews", reviews);
         Float rating = dishMapper.getAvgRating(dishId);
         model.addAttribute("rating", rating);
-        return "dishReview"; // 返回模板文件名
+        return "reviewDish"; // 返回模板文件名
     }
 
     // 查询菜品的最新价格
@@ -125,6 +128,9 @@ public class UserController {
     public String enterMenu(@PathVariable Long path, Model model,@RequestParam Long id) {
         List<MenuItem> menuItems = menuMapper.getMenuItemsByMerchantId(id);
         model.addAttribute("menuItems",menuItems);
+
+        Long pendingCount = orderMapper.countPendingOrders(id);
+        model.addAttribute("hasPendingOrder", pendingCount > 0);
         return "menuItems";
     }
 

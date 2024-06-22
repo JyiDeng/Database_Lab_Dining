@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>菜单详情</title>
+  <meta charset="UTF-8">
+  <title>菜单概览-您的界面</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -18,6 +19,14 @@
       border-radius: 8px;
     }
     h1 {
+      text-align: center;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    h3 {
       text-align: center;
       color: #333;
     }
@@ -46,7 +55,7 @@
 </head>
 <body>
 <div class="container">
-  <h1>菜单详情</h1>
+  <h1>菜单概览-您的界面</h1>
   <table>
     <thead>
     <tr>
@@ -63,7 +72,7 @@
       <td th:text="${menuItem.dishName}">菜品名称</td>
       <td th:text="${menuItem.price}">价格</td>
       <!--<td id="quantity-${menuItem.menuItemId}">0</td>-->
-      <td id="quantity-[[${menuItem.menuItemId}]]">0</td>
+      <td id="quantity"  >0</td>
       <td>
         <button type="button" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]], 1)|">增加1份</button>
         <button type="button" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]], -1)|">减少1份</button>
@@ -72,20 +81,43 @@
     </tbody>
   </table>
 
-  <div>
-    <h2>当前订单</h2>
-    <div id="cartItems">
-      <!-- 动态更新购物车内容 -->
-    </div>
-  </div>
-</div>
 
+
+
+
+
+</div>
+<div th:if="${!hasPendingOrder}">
+  <h3>当前没有正在进行中的订单，请点击按钮创建订单。</h3>
+  <button id="createOrderButton" onclick="createOrder(userId, merchantId,'Pending', 0.0)">Create Order</button>
+</div>
+<div th:if="${hasPendingOrder}">
+  <h3>当前您在该商家已有订单，请前往订单界面查看。</h3>
+</div>
 <script>
-  const cart = {}; // 记录已选数量
+  let order = {}; // 记录已选数量
+
+
+  let userId;
+  let merchantId;
+
+  function parseUrl() {
+    const url = new URL(window.location.href);
+    // 使用正则表达式提取
+    const userMatch = url.match(/\/user\/(\d+)/);
+    if (userMatch) {
+      userId = parseInt(userMatch[1]);
+    }
+    const idMatch = url.match(/id=(\d+)/);
+    if (idMatch) {
+      merchantId = parseInt(idMatch[1]);
+    }
+  }
+  parseUrl();
 
   function updateQuantity(menuItemID, change) {
-    const quantityElement = document.getElementById(`quantity-${menuItemID}`);
-    let currentQuantity = parseInt(quantityElement?.innerText);
+    var quantityElement = document.getElementById(`quantity`);
+    let currentQuantity = parseInt(quantityElement.innerText);
 
     // 更新数量
     currentQuantity += change;
@@ -98,27 +130,63 @@
 
     // 更新购物车
     if (currentQuantity > 0) {
-      cart[menuItemID] = currentQuantity;
+      order[menuItemID] = currentQuantity;
     } else {
-      delete cart[menuItemID];
+      delete order[menuItemID];
     }
-
-    updateCart();
+    //
+    updateOrder();
   }
 
-  function updateCart() {
-    const cartItemsDiv = document.getElementById("cartItems");
-    cartItemsDiv.innerHTML = "";
+  function createOrder(userID, merchantID, orderType, totalPrice) {
+    fetch('/createOrder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      body: `userID=${userID}&merchantID=${merchantID}&orderType=${orderType}&totalPrice=${totalPrice}`
+    })
+            .then(response => {
+              if (response.ok) {
+                document.getElementById('createOrderButton').style.display = 'none';
+                location.reload();
+              }
+            });
+  }
+  document.addEventListener("DOMContentLoaded", parseUrl);
 
-    for (const menuItemID in cart) {
-      const quantity = cart[menuItemID];
-      const menuItemRow = document.querySelector(`tr:${menuItemID}`).closest('tr');
-      const dishName = menuItemRow.querySelector('td:nth-child(2)')?.innerText;
+  function updateOrder() {
+    fetch('/updateOrder', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(order)
+    })
+            .then(response => response.json())
+            .then(data => {
+              console.log('Success:', data);
+              // 可以在这里处理成功的响应
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              // 可以在这里处理错误
+            });
+    // const orderItemsDiv = document.getElementById("orderItems");
+    // orderItemsDiv.innerHTML = "";
+    //
+    // for (const menuItemID in order) {
+    //   const quantity = order[menuItemID];
+    //   const menuItemRow = document.querySelector(`tr`).closest('tr');
+    //   const dishName = menuItemRow.querySelector('td:nth-child(2)')?.innerText;
+    //
+    //   const orderItem = document.createElement("p");
+    //   orderItem.innerText = `${dishName}: ${quantity}`;
+    //   orderItemsDiv.appendChild(orderItem);
+    // }
 
-      const cartItem = document.createElement("p");
-      cartItem.innerText = `${dishName}: ${quantity}`;
-      cartItemsDiv.appendChild(cartItem);
-    }
+
+
   }
 </script>
 </body>

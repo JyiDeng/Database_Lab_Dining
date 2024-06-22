@@ -91,13 +91,13 @@ public class MerchantController {
 //        return menuItem;
 //    }
     @RequestMapping("/{path}/addMenuItem")
-    public String addMenuItem(@PathVariable Long path, @RequestParam Long menuId, Long dishId,Long menuItemId,Float price) {
-        if(menuMapper.findMenuById(menuId) == null){
-            return "Menu " + menuId + "does not exist!";
+    public String addMenuItem(@PathVariable Long path, @RequestParam Long dishId,Long menuItemId,Float price) {
+        if(menuMapper.findMenuById(path) == null){
+            return "Menu " + path + "does not exist!";
         }
 
         if (menuMapper.findMenuItemById(menuItemId) == null) {
-            MenuItem menuItem = new MenuItem(menuItemId,menuId,dishId,price,null);  //测试dishName，后续查询了可以显示dishName！
+            MenuItem menuItem = new MenuItem(menuItemId,dishId,null,null);  //测试dishName，后续查询了可以显示dishName！
             menuMapper.insertMenuItem(menuItem);
             return "MenuItem " + menuItemId + " is added successfully!";
         }else{

@@ -67,15 +67,15 @@ Insert into `Dish` VALUES (3,'PESTO E PATATE','Western food','classic pesto pizz
 DROP TABLE IF EXISTS `menuItem`;
 CREATE TABLE menuItem (
     menuItemId INT AUTO_INCREMENT PRIMARY KEY,
-#     merchantId INT,
     dishID INT,
-    price DECIMAL(10, 2),
     FOREIGN KEY (dishID) REFERENCES dish(dishID)
-#     FOREIGN KEY (merchantId) REFERENCES merchant(merchantId)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-Insert into `menuItem` VALUES (1,1,18);
-Insert into `menuItem` VALUES (2,2,13.8);
-Insert into `menuItem` VALUES (3,3,68);
+# Insert into `menuItem` VALUES (1,1,18);
+# Insert into `menuItem` VALUES (2,2,13.8);
+# Insert into `menuItem` VALUES (3,3,68);
+Insert into `menuItem` VALUES (1,1);
+Insert into `menuItem` VALUES (2,2);
+Insert into `menuItem` VALUES (3,3);
 
 DROP TABLE IF EXISTS `menuPrice`;
 CREATE TABLE menuPrice (
@@ -193,14 +193,17 @@ CREATE TABLE OrderItem (
     OrderID INT,
     DishID INT,
     Quantity INT NOT NULL,
-    Price DECIMAL(10, 2) NOT NULL,
+#     Price DECIMAL(10, 2) NOT NULL,
 --     PRIMARY KEY (OrderID, DishID),
     FOREIGN KEY (OrderID) REFERENCES MyOrder(OrderID),
     FOREIGN KEY (DishID) REFERENCES Dish(DishID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `OrderItem` VALUES (1,1,2,3,4.9);
-INSERT INTO `OrderItem` VALUES (2,2,2,5,8);
-INSERT INTO `OrderItem` VALUES (3,3,3,1,25);
+# INSERT INTO `OrderItem` VALUES (1,1,2,3,4.9);
+# INSERT INTO `OrderItem` VALUES (2,2,2,5,8);
+# INSERT INTO `OrderItem` VALUES (3,3,3,1,25);
+INSERT INTO `OrderItem` VALUES (1,1,2,0);
+INSERT INTO `OrderItem` VALUES (2,2,2,0);
+INSERT INTO `OrderItem` VALUES (3,3,3,0);
 
 DROP TABLE IF EXISTS `Admin`;
 CREATE TABLE Admin (

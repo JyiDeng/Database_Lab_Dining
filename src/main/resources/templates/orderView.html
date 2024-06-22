@@ -44,6 +44,18 @@
             background-color: #f1f1f1;
         }
     </style>
+    <script>
+        function redirectToOrderItems(orderId) {
+            // 获取当前URL
+            var currentUrl = window.location.href;
+            // 去掉最后的 "allMenus"
+            var baseUrl = currentUrl.replace(/viewOrders$/, '');
+            // 构建新的URL
+            var newUrl = baseUrl + 'orderDetail?orderId=' + orderId;
+            // 跳转到新的URL
+            window.location.href = newUrl;
+        }
+    </script>
 </head>
 <body>
 <table>
@@ -56,18 +68,21 @@
         <th>订单状态</th>
         <th>订单类型</th>
         <th>订单总价</th>
+        <th>操作</th>
 
     </tr>
     </thead>
     <tbody>
     <tr th:each="order : ${orders}">
-        <td th:text="${order.OrderId}">订单编号</td>
-        <td th:text="${order.UserId}">顾客id</td>
+        <td th:text="${order.orderId}">订单编号</td>
+        <td th:text="${order.userId}">顾客id</td>
         <td th:text="${order.merchantId}">商家id</td>
         <td th:text="${order.orderDate}">订单时间</td>
         <td th:text="${order.status}">订单状态</td>
         <td th:text="${order.orderType}">订单类型</td>
-
+        <td>
+            <button type="button" th:attr="onclick=|redirectToOrderItems([[${order.orderId}]])|">查看订单详情</button>
+        </td>
     </tr>
     </tbody>
 </table>
