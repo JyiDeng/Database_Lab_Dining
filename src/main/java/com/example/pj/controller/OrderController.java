@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -20,14 +19,14 @@ public class OrderController {
     @Autowired
     private DishMapper dishMapper;
 
-    @PostMapping("/create")
-    public String createOrder(@RequestBody MyOrder order) {
-        order.setOrderDate(LocalDateTime.now().toString());
-        order.setStatus("Pending");
-        orderMapper.createOrder(order);
-//        orderMapper.insertOrderItem(order.getOrderId(), order.getOrderItems());
-        return "Order created successfully with ID: " + order.getOrderId();
-    }
+//    @PostMapping("/create")
+//    public String createOrder(@RequestBody MyOrder order) {
+//        order.setOrderDate(LocalDateTime.now());
+//        order.setStatus("Pending");
+//        orderMapper.createOrder(order);
+////        orderMapper.insertOrderItem(order.getOrderId(), order.getOrderItems());
+//        return "Order created successfully with ID: " + order.getOrderId();
+//    }
 
     @RequestMapping("/orders/{merchantId}")
     public String getOrdersByMerchantId(@PathVariable Long merchantId, Model model) {
@@ -42,17 +41,18 @@ public class OrderController {
 
 
 
-    @RequestMapping("/{path}/createOrder")
-    public void createOrder2(@PathVariable String path,@RequestParam Long userID, @RequestParam Long merchantID, @RequestParam String orderType, @RequestParam Float totalAmount) {
-        MyOrder newOrder = new MyOrder();
-        newOrder.setUserId(userID);
-        newOrder.setMerchantId(merchantID);
-        newOrder.setOrderType(orderType);
-        newOrder.setTotalAmount(totalAmount);
-        orderMapper.createOrder(newOrder);
-
-//        return "redirect:/orders/" + merchantID;
-    }
+//    @RequestMapping("/{path}/createOrder")
+//    public void createOrder2(@PathVariable String path,@RequestParam Long userID,  Long merchantID,  String status, String orderType) {
+//        MyOrder newOrder = new MyOrder();
+//        newOrder.setUserId(userID);
+//        newOrder.setMerchantId(merchantID);
+//        newOrder.setStatus(status);
+//        newOrder.setOrderType(orderType);
+//        newOrder.setTotalPrice(0F);  // 初始化为0，Float类型
+//        orderMapper.createOrder(newOrder);
+//
+////        return "redirect:/orders/" + merchantID;
+//    }
 //    @RequestMapping("/updateOrder")
 //    public String updateOrder(@RequestBody Map<String, Object> orderData) {
 //        Long orderId = (Long) orderData.get("orderId");

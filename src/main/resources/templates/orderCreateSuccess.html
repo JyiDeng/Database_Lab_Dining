@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>订单创建成功！</title>
+    <script>
+        function redirectBackToMenuItems() {
+            var currentUrl = window.location.href;
+            // var baseUrl = currentUrl.replace(/createOrder$/, '');
+            var merchantIdParam = "merchantId=";
+            var startIndex = currentUrl.indexOf(merchantIdParam) + merchantIdParam.length;
+            var endIndex = currentUrl.indexOf("&", startIndex) !== -1 ? currentUrl.indexOf("&", startIndex) : currentUrl.length;
+            var merchantId = currentUrl.substring(startIndex, endIndex);
+            console.log(merchantId);
+            createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/createOrder')) + `/menuItems?id=${merchantId}`;
+            console.log(createOrderUrl);
+            window.location.href = createOrderUrl;
+        }
+    </script>
+</head>
+<body>
+<h1>订单创建成功！</h1>
+<button type="button" th:attr="onclick=|redirectBackToMenuItems()|">
+    返回菜单概览-您的界面</button>
+
+</body>
+</html>

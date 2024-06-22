@@ -30,6 +30,10 @@
       text-align: center;
       color: #333;
     }
+    button {
+      text-align: center;
+      color: #333;
+    }
     table {
       width: 100%;
       border-collapse: collapse;
@@ -80,40 +84,25 @@
     </tr>
     </tbody>
   </table>
-
-
-
-
-
-
 </div>
-<div th:if="${!hasPendingOrder}">
-  <h3>当前没有正在进行中的订单，请点击按钮创建订单。</h3>
-  <button id="createOrderButton" onclick="createOrder(userId, merchantId,'Pending', 0.0)">Create Order</button>
+<br><br><br><br><br>
+
+<div class="container" th:if="${!hasPendingOrder}">
+  <h3>当前您在该商家没有正在进行中的订单，请选择订单类型，点击按钮创建订单。</h3>
+  <label for="orderType">订单类型：</label>
+  <select id="orderType">
+    <option value="Queue">线下取餐</option>
+    <option value="Online">线上点餐</option>
+  </select>
+  <button id="createOrderButton" th:attr="onclick=|createOrder([[${userId}]],[[${merchantId}]],'Pending')|">创建订单</button>
 </div>
-<div th:if="${hasPendingOrder}">
+<div class="container" th:if="${hasPendingOrder}">
   <h3>当前您在该商家已有订单，请前往订单界面查看。</h3>
+  <button id="viewOrders" th:attr="onclick=|viewOrders()|">查看订单</button>
 </div>
 <script>
   let order = {}; // 记录已选数量
 
-
-  let userId;
-  let merchantId;
-
-  function parseUrl() {
-    const url = new URL(window.location.href);
-    // 使用正则表达式提取
-    const userMatch = url.match(/\/user\/(\d+)/);
-    if (userMatch) {
-      userId = parseInt(userMatch[1]);
-    }
-    const idMatch = url.match(/id=(\d+)/);
-    if (idMatch) {
-      merchantId = parseInt(idMatch[1]);
-    }
-  }
-  parseUrl();
 
   function updateQuantity(menuItemID, change) {
     var quantityElement = document.getElementById(`quantity`);
@@ -138,22 +127,37 @@
     updateOrder();
   }
 
-  function createOrder(userID, merchantID, orderType, totalPrice) {
-    fetch('/createOrder', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: `userID=${userID}&merchantID=${merchantID}&orderType=${orderType}&totalPrice=${totalPrice}`
-    })
-            .then(response => {
-              if (response.ok) {
-                document.getElementById('createOrderButton').style.display = 'none';
-                location.reload();
-              }
-            });
+  let createOrderUrl;
+  function redirectToCreateOrder(userId, merchantId, status,orderType) {
+    var currentUrl = window.location.href;
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/menuItems')) + `/createOrder?userId=${userId}&merchantId=${merchantId}&status=${status}&orderType=${orderType}`;
+    console.log(createOrderUrl);
+    window.location.href = createOrderUrl;
   }
-  document.addEventListener("DOMContentLoaded", parseUrl);
+  function viewOrders() {
+    var currentUrl = window.location.href;
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/menuItems')) + `/viewOrders`;
+    console.log(createOrderUrl);
+    window.location.href = createOrderUrl;
+  }
+
+  function createOrder(userId, merchantId, status) {
+    const orderType = document.getElementById('orderType').value;
+    redirectToCreateOrder(userId, merchantId, status,orderType);
+    // fetch(createOrderUrl, {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/x-www-form-urlencoded'
+    //   },
+    //   body: `userId=${userId}&merchantId=${merchantId}&status=${status}&totalPrice=0&orderType=${orderType}`
+    // })
+    //         .then(response => {
+    //           if (response.ok) {
+    //             document.getElementById('createOrderButton').style.display = 'none';
+    //             location.reload();
+    //           }
+    //         });
+  }
 
   function updateOrder() {
     fetch('/updateOrder', {
@@ -172,21 +176,6 @@
               console.error('Error:', error);
               // 可以在这里处理错误
             });
-    // const orderItemsDiv = document.getElementById("orderItems");
-    // orderItemsDiv.innerHTML = "";
-    //
-    // for (const menuItemID in order) {
-    //   const quantity = order[menuItemID];
-    //   const menuItemRow = document.querySelector(`tr`).closest('tr');
-    //   const dishName = menuItemRow.querySelector('td:nth-child(2)')?.innerText;
-    //
-    //   const orderItem = document.createElement("p");
-    //   orderItem.innerText = `${dishName}: ${quantity}`;
-    //   orderItemsDiv.appendChild(orderItem);
-    // }
-
-
-
   }
 </script>
 </body>

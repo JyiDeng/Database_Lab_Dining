@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 //@RestController
@@ -102,6 +103,20 @@ public class UserController {
         return "orderDetail";
     }
 
+    @RequestMapping("/{path}/createOrder")
+    public String createOrder2(@PathVariable String path, @RequestParam Long userId, Long merchantId, String status, String orderType) {
+        MyOrder newOrder = new MyOrder();
+        newOrder.setUserId(userId);
+        newOrder.setOrderDate(LocalDateTime.now());
+        newOrder.setMerchantId(merchantId);
+        newOrder.setStatus(status);
+        newOrder.setOrderType(orderType);
+        newOrder.setTotalPrice(0F);  // 初始化为0，Float类型
+        orderMapper.createOrder(newOrder);
+
+        return "orderCreateSuccess";
+//        return "redirect:/orders/" + merchantID;
+    }
     @RequestMapping("/{path}/review/{dishId}")
     public String getDishReview(@PathVariable Long dishId,Model model,@PathVariable Long path){
         List<Review> reviews = userMapper.dishReview(dishId);
@@ -128,7 +143,8 @@ public class UserController {
     public String enterMenu(@PathVariable Long path, Model model,@RequestParam Long id) {
         List<MenuItem> menuItems = menuMapper.getMenuItemsByMerchantId(id);
         model.addAttribute("menuItems",menuItems);
-
+        model.addAttribute("userId",path);
+        model.addAttribute("merchantId",id);
         Long pendingCount = orderMapper.countPendingOrders(id);
         model.addAttribute("hasPendingOrder", pendingCount > 0);
         return "menuItems";

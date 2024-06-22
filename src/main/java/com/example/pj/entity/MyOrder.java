@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.stereotype.Component;
-
+import java.time.LocalDateTime;
 import java.util.List;
 
 @NoArgsConstructor
@@ -17,10 +17,10 @@ public class MyOrder {
     private Long orderId;
     private Long userId;
     private Long merchantId;
-    private String orderDate;
+    private LocalDateTime orderDate;
     private String status;
     private String orderType;
-    private Float totalAmount;
+    private Float totalPrice;
     private List<OrderItem> orderItems;
 
 

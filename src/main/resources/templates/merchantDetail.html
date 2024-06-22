@@ -90,17 +90,13 @@
   </tbody>
 
 </table>
-<!--<a href="/users/searchPage">Back to Search</a>-->
 <div class="container">
-  <!--<form th:action="@{/user/{path}/searchDishes}" method="get">-->
-  <!--<form  method="get">-->
+
   <form onsubmit="redirectToSearchDish(event)">
     <label>
       <input type="text" id="dishName" placeholder="Enter dish name" required>
     </label>
-    <!--<button type="submit">Search Dishes</button>-->
-    <!--<button th:onclick="'redirectTo(' + ${dish.dishId} + ')'">搜索菜品</button>-->
-    <!--<button data-dish-id="${dish.dishId}" onclick="redirectToDishDetails(${dish.dishId})">查看详情</button>-->
+
     <button th:onclick="'redirectToSearchDish()'" type="submit">搜索指定菜品</button>
   </form>
 
