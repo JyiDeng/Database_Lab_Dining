@@ -152,7 +152,7 @@ public class MerchantController {
         }
 
         // 插入新的价格记录
-        MenuPrice menuPrice = new MenuPrice(null, menuItemId, newPrice, now, null);
+        MenuPrice menuPrice = new MenuPrice(null, menuItemId, newPrice, now, null,null);
         menuMapper.insertMenuPrice(menuPrice);
 
         // 更新 menuItem 表中的价格

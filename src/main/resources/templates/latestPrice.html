@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>查询价格变化</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+
+</head>
+<body>
+<div class="container">
+  <h1>查询价格变化</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>菜品菜单编号</th>
+      <th>菜品名称</th>
+      <th>单价</th>
+      <th>有效日期</th>
+      <th>价格终止日期</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="menuPrice : ${allMenuPrice}">
+      <!--<td th:text="${menuPrice.menuPriceId}">价格</td>-->
+      <td th:text="${menuPrice.menuItemId}">菜品菜单编号</td>
+      <td th:text="${menuPrice.dishName}">菜品名称</td>
+      <td th:text="${menuPrice.price}">单价</td>
+      <td th:text="${menuPrice.effectiveDate}">有效日期</td>
+      <td th:text="${menuPrice.endDate}">价格终止日期</td>
+    </tr>
+
+    </tbody>
+
+  </table>
+
+
+</div>
+</body>
+</html>

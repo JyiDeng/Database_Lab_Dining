@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 @Data
 @Component
 public class UserFavoriteDish {
+    private Long favoriteDishId;
     private Long userId;
     private Long dishId;
+    private String dishName; // 查询用
     private String favoriteDate;
 
 }

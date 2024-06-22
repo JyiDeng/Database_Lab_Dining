@@ -14,10 +14,10 @@
 查询所有商家列表（简略）：<br>
 <button onclick="redirectTo('/searchMerchant2?keyword=')">View All Merchants (Concise)</button>
 <br>-------------------<br>
-查询第2个商家列表（简略）：<br>
-<button onclick="redirectTo('/searchMerchant2?keyword=2')">Search Merchant Id=2 (Concise)</button>
+查询名字里含有“e”的商家列表（简略）：<br>
+<button onclick="redirectTo('/searchMerchant2?keyword=e')">Search Merchant Id=2 (Concise)</button>
 <br>-------------------<br>
-查询第3个商家列表（详细）：<br>
+查询第3个（id=3）商家列表（详细）：<br>
 <button onclick="redirectTo('/searchMerchantDetails?id=3')">Search Merchant Id=3 (Detailed)</button>
 <br>-------------------<br>
 查询第3个商家的关于`p`的菜品：<br>
@@ -27,17 +27,21 @@
 <button onclick="redirectTo('/latestPrice/2')">查询id=2的菜品的最新价格</button>
 <br>-------------------<br>
 收藏id为2的菜品：<br>
-<button onclick="redirectTo('/favoriteDish?dishId=2')">收藏id为2的菜品</button>
+<button onclick="redirectTo('/addFavoriteDish?dishId=2')">收藏id为2的菜品</button>
+<br>-------------------<br>
+查看当前收藏的所有菜品：<br>
+<button onclick="redirectTo('/findFavoriteDish?dishId=')">查看当前收藏的所有菜品</button>
 <br>-------------------<br>
 收藏id为3的商户：<br>
 <button onclick="redirectTo('/favoriteMerchant?merchantId=3')">收藏id为3的商户</button>
 <br>-------------------<br>
+查看当前收藏的所有商户：<br>
+<button onclick="redirectTo('/findFavoriteMerchant?merchantId=')">查看当前收藏的所有商户</button>
+<br>-------------------<br>
 查询订单：<br>
 <button onclick="redirectTo('/viewOrders')">收藏id为3的商户</button>
 <br>-------------------<br>
-查询菜单单品id为3的菜品的最新价格：<br>
-<button onclick="redirectTo('/latestPrice/3')">查询商品的最新价格</button>
-<br>-------------------<br>
+
 
 
 <script>

@@ -76,18 +76,26 @@ public class UserController {
     }
 
     // 收藏菜品
-    @RequestMapping("/{userId}/favoriteDish")
-    public void favoriteDish(@PathVariable Long userId, @RequestParam Long dishId) {
-        userMapper.favoriteDish(userId, dishId);
-//        return "菜品"+ dishId +"已收藏!";
+    @RequestMapping("/{userId}/findFavoriteDish")
+    public String findFavoriteDish(Model model,@PathVariable Long userId, @RequestParam Long dishId) {
+        List<UserFavoriteDish> userFavoriteDishes = userMapper.findFavoriteDish(userId,dishId);
+        model.addAttribute("userFavoriteDishes",userFavoriteDishes);
+        return "favoriteDish";
+    }
+
+    @RequestMapping("/{userId}/addFavoriteDish")
+    public String addFavoriteDish(Model model,@PathVariable Long userId, @RequestParam Long dishId) {
+        List<UserFavoriteDish> userFavoriteDishes = userMapper.addFavoriteDish(userId,dishId);
+        model.addAttribute("userFavoriteDishes",userFavoriteDishes);
+        return "favoriteDishAddSuccess";
     }
 
     // 收藏商户
-    @RequestMapping("/{userId}/favoriteMerchant")
-    public void favoriteMerchant(@PathVariable Long userId, @RequestParam Long merchantId) {
-        userMapper.favoriteMerchant(userId, merchantId);
-//        return "商户"+ merchantId +"已收藏!";
-    }
+//    @RequestMapping("/{userId}/favoriteMerchant")
+//    public String favoriteMerchant(@PathVariable Long userId, @RequestParam Long merchantId) {
+//        userMapper.findFavoriteMerchant(userId);
+////        return "商户"+ merchantId +"已收藏!";
+//    }
 
     // 查询用户订单
     @RequestMapping("/{userId}/viewOrders")
@@ -210,8 +218,11 @@ public class UserController {
 
     // 查询菜品的最新价格
     @RequestMapping("{path}/latestPrice/{menuItemId}")
-    public MenuPrice getLatestPriceByMenuItemId(@PathVariable Long menuItemId,@PathVariable Long path) {
-        return menuMapper.findLatestPriceByMenuItemId(menuItemId);
+    public String getLatestPriceByMenuItemId(Model model,@PathVariable Long menuItemId,@PathVariable Long path) {
+//        MenuPrice menuprice = menuMapper.findLatestPriceByMenuItemId(menuItemId);
+        List<MenuPrice> allMenuPrice = menuMapper.findAllPriceByMenuItemId(menuItemId);
+        model.addAttribute("allMenuPrice",allMenuPrice);
+        return "latestPrice";
     }
 
 

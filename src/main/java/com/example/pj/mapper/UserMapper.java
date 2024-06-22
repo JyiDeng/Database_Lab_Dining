@@ -1,9 +1,6 @@
 package com.example.pj.mapper;
 
-import com.example.pj.entity.Merchant;
-import com.example.pj.entity.Review;
-import com.example.pj.entity.User;
-import com.example.pj.entity.MyOrder;
+import com.example.pj.entity.*;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -37,12 +34,23 @@ public interface UserMapper {
     List<MyOrder> findOrdersByUserId(Long userId);
 
     // 收藏菜品
-    @Insert("INSERT INTO FavoriteDish (userId, dishID, FavoriteDate) VALUES (#{userId}, #{dishId}, NOW())")
-    void favoriteDish(@Param("userId") Long userId, @Param("dishId") Long dishId);
+    @Select("SELECT fd.*, d.dishName as dishName " +
+            "FROM FavoriteDish fd " +
+            "JOIN dish d ON fd.dishId = d.dishId " +
+            "WHERE fd.userId = #{userId} " +
+            "AND fd.dishId <> #{dishId}")
+    List<UserFavoriteDish> findFavoriteDish(@Param("userId") Long userId, @Param("dishId") Long dishId);
+
+    @Insert("INSERT INTO FavoriteDish (userId, dishID, FavoriteDate) " +
+            "VALUES (#{userId}, #{dishId}, NOW())")
+    List<UserFavoriteDish> addFavoriteDish(@Param("userId") Long userId, @Param("dishId") Long dishId);
 
     // 收藏商户
+    @Select("SELECT * FROM FavoriteMerchant")
+    List<UserFavoriteMerchant> findFavoriteMerchant(@Param("userId") Long userId);
+
     @Insert("INSERT INTO FavoriteMerchant (userId, merchantID, FavoriteDate) VALUES (#{userId}, #{merchantId}, NOW())")
-    void favoriteMerchant(@Param("userId") Long userId, @Param("merchantId") Long merchantId);
+    List<UserFavoriteMerchant> addFavoriteMerchant(@Param("userId") Long userId, @Param("merchantId") Long merchantId);
 
     @Select("SELECT * FROM Review WHERE dishId = #{dishId}")
     List<Review> dishReview(@Param("dishId") Long dishId);

@@ -48,12 +48,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void favoriteDish(Long userId, Long dishId) {
-        userMapper.favoriteDish(userId, dishId);
+//        userMapper.favoriteDish(userId, dishId);
     }
 
     @Override
     public void favoriteMerchant(Long userId, Long merchantId) {
-        userMapper.favoriteMerchant(userId, merchantId);
+//        userMapper.favoriteMerchant(userId, merchantId);
     }
 
 
