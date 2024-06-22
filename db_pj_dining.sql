@@ -17,6 +17,15 @@ CREATE TABLE if not exists User (
 INSERT INTO `user` VALUES (1,'Alice1','Female',75,'Student',20,'12345');
 INSERT INTO `user` VALUES (2,'Tom1','Male',50,'Student',25,'54321');
 INSERT INTO `user` VALUES (3,'Octpus1','Other',25,'Staff',1,'11111');
+INSERT INTO `user` (UserName, Gender, EcardID, Role, Age, Password) VALUES
+('Bob1', 'Male', 65, 'Student', 22, 'password1'),
+('Carol1', 'Female', 45, 'Staff', 30, 'password2'),
+('Dave1', 'Male', 35, 'Student', 19, 'password3'),
+('Eve', 'Female', 55, 'Staff', 28, 'password4'),
+('Frank1', 'Male', 85, 'Student', 24, 'password5'),
+('Grace1', 'Female', 95, 'Staff', 35, 'password6'),
+('Bob2', 'Male', 247, 'Student', 20, 'password1'),
+('Heidi', 'Female', 105, 'Student', 21, 'password7');
 
 DROP TABLE IF EXISTS `Merchant`;
 CREATE TABLE if not exists Merchant(
@@ -28,12 +37,15 @@ CREATE TABLE if not exists Merchant(
     Password VARCHAR(50)
 #     FOREIGN KEY (menuID) REFERENCES menu(menuID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-# insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', 1, '12345');
-# insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road', 2,'54321');
-# insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road', 3,'11111');
 insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', '12345');
 insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road','54321');
 insert into `Merchant` VALUES (3,'Fantasy Canteen Topolino pizzeria','PESTO E PATATE','888-5 Changping Road', '11111');
+INSERT INTO `Merchant` (MerchantName, MainDishes, Address, Password) VALUES
+('Green Garden', 'Vegetarian', '123 Green St', 'gg123'),
+('Sunshine Bakery', 'Pastries', '456 Sunshine Ave', 'sb123'),
+('Ocean Delight', 'Seafood', '789 Ocean Blvd', 'od123'),
+('Mountain Grill', 'BBQ', '321 Mountain Rd', 'mg123'),
+('Spicy Corner', 'Spicy Food', '654 Spicy Ln', 'sc123');
 
 DROP TABLE IF EXISTS `Dish`;
 CREATE TABLE if not exists Dish (
@@ -53,6 +65,36 @@ CREATE TABLE if not exists Dish (
 Insert into `Dish` VALUES (1,'Braised Chicken','Chinese food','sauce delicious','examplePic1.com','original','chicken, green pepper, potatoes, ginger','','delicious chicken, green pepper vitamin high',  1);
 Insert into `Dish` VALUES (2,'Hachii','sweet','classic, small expensive','examplePic2.com','chocolate','milk, cocoa, sugar, additives','milk','high calcium content', 2);
 Insert into `Dish` VALUES (3,'PESTO E PATATE','Western food','classic pesto pizza','examplePic3.com','pesto flavor','Mozzarella cheese, pesto sauce, baked sweet potato, rosemary, garlic, Dried tomatoes in oil','garlic','balanced nutrition',3);
+INSERT INTO `Dish` (DishName, Category, Description, Picture, Flavor, Ingredients, Allergens, NutritionInfo, MerchantID) VALUES
+('Veggie Delight', 'Vegetarian', 'A mix of fresh vegetables', 'examplePic4.com', 'savory', 'broccoli, carrots, bell peppers', '', 'high in fiber', 4),
+('Pastry Heaven', 'Pastries', 'Assorted pastries', 'examplePic5.com', 'sweet', 'flour, sugar, butter', 'gluten', 'high in calories', 5),
+('Shrimp Delight', 'Seafood', 'Grilled shrimp', 'examplePic6.com', 'savory', 'shrimp, garlic, lemon', 'shellfish', 'high in protein', 6),
+('BBQ Ribs', 'BBQ', 'Slow-cooked ribs', 'examplePic7.com', 'smoky', 'pork, BBQ sauce', '', 'high in protein', 7),
+('Spicy Tofu', 'Spicy Food', 'Spicy grilled tofu', 'examplePic8.com', 'spicy', 'tofu, chili sauce', '', 'high in protein', 8),
+
+('Veggie Pasta', 'Vegetarian', 'Pasta with vegetables', 'examplePic9.com', 'savory', 'pasta, vegetables', 'gluten', 'high in fiber', 4),
+('Cupcake Delight', 'Pastries', 'Assorted cupcakes', 'examplePic10.com', 'sweet', 'flour, sugar, butter', 'gluten', 'high in calories', 5),
+('Salmon Fillet', 'Seafood', 'Grilled salmon', 'examplePic11.com', 'savory', 'salmon, lemon', 'fish', 'high in protein', 6),
+('Grilled Chicken', 'BBQ', 'Grilled chicken', 'examplePic12.com', 'smoky', 'chicken, BBQ sauce', '', 'high in protein', 7),
+('Spicy Noodles', 'Spicy Food', 'Noodles with spicy sauce', 'examplePic13.com', 'spicy', 'noodles, chili sauce', 'gluten', 'high in protein', 8),
+
+('Veggie Burger', 'Vegetarian', 'Burger with vegetables', 'examplePic14.com', 'savory', 'bun, vegetables', 'gluten', 'high in fiber', 4),
+('Donut Delight', 'Pastries', 'Assorted donuts', 'examplePic15.com', 'sweet', 'flour, sugar, butter', 'gluten', 'high in calories', 5),
+('Lobster Tail', 'Seafood', 'Grilled lobster tail', 'examplePic16.com', 'savory', 'lobster, garlic butter', 'shellfish', 'high in protein', 6),
+('BBQ Brisket', 'BBQ', 'Slow-cooked brisket', 'examplePic17.com', 'smoky', 'beef, BBQ sauce', '', 'high in protein', 7),
+('Spicy Chicken', 'Spicy Food', 'Spicy fried chicken', 'examplePic18.com', 'spicy', 'chicken, chili sauce', '', 'high in protein', 8),
+
+('Veggie Soup', 'Vegetarian', 'Soup with fresh vegetables', 'examplePic19.com', 'savory', 'vegetables, broth', '', 'high in fiber', 4),
+('Muffin Delight', 'Pastries', 'Assorted muffins', 'examplePic20.com', 'sweet', 'flour, sugar, butter', 'gluten', 'high in calories', 5),
+('Crab Cakes', 'Seafood', 'Fried crab cakes', 'examplePic21.com', 'savory', 'crab, bread crumbs', 'shellfish', 'high in protein', 6),
+('BBQ Sausage', 'BBQ', 'Grilled sausages', 'examplePic22.com', 'smoky', 'sausages, BBQ sauce', '', 'high in protein', 7),
+('Spicy Beef', 'Spicy Food', 'Spicy beef stir-fry', 'examplePic23.com', 'spicy', 'beef, chili sauce', '', 'high in protein', 8),
+
+('Veggie Wrap', 'Vegetarian', 'Wrap with fresh vegetables', 'examplePic24.com', 'savory', 'tortilla, vegetables', 'gluten', 'high in fiber', 4),
+('Pie Delight', 'Pastries', 'Assorted pies', 'examplePic25.com', 'sweet', 'flour, sugar, butter', 'gluten', 'high in calories', 5),
+('Clam Chowder', 'Seafood', 'Creamy clam chowder', 'examplePic26.com', 'savory', 'clams, cream', 'shellfish', 'high in protein', 6),
+('BBQ Wings', 'BBQ', 'Grilled chicken wings', 'examplePic27.com', 'smoky', 'chicken wings, BBQ sauce', '', 'high in protein', 7),
+('Spicy Pork', 'Spicy Food', 'Spicy pork stir-fry', 'examplePic28.com', 'spicy', 'pork, chili sauce', '', 'high in protein', 8);
 
 # DROP TABLE IF EXISTS `menu`;
 # CREATE TABLE menu (
@@ -76,6 +118,9 @@ CREATE TABLE menuItem (
 Insert into `menuItem` VALUES (1,1);
 Insert into `menuItem` VALUES (2,2);
 Insert into `menuItem` VALUES (3,3);
+INSERT INTO `menuItem` (dishID) VALUES
+(4), (5), (6), (7), (8), (9), (10), (11), (12), (13), (14), (15), (16), (17), (18),
+(19), (20), (21), (22), (23), (24), (25), (26), (27), (28);
 
 DROP TABLE IF EXISTS `menuPrice`;
 CREATE TABLE menuPrice (
