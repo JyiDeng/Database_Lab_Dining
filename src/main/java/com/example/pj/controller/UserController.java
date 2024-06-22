@@ -77,8 +77,8 @@ public class UserController {
 
     // 收藏菜品
     @RequestMapping("/{userId}/findFavoriteDish")
-    public String findFavoriteDish(Model model,@PathVariable Long userId, @RequestParam Long dishId) {
-        List<UserFavoriteDish> userFavoriteDishes = userMapper.findFavoriteDish(userId,dishId);
+    public String findFavoriteDish(Model model,@PathVariable Long userId) {
+        List<UserFavoriteDish> userFavoriteDishes = userMapper.findFavoriteDish(userId);
         model.addAttribute("userFavoriteDishes",userFavoriteDishes);
         return "favoriteDish";
     }

@@ -54,14 +54,13 @@
     <tr>
       <th>菜品收藏编号</th>
       <th>菜品名称</th>
-      <th>菜品名称</th>
       <th>收藏日期</th>
     </tr>
     </thead>
     <tbody>
     <tr th:each="userFavoriteDish : ${userFavoriteDishes}">
       <td th:text="${userFavoriteDish.favoriteDishId}">菜品收藏编号</td>
-      <td th:text="${userFavoriteDish.dishId}">菜品名称</td>
+      <td th:text="${userFavoriteDish.dishName}">菜品名称</td>
       <td th:text="${userFavoriteDish.favoriteDate}">收藏日期</td>
     </tr>
 

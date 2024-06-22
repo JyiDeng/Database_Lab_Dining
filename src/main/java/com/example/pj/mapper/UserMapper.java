@@ -37,9 +37,8 @@ public interface UserMapper {
     @Select("SELECT fd.*, d.dishName as dishName " +
             "FROM FavoriteDish fd " +
             "JOIN dish d ON fd.dishId = d.dishId " +
-            "WHERE fd.userId = #{userId} " +
-            "AND fd.dishId <> #{dishId}")
-    List<UserFavoriteDish> findFavoriteDish(@Param("userId") Long userId, @Param("dishId") Long dishId);
+            "WHERE fd.userId = #{userId} ")
+    List<UserFavoriteDish> findFavoriteDish(@Param("userId") Long userId);
 
     @Insert("INSERT INTO FavoriteDish (userId, dishID, FavoriteDate) " +
             "VALUES (#{userId}, #{dishId}, NOW())")
