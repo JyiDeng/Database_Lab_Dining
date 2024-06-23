@@ -50,6 +50,7 @@ public interface UserMapper {
     int findFavoriteDish(@Param("userId") Long userId, @Param("dishId") Long dishId);
 
 
+
     // 收藏商户
     @Select("SELECT fm.*, m.merchantName as merchantName " +
             "FROM FavoriteMerchant fm " +
@@ -64,6 +65,13 @@ public interface UserMapper {
     @Insert("INSERT INTO FavoriteMerchant (userId, merchantID, FavoriteDate) VALUES (#{userId}, #{merchantId}, NOW())")
     @Options(useGeneratedKeys = true, keyProperty = "favoriteMerchantId")
     void addFavoriteMerchant(@Param("userId") Long userId, @Param("merchantId") Long merchantId);
+
+
+    @Select("SELECT d.DishID, d.DishName, COUNT(f.userId) as count " +
+            "FROM Dish d LEFT JOIN FavoriteDish f ON d.DishID = f.dishId " +
+            "WHERE d.MerchantID = #{merchantId} " +
+            "GROUP BY d.DishID, d.DishName")
+    List<UserFavoriteDish> findDishFavoriteCountsByMerchant(@Param("merchantId") Long merchantId);
 
     @Select("SELECT * FROM Review WHERE dishId = #{dishId}")
     List<Review> dishReview(@Param("dishId") Long dishId);

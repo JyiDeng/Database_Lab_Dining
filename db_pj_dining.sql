@@ -193,6 +193,10 @@ CREATE TABLE FavoriteMerchant (
 INSERT INTO `FavoriteMerchant` VALUES (1,2,2,'2024-4-30 5:30:25');
 INSERT INTO `FavoriteMerchant` VALUES (2,1,1,'2024-5-6 7:30:00');
 INSERT INTO `FavoriteMerchant` VALUES (3,3,3,'2024-5-15 23:59:58');
+INSERT INTO `FavoriteMerchant` (userId,merchantId,favoriteDate)VALUES (2,4,'2024-5-15 23:59:58');
+INSERT INTO `FavoriteMerchant` (userId,merchantId,favoriteDate)VALUES (5,4,'2024-5-16 3:59:58');
+INSERT INTO `FavoriteMerchant` (userId,merchantId,favoriteDate)VALUES (4,4,'2024-5-25 13:59:58');
+INSERT INTO `FavoriteMerchant` (userId,merchantId,favoriteDate)VALUES (3,5,'2024-5-5 23:59:58');
 
 DROP TABLE IF EXISTS `FavoriteDish`;
 CREATE TABLE FavoriteDish (
@@ -206,6 +210,12 @@ CREATE TABLE FavoriteDish (
 INSERT INTO `FavoriteDish` VALUES (1,2,1,'2024-5-30 15:30:25');
 INSERT INTO `FavoriteDish` VALUES (2,1,1,'2024-6-6 7:50:00');
 INSERT INTO `FavoriteDish` VALUES (3,3,3,'2024-6-15 13:59:58');
+INSERT INTO `FavoriteDish` (userId,dishId,favoriteDate) VALUES (3,4,'2024-6-15 13:00:58');
+INSERT INTO `FavoriteDish` (userId,dishId,favoriteDate) VALUES (5,4,'2024-4-15 23:59:05');
+INSERT INTO `FavoriteDish` (userId,dishId,favoriteDate) VALUES (6,4,'2024-6-15 3:59:58');
+INSERT INTO `FavoriteDish` (userId,dishId,favoriteDate) VALUES (7,9,'2024-5-15 13:59:00');
+INSERT INTO `FavoriteDish` (userId,dishId,favoriteDate) VALUES (6,9,'2024-6-10 13:59:58');
+INSERT INTO `FavoriteDish` (userId,dishId,favoriteDate) VALUES (4,9,'2024-6-5 13:59:40');
 
 
 DROP TABLE IF EXISTS `Review`;

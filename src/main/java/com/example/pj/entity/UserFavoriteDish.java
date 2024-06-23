@@ -17,5 +17,6 @@ public class UserFavoriteDish {
     private Long dishId;
     private String dishName; // 查询用
     private String favoriteDate;
+    private Integer count;
 
 }

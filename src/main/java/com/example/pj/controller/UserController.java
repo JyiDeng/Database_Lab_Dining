@@ -115,6 +115,12 @@ public class UserController {
         return "favoriteAddSuccess";
     }
 
+    @RequestMapping("/{userId}/dishFavoriteCounts")
+    public String getDishFavoriteCounts(Model model, @PathVariable Long userId, @RequestParam Long merchantId) {
+        List<UserFavoriteDish> dishFavoriteCounts = userMapper.findDishFavoriteCountsByMerchant(merchantId);
+        model.addAttribute("dishFavoriteCounts", dishFavoriteCounts);
+        return "favoriteDishCount";
+    }
 
     // 查询用户订单
     @RequestMapping("/{userId}/viewOrders")

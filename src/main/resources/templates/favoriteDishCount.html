@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>商户菜品收藏量</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+<h1>商户菜品收藏量</h1>
+<table>
+  <thead>
+  <tr>
+    <th>菜品ID</th>
+    <th>菜品名称</th>
+    <th>收藏量</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="dishFavoriteCount : ${dishFavoriteCounts}">
+    <td th:text="${dishFavoriteCount.dishId}"></td>
+    <td th:text="${dishFavoriteCount.dishName}"></td>
+    <td th:text="${dishFavoriteCount.count}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>
