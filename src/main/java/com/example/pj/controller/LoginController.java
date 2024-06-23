@@ -41,7 +41,7 @@ public class LoginController {
             return ResponseEntity.ok().body(Collections.singletonMap("redirectUrl",redirectUrl));
 //            return ResponseEntity.status(302).header("Location", redirectUrl).build();
         } else {
-            return ResponseEntity.status(401).body("Invalid credentials");
+            return ResponseEntity.status(401).body("账号或密码错误！");
         }
     }
 }

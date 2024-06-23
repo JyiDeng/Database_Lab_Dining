@@ -8,8 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 //@RestController
 // 如果用Controller才能用html加载，如果用RestController才能用文字加载
@@ -230,7 +230,7 @@ public class UserController {
         model.addAttribute("reviews", reviews);
         Float rating = dishMapper.getAvgRating(dishId);
         model.addAttribute("rating", rating);
-        return "reviewDish"; // 返回模板文件名
+        return "reviews"; // 返回模板文件名
     }
 
     // 查询菜品的最新价格
@@ -265,9 +265,17 @@ public class UserController {
 
 
     @RequestMapping("/{path}/msg")
-    public String getUserMessages( Model model,@RequestParam int userId,@PathVariable String path) {
+    public String getUserMessages( Model model,@RequestParam Long userId,@PathVariable String path) {
         List<Message> messages = messageMapper.getMessagesByUserId(userId);
         model.addAttribute("messages",messages);
         return "messages";
     }
+
+    @RequestMapping("/{path}/sales")
+    public String getSales( Model model,@PathVariable String path) {
+        List<Sales> sales = dishMapper.getSales();
+        model.addAttribute("sales",sales);
+        return "sales";
+    }
+
 }

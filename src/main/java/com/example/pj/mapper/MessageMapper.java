@@ -9,5 +9,5 @@ import java.util.List;
 @Mapper
 public interface MessageMapper {
     @Select("SELECT * FROM message WHERE user_id = #{userId}")
-    List<Message> getMessagesByUserId(int userId);
+    List<Message> getMessagesByUserId(Long userId);
 }

@@ -67,9 +67,10 @@
       <td th:text="${item.price}">单价</td>
       <td th:text="${item.quantity * item.price}">本项总价</td>
     </tr>
+    <!--应该用sql计算出总价-->
     <!--<tr>-->
     <!--  <td colspan="4" style="text-align:right;"><strong>总价:</strong></td>-->
-    <!--  <td th:text="${#numbers.formatDecimal(orderItems.stream().mapToDouble(item -> item.quantity * item.price).sum(), 2, 'POINT', 'COMMA')}">总价</td>-->
+    <!--  <td th:text="${#numbers.formatDecimal(orderItems.stream().mapToDouble( item.quantity * item.price).sum(), 2, 'POINT', 'COMMA')}">总价</td>-->
     <!--</tr>-->
     </tbody>
 
@@ -77,7 +78,26 @@
 
   </table>
   <br><br><br><br>
-  <button type="button" >点击提交订单</button>
+  <button type="button" th:attr="onclick=|submitOrder()|">增加1份</button>
 </div>
+<script>
+  function submitOrder(){
+    var currentUrl = window.location.href;
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/orderDetail')) + `/orderSubmitSuccess?orderId=${orderId}`;
+    // 获取orderId=6那个6，传进去是不是就能把orderId提交？其实提交只是改一个status=completed
+    console.log(createOrderUrl);
+    window.location.href = createOrderUrl;
+
+    var msg;
+    if (change===1) msg = "增加成功！";
+    else msg = "减少成功！（最低为0份）";
+
+
+    fetch(createOrderUrl, {
+      method: 'POST'
+
+    })
+  }
+</script>
 </body>
 </html>

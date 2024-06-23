@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>viewOrders</title>
+    <title>查看所有订单</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -58,6 +58,8 @@
     </script>
 </head>
 <body>
+<div class="container">
+    <h1>查看所有订单</h1>
 <table>
     <thead>
     <tr>
@@ -82,9 +84,13 @@
         <td th:text="${order.orderType}">订单类型</td>
         <td>
             <button type="button" th:attr="onclick=|redirectToOrderItems([[${order.orderId}]])|">查看订单详情</button>
+            <button type="button" th:if="${order.status=='Completed'}" th:attr="onclick=|confirmAcception([[${order.orderId}]])|">确认收到餐品</button>
+            <button type="button" th:if="${order.status=='Ended'}" th:attr="onclick=|reviewMerchant([[${order.orderId}]])|">评价商家</button>
+            <button type="button" th:if="${order.status=='Ended'}" th:attr="onclick=|reviewDish([[${order.orderId}]])|">评价菜品</button>
         </td>
     </tr>
     </tbody>
 </table>
+</div>
 </body>
 </html>

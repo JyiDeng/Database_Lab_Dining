@@ -55,18 +55,13 @@ public interface DishMapper {
     List<Map<String, Object>> getFavoriteCountsByMerchantId(Long merchantId);
 
     // 查询各个菜品通过排队点餐和在线点餐的销量
-    @Select("SELECT \n" +
-            "    oi.DishID,\n" +
-            "    d.Name AS DishName,\n" +
-            "    SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END) AS QueueSales,\n" +
-            "    SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END) AS OnlineSales\n" +
-            "FROM \n" +
-            "    Order o\n" +
-            "JOIN \n" +
-            "    OrderItem oi ON o.OrderID = oi.OrderID\n" +
-            "JOIN \n" +
-            "    Dish d ON oi.DishID = d.DishID\n" +
-            "GROUP BY \n" +
-            "    oi.DishID, d.Name;")
-    List<Map<String, Object>> getSalesByDishId(Long dishId);
+    @Select("SELECT oi.DishID AS dishId, d.dishName AS DishName, m.MerchantName AS merchantName " +
+            ",SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END) AS QueueSales, " +
+            "SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END) AS OnlineSales " +
+            "FROM MyOrder o " +
+            "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
+            "JOIN Dish d ON oi.DishID = d.DishID " +
+            "LEFT JOIN merchant m on d.merchantId = m.merchantId " +
+            "GROUP BY oi.DishID, d.dishName ;")
+    List<Sales> getSales();
 }

@@ -12,12 +12,10 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 @ToString
 
-public class Review {
-    private Long reviewId;
-    private Long userId;
-    private Long merchantId;
+public class Sales {
     private Long dishId;
-    private Float rating;
-    private String content;
-    private String reviewDate;
+    private String merchantName;
+    private String dishName;
+    private Integer queueSales;
+    private Integer onlineSales;
 }

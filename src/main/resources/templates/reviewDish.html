@@ -1,86 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>merchantReview</title>
-  <link rel="stylesheet" href="/css/mycss.css">
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f9f9f9;
-    }
-    .container {
-      width: 80%;
-      margin: 0 auto;
-      padding: 20px;
-      background-color: #fff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      border-radius: 8px;
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-    }
-    h2 {
-      text-align: center;
-      color: #333;
-    }
-    h3 {
-      text-align: center;
-      color: #333;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 20px 0;
-    }
-    table, th, td {
-      border: 1px solid #ccc;
-    }
-    th, td {
-      padding: 10px;
-      text-align: left;
-    }
-    th {
-      background-color: #f2f2f2;
-    }
-    tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-    tr:hover {
-      background-color: #f1f1f1;
-    }
-  </style>
+    <title>订单评价</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        table, th, td {
+            border: 1px solid #ccc;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+    </style>
 </head>
-
 <body>
-
-<table>
-  <thead>
-  <tr>
-    <th>商户ID</th>
-    <th>评价ID</th>
-    <th>菜品名称</th>
-    <th>评价星级</th>  <!--经过平均值计算得出-->
-    <th>评价内容</th>
-    <th>评价日期</th>
-
-  </tr>
-  </thead>
-  <tbody>
-  <tr th:each="review : ${reviews}">
-    <td th:text="${review.merchantId}">商户ID</td>
-    <td th:text="${review.reviewId}">评价ID</td>
-    <td th:text="${review.dishId}">菜品名称</td>
-    <td th:text="${rating}">评价星级</td>
-    <td th:text="${review.content}">评价内容</td>
-    <td th:text="${review.reviewDate}">评价日期</td>
-
-  </tr>
-  </tbody>
-
-</table>
+<div class="container">
+<h1>订单评价页面</h1>
+<form th:action="@{/submitReview}" method="post">
+    <label for="dish">选择菜品:</label>
+    <select id="dish" name="dish">
+        <option th:each="dish : ${dishes}" th:text="${dish}" th:value="${dish}"></option>
+    </select>
+    <br><br>
+    <label for="rating">选择评分:</label>
+    <select id="rating" name="rating">
+        <option value="1">1星</option>
+        <option value="2">2星</option>
+        <option value="3">3星</option>
+        <option value="4">4星</option>
+        <option value="5">5星</option>
+    </select>
+    <br><br>
+    <label for="review">评价内容:</label>
+    <textarea id="review" name="review"></textarea>
+    <br><br>
+    <button type="submit">提交评价</button>
+</form>
+</div>
 </body>
 </html>
