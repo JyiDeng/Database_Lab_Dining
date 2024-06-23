@@ -97,7 +97,7 @@ public class MerchantController {
         }
 
         if (menuMapper.findMenuItemById(menuItemId) == null) {
-            MenuItem menuItem = new MenuItem(menuItemId,dishId,null,null);  //测试dishName，后续查询了可以显示dishName！
+            MenuItem menuItem = new MenuItem(menuItemId,dishId,null,null,null);  //测试dishName，后续查询了可以显示dishName！
             menuMapper.insertMenuItem(menuItem);
             return "MenuItem " + menuItemId + " is added successfully!";
         }else{

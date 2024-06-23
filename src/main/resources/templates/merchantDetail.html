@@ -90,6 +90,7 @@
   </tbody>
 
 </table>
+<br><br><br><br>
 <div class="container">
 
   <form onsubmit="redirectToSearchDish(event)">
@@ -101,6 +102,22 @@
   </form>
 
 </div>
+<br><br><br><br>
+<div class="container" th:if="${!hasPendingOrder}">
+  <h3>当前您在该商家没有正在进行中的订单，请选择订单类型，点击按钮创建订单。</h3>
+  <label for="orderType">订单类型：</label>
+  <select id="orderType">
+    <option value="Queue">线下取餐</option>
+    <option value="Online">线上点餐</option>
+  </select>
+  <button id="createOrderButton" th:attr="onclick=|createOrder([[${userId}]],[[${merchant.getMerchantId()}]],'Pending')|">创建订单</button>
+</div>
+<div class="container" th:if="${hasPendingOrder}">
+  <h3>当前您在该商家已有订单，请前往订单界面查看。</h3>
+  <button id="viewOrders" th:attr="onclick=|viewOrders()|">查看订单</button>
+</div>
+
+
 <script>
   // setTimeout(
     function redirectToMenu() {
@@ -108,9 +125,26 @@
     var newUrl = currentUrl.replace('/searchMerchantDetails', '/menuItems');
     window.location.href = newUrl;
 
-  }
-  // ,2000);
 
+  }
+  function viewOrders() {
+    var currentUrl = window.location.href;
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/searchMerchantDetails')) + `/viewOrders`;
+    console.log(createOrderUrl);
+    window.location.href = createOrderUrl;
+  }
+  let createOrderUrl;
+  // ,2000);
+    function createOrder(userId, merchantId, status) {
+      const orderType = document.getElementById('orderType').value;
+      redirectToCreateOrder(userId, merchantId, status,orderType);
+    }
+  function redirectToCreateOrder(userId, merchantId, status,orderType) {
+    var currentUrl = window.location.href;
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/searchMerchantDetails')) + `/createOrder?userId=${userId}&merchantId=${merchantId}&status=${status}&orderType=${orderType}`;
+    console.log(createOrderUrl);
+    window.location.href = createOrderUrl;
+  }
 
   // setTimeout(
     async function redirectToSearchDish() {

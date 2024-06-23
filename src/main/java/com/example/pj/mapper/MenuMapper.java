@@ -72,10 +72,13 @@ public interface MenuMapper {
     @Update("UPDATE menuPrice SET endDate = #{endDate} WHERE menuItemID = #{menuItemID} AND endDate IS NULL")
     void updateMenuPriceEndDate(@Param("menuItemID") Long menuItemId, @Param("endDate") String endDate);
 
-    @Select("SELECT mi.*, d.dishName, mp.price " +
+    @Select("SELECT mi.*, " +
+//            "oi.quantity as quantity, " +
+            "d.dishName, mp.price " +
             "FROM menuItem mi " +
             "JOIN Dish d ON mi.dishID = d.DishID " +
             "JOIN menuPrice mp on mi.menuItemId = mp.menuItemId " +
+//            "left JOIN orderItem oi on oi.dishId = d.dishId " +
             "WHERE d.merchantID = #{merchantId} " +
             "AND mp.endDate IS NULL")
     List<MenuItem> getMenuItemsByMerchantId(Long merchantId);

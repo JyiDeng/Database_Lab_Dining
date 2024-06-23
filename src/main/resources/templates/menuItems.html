@@ -58,7 +58,7 @@
   </style>
 </head>
 <body>
-<div class="container">
+<div class="container" >
   <h1>菜单概览-您的界面</h1>
   <table>
     <thead>
@@ -66,7 +66,7 @@
       <th>菜单项目ID</th>
       <th>菜品名称</th>
       <th>价格</th>
-      <th>已选数量</th>
+      <!--<th>已选数量</th>-->
       <th>操作</th>
     </tr>
     </thead>
@@ -75,18 +75,21 @@
       <td th:text="${menuItem.menuItemId}">菜单项目ID</td>
       <td th:text="${menuItem.dishName}">菜品名称</td>
       <td th:text="${menuItem.price}">价格</td>
-      <!--<td id="quantity-${menuItem.menuItemId}">0</td>-->
-      <td id="quantity">0</td>
-      <td>
-        <button type="button" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]], 1, [[${userId}]],[[${merchantId}]])|">增加1份</button>
-        <button type="button" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]],-1, [[${userId}]],[[${merchantId}]])|">减少1份</button>
+      <!--<td id="quantity-${menuItem.menuItemId}" th:text="${menuItem.quantity}">已选数量</td>-->
+      <!--<td id="quantity" th:text="${menuItem.quantity}">已选数量</td>-->
+      <!--<td id="quantity">0</td>-->
+      <td >
+        <button type="button" th:if="${hasPendingOrder}" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]], 1, [[${userId}]],[[${merchantId}]],[[${menuItem.dishId}]])|">增加1份</button>
+        <button type="button" th:if="${hasPendingOrder}" th:attr="onclick=|updateQuantity([[${menuItem.menuItemId}]],-1, [[${userId}]],[[${merchantId}]],[[${menuItem.dishId}]])|">减少1份</button>
+        <!--<button type="button" th:attr="onclick=|updateOrder([[${menuItem.dishId}]],[[${merchantId}]],[[${menuItem.menuItemId}]])|">确认提交点餐修改</button>-->
       </td>
     </tr>
     </tbody>
   </table>
-  <button type="button" th:attr="onclick=|updateOrder([[${menuItems}]],[[${merchantId}]])|">确认提交点餐修改</button>
+
 </div>
-<br><br><br><br><br>
+
+<br>
 
 <div class="container" th:if="${!hasPendingOrder}">
   <h3>当前您在该商家没有正在进行中的订单，请选择订单类型，点击按钮创建订单。</h3>
@@ -101,31 +104,45 @@
   <h3>当前您在该商家已有订单，请前往订单界面查看。</h3>
   <button id="viewOrders" th:attr="onclick=|viewOrders()|">查看订单</button>
 </div>
+
+
+<br><br><br><br><br>
+<div  class="container" id="messageBox" style="display:none;">
+  <p id="messageText"></p>
+</div>
+
+
+
+
 <script th:inline="javascript">
   let order = {}; // 记录已选数量
+  let currentQuantity = 0;
+
+  function updateQuantity(menuItemId, change,userId,merchantId,dishId) {
 
 
-  function updateQuantity(menuItemId, change,userId,merchantId) {
-    var quantityElement = document.getElementById(`quantity`);
-    let currentQuantity = parseInt(quantityElement.innerText);
+    // var quantityElement = document.getElementById(`quantity`);
+    // let currentQuantity = parseInt(quantityElement.innerText);
 
     // 更新数量
+    // 这个只是在显示上、在后台临时存了数据，没有正式存入变化
     currentQuantity += change;
     if (currentQuantity < 0) {
       currentQuantity = 0;
     }
 
     // 更新DOM中的数量显示
-    quantityElement.innerText = currentQuantity;
+    // quantityElement.innerText = currentQuantity;
 
     // 更新购物车
-    if (currentQuantity > 0) {
-      order[menuItemId] = currentQuantity;
-    } else {
-      delete order[menuItemId];
-    }
+    // if (currentQuantity > 0) {
+    //   order[menuItemId] = currentQuantity;
+    // } else {
+    //   delete order[menuItemId];
+    // }
     //
-    // updateOrder(menuItemId, currentQuantity,userId,merchantId);
+    // 这个真正在后台存了数据
+    updateOrder(dishId,merchantId,change);
   }
 
   let createOrderUrl;
@@ -148,32 +165,40 @@
   }
 
 
-  function updateOrder(menuItems,merchantId) {
-    // menuItemId, quantity,userId,merchantId
+  function updateOrder(dishId,merchantId,change) {
+
     var currentUrl = window.location.href;
-    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/menuItems')) + `/updateOrder3?&merchantId=${merchantId}&menuItems=${JSON.stringify(menuItems)}`;
-    console.log(createOrderUrl);
-    // // redirect
-    // window.location.href = createOrderUrl;
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/menuItems')) + `/updateOrder3?&merchantId=${merchantId}&dishId=${dishId}&count=${currentQuantity}`;
+    var msg;
+    if (change===1) msg = "增加成功！";
+    else msg = "减少成功！（最低为0份）";
+
+
     fetch(createOrderUrl, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        menuItems: menuItems,
-        // userId: userId,
-        merchantId: merchantId
-      })
+      method: 'POST'
+
     })
-            .then(response => response.json())
+
             .then(data => {
               console.log('Success:', data);
+              showMessage(msg);
             })
             .catch((error) => {
               console.error('Error:', error);
+              showMessage(msg);
             });
   }
+
+  function showMessage(message) {
+    var messageBox = document.getElementById("messageBox");
+    var messageText = document.getElementById("messageText");
+    messageText.innerText = message;
+    messageBox.style.display = "block";
+    setTimeout(() => {
+      messageBox.style.display = "none";
+    }, 3000);
+  }
+
 </script>
 </body>
 </html>

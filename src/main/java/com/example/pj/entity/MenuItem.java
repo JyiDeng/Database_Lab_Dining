@@ -17,5 +17,5 @@ public class MenuItem {
     private Long dishId;
     private Float price;
     private String dishName; // 测试可以：表里没有、通过sql语句查询的时候可用
-//    private Integer quantity; // menuItem不应该有quantity，OrderItem有
+//    private Integer quantity; // menuItem的quantity是查询得出的，OrderItem有货真价实的自己的属性
 }

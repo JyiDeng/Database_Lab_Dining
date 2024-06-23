@@ -53,7 +53,7 @@
     <thead>
     <tr>
       <th>订单项编号</th>
-      <th>菜品编号</th>
+      <th>菜品名称</th>
       <th>数量</th>
       <th>单价</th>
       <th>本项总价</th>
@@ -62,7 +62,7 @@
     <tbody>
     <tr th:each="item : ${orderItems}">
       <td th:text="${item.orderItemId}">订单项编号</td>
-      <td th:text="${item.dishId}">菜品编号</td>
+      <td th:text="${item.dishName}">菜品名称</td>
       <td th:text="${item.quantity}">数量</td>
       <td th:text="${item.price}">单价</td>
       <td th:text="${item.quantity * item.price}">本项总价</td>

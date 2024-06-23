@@ -17,8 +17,11 @@ public interface OrderMapper {
 //    @Insert("INSERT INTO OrderItem (OrderID, DishID, Quantity, Price) VALUES (#{orderId}, #{dishId}, #{quantity}, #{price})")
 //    void insertOrderItem(@Param("orderId") Long orderId, @Param("dishId") Long dishId, @Param("quantity") Long quantity, @Param("price") Float price);
 
-    @Select("SELECT COUNT(*) FROM myOrder WHERE merchantID = #{merchantID} AND Status = 'Pending'")
-    Long countPendingOrders(@Param("merchantID") Long merchantId);
+    @Select("SELECT COUNT(*) FROM myOrder " +
+            "WHERE merchantID = #{merchantID} " +
+            "AND userId = #{userId} " +
+            "AND Status = 'Pending'")
+    Long countPendingOrders(@Param("merchantID") Long merchantId, Long userId);
 
 
     // 查询订单
@@ -33,10 +36,10 @@ public interface OrderMapper {
     @Select("SELECT * FROM MyOrder WHERE UserID = #{userId}")
     List<MyOrder> getOrdersByUserId(Long userId);
 
-    @Select("SELECT oi.*, mp.price AS price " +
+    @Select("SELECT oi.*, mp.price AS price,d.dishName as dishName " +
             "FROM OrderItem oi " +
             "JOIN menuItem mi ON oi.dishID = mi.dishID " +
-//            "JOIN dish d ON oi.dishID = d.dishID " +
+            "JOIN dish d ON oi.dishID = d.dishID " +
             "JOIN menuPrice mp ON mi.menuItemId = mp.menuItemID " +
             "WHERE oi.OrderID = #{orderId} " +
 //            "AND d.merchantId = #{path} " +

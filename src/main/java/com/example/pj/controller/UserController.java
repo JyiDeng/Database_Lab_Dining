@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 //@RestController
@@ -58,6 +59,9 @@ public class UserController {
     public String getMerchantDetails(@RequestParam Long id, Model model,@PathVariable Long path) {
         Merchant merchant = merchantMapper.getMerchantDetails(id);
         model.addAttribute("merchant",merchant);
+        model.addAttribute("userId",path);
+        Long pendingCount = orderMapper.countPendingOrders(id,path);
+        model.addAttribute("hasPendingOrder", pendingCount > 0);
         return "merchantDetail";
     }
 
@@ -192,48 +196,31 @@ public class UserController {
     }
 
     @RequestMapping("/{path}/updateOrder3")
-    public String updateOrder3( @PathVariable String path,@RequestParam List<MenuItem> menuItems,Long merchantId) {
+    public String updateOrder3( @PathVariable String path,@RequestParam Long dishId,Long merchantId,Long count) {
 
-        for(MenuItem menuItem: menuItems){
+//        for(MenuItem menuItem: menuItems){
 //            Long menuItemId = menuItem.getMenuItemId();
-            Long dishId = menuItem.getDishId();
+//            Long dishId = menuItem.getDishId();
+        try{
             Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
             OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
-            Long quantity = orderItem.getQuantity();
+
             if (orderItem == null) {
-                orderMapper.insertOrderItem(orderId, dishId, quantity);
+                orderMapper.insertOrderItem(orderId, dishId, count);
             } else {
-                if (quantity > 0) {
-                    orderMapper.updateOrderItemQuantity(orderId, dishId, quantity);
+//                Long quantity = orderItem.getQuantity();
+                if (count > 0) {
+                    orderMapper.updateOrderItemQuantity(orderId, dishId, count);
                 } else {
                     orderMapper.deleteOrderItem(orderId, dishId);
                 }
             }
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
         return "orderUpdateSuccess";
     }
-    //        try {
-//            updateOrder(menuItemId, quantity,merchantId);
-//            return ResponseEntity.ok().body("Order updated successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order: " + e.getMessage());
-//        }
-    public void updateOrder(Long menuItemId, Long quantity, Long merchantId) {
 
-        Long dishId = orderMapper.findDishIdByMenuItemId(menuItemId);
-        Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
-        OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
-
-        if (orderItem == null) {
-            orderMapper.insertOrderItem(orderId, dishId, quantity);
-        } else {
-            if (quantity > 0) {
-                orderMapper.updateOrderItemQuantity(orderId, dishId, quantity);
-            } else {
-                orderMapper.deleteOrderItem(orderId, dishId);
-            }
-        }
-    }
     
     
     
@@ -268,8 +255,11 @@ public class UserController {
         model.addAttribute("menuItems",menuItems);
         model.addAttribute("userId",path);
         model.addAttribute("merchantId",id);
-        Long pendingCount = orderMapper.countPendingOrders(id);
+        Long pendingCount = orderMapper.countPendingOrders(id,path);
         model.addAttribute("hasPendingOrder", pendingCount > 0);
+//        Long orderId = orderMapper.findOrderIdByMerchantId(id);
+//        List<Long> quantities = new ArrayList<>();
+
         return "menuItems";
     }
 

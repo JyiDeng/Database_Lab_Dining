@@ -31,19 +31,6 @@ public class OrderController {
 //        return "Order created successfully with ID: " + order.getOrderId();
 //    }
 
-    @RequestMapping("/orders/{merchantId}")
-    public String getOrdersByMerchantId(@PathVariable Long merchantId, Model model) {
-        List<Map<String, Object>> orders = orderMapper.getOrdersByMerchantId(merchantId);
-        Long pendingCount = orderMapper.countPendingOrders(merchantId);
-
-        model.addAttribute("orders", orders);
-        model.addAttribute("hasPendingOrder", pendingCount > 0);
-
-        return "orderView";
-    }
-
-    @Autowired
-    private OrderService orderService;
 
 
 
