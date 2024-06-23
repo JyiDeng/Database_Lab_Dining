@@ -3,8 +3,6 @@ package com.example.pj.controller;
 import com.example.pj.entity.User;
 import com.example.pj.mapper.MerchantMapper;
 import com.example.pj.mapper.UserMapper;
-import com.example.pj.service.MerchantService;
-import com.example.pj.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,12 +12,12 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
-    @Autowired
-    private UserService userService;
+//    @Autowired
+//    private UserService userService;
     @Autowired
     UserMapper userMapper;
-    @Autowired
-    private MerchantService merchantService;
+//    @Autowired
+//    private MerchantService merchantService;
     @Autowired
     MerchantMapper merchantMapper;
 

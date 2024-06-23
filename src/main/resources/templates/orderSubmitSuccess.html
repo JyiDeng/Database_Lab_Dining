@@ -5,6 +5,15 @@
 </head>
 <body>
 <h1>订单提交成功！</h1>
+<button type="button" th:attr="onclick=|redirectToAllOrders()|">返回查看所有订单</button>
 
+<script>
+  function redirectToAllOrders(){
+    var currentUrl = window.location.href;
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/orderSubmitSuccess')) + `/viewOrders`;
+    console.log(createOrderUrl);
+    window.location.href = createOrderUrl;
+  }
+</script>
 </body>
 </html>

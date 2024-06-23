@@ -267,9 +267,9 @@ CREATE TABLE MyOrder (
     FOREIGN KEY (UserID) REFERENCES User(UserID),
     FOREIGN KEY (merchantID) REFERENCES merchant(merchantID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `MyOrder` VALUES(1,1,1,'2024-5-1 6:32:29','Completed','Queue',30);
-INSERT INTO `MyOrder` VALUES(2,3,2,'2024-5-8 18:10:10','Cancelled','Queue',99.9);
-INSERT INTO `MyOrder` VALUES(3,2,3,'2024-5-17 13:29:20','Pending','Online',10.24);
+INSERT INTO `MyOrder` VALUES(1,1,1,'2024-5-1 6:32:29','Completed','Queue',0);  # totalPrice应该由查询得出
+INSERT INTO `MyOrder` VALUES(2,3,2,'2024-5-8 18:10:10','Cancelled','Queue',0);
+INSERT INTO `MyOrder` VALUES(3,2,3,'2024-5-17 13:29:20','Pending','Online',0);
 
 DROP TABLE IF EXISTS `OrderItem`;
 CREATE TABLE OrderItem (
@@ -285,9 +285,9 @@ CREATE TABLE OrderItem (
 # INSERT INTO `OrderItem` VALUES (1,1,2,3,4.9);
 # INSERT INTO `OrderItem` VALUES (2,2,2,5,8);
 # INSERT INTO `OrderItem` VALUES (3,3,3,1,25);
-INSERT INTO `OrderItem` VALUES (1,1,2,0);
-INSERT INTO `OrderItem` VALUES (2,2,2,0);
-INSERT INTO `OrderItem` VALUES (3,3,3,0);
+INSERT INTO `OrderItem` VALUES (1,1,2,1);  # quantity应该由按钮增加，但这里可以作为效果展示
+INSERT INTO `OrderItem` VALUES (2,2,2,1);
+INSERT INTO `OrderItem` VALUES (3,3,3,1);
 
 DROP TABLE IF EXISTS `Admin`;
 CREATE TABLE Admin (

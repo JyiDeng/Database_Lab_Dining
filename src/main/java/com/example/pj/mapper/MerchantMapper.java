@@ -7,8 +7,8 @@ import java.util.List;
 
 @Mapper
 public interface MerchantMapper {
-    @Select("SELECT * FROM merchant")
-    List<User> findAll();
+//    @Select("SELECT * FROM merchant")
+//    List<User> findAll();
 
 
 
@@ -22,8 +22,8 @@ public interface MerchantMapper {
     @Select("SELECT * FROM merchant WHERE MerchantID = #{merchantId}")
     Merchant getMerchantDetails(@Param("merchantId") Long merchantId);
 
-    @Select("SELECT * FROM dish WHERE MerchantID = #{merchantId}")
-    List<Dish> getDishesByMerchantID(@Param("merchantId") Long merchantId);
+//    @Select("SELECT * FROM dish WHERE MerchantID = #{merchantId}")
+//    List<Dish> getDishesByMerchantID(@Param("merchantId") Long merchantId);
 
 
 

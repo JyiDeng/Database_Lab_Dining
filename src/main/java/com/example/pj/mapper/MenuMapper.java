@@ -56,7 +56,7 @@ public interface MenuMapper {
     @Select("SELECT * FROM menuPrice WHERE menuItemID = #{menuItemId} ORDER BY effectiveDate DESC LIMIT 1")
     MenuPrice findLatestByMenuItemId(Long menuItemId);
 
-    @Insert("INSERT INTO menuPrice (menuItemID, price, effectiveDate, endDate) VALUES (#{menuItemId}, #{price}, #{effectiveDate})")
+    @Insert("INSERT INTO menuPrice (menuItemID, price, effectiveDate) VALUES (#{menuItemId}, #{price}, #{effectiveDate})")
     @Options(useGeneratedKeys = true, keyProperty = "menuPriceId")
     void insertMenuPrice(MenuPrice menuPrice);
 
@@ -71,18 +71,26 @@ public interface MenuMapper {
             "WHERE mi.menuItemId = #{menuItemId}")
     List<MenuPrice> findAllPriceByMenuItemId(Long menuItemId);
 
-    @Update("UPDATE menuPrice SET endDate = #{endDate} WHERE menuItemID = #{menuItemID} AND endDate IS NULL")
-    void updateMenuPriceEndDate(@Param("menuItemID") Long menuItemId, @Param("endDate") String endDate);
+//    @Update("UPDATE menuPrice SET endDate = #{endDate} WHERE menuItemID = #{menuItemID} AND endDate IS NULL")
+//    void updateMenuPriceEndDate(@Param("menuItemID") Long menuItemId, @Param("endDate") String endDate);
 
     @Select("SELECT mi.*, " +
-//            "oi.quantity as quantity, " +
             "d.dishName, mp.price " +
             "FROM menuItem mi " +
             "JOIN Dish d ON mi.dishID = d.DishID " +
             "JOIN menuPrice mp on mi.menuItemId = mp.menuItemId " +
-//            "left JOIN orderItem oi on oi.dishId = d.dishId " +
-            "WHERE d.merchantID = #{merchantId} " +
-            "AND mp.endDate IS NULL")
+//            "JOIN (SELECT menuItemId, MAX(effectiveDate) AS maxDate " +
+//            "FROM menuPrice" +
+//            "GROUP BY menuItemId) sub " +
+//            "ON mp.menuItemId = sub.menuItemId " +
+//            "AND mp.effectiveDate = sub.maxDate " +
+//            "WHERE d.merchantID = #{merchantId}")
+            "WHERE d.merchantID = #{merchantId} "
+            +
+            "AND mp.effectiveDate = " +
+            "(SELECT MAX(effectiveDate) " +
+            "FROM menuPrice " +
+            " WHERE menuItemId = mi.menuItemId)")
     List<MenuItem> getMenuItemsByMerchantId(Long merchantId);
 
 

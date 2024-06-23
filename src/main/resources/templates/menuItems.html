@@ -119,16 +119,20 @@
   // let currentQuantity = 0;
 
   function updateQuantity(menuItemId, change,userId,merchantId,dishId) {
-
+    let currentQuantity = 0;
 
     // var quantityElement = document.getElementById(`quantity`);
     // let currentQuantity = parseInt(quantityElement.innerText);
 
     // 更新数量
     // 这个只是在显示上、在后台临时存了数据，没有正式存入变化
-    order[menuItemId] += change;
-    if (order[menuItemId] < 0) {
-      order[menuItemId] = 0;
+    // order[menuItemId] += change;
+    // if (order[menuItemId] < 0) {
+    //   order[menuItemId] = 0;
+    // }
+    currentQuantity += change;
+    if (currentQuantity < 0) {
+      currentQuantity = 0;
     }
 
     // 更新DOM中的数量显示

@@ -24,27 +24,28 @@ public interface OrderMapper {
     Long countPendingOrders(@Param("merchantID") Long merchantId, Long userId);
 
 
-    // 查询订单
-    @Select("SELECT * FROM MyOrder WHERE UserID = #{userId}")
-    List<MyOrder> findOrdersByUserId(Long userId);
-
 
     @Select("SELECT * FROM myOrder o LEFT JOIN OrderItem oi ON o.OrderID = oi.OrderID WHERE o.merchantID = #{merchantID}")
     List<Map<String, Object>> getOrdersByMerchantId(@Param("merchantID") Long merchantId);
 
-
+    // 查询订单
     @Select("SELECT * FROM MyOrder WHERE UserID = #{userId}")
     List<MyOrder> getOrdersByUserId(Long userId);
 
     @Select("SELECT oi.*, mp.price AS price,d.dishName as dishName " +
             "FROM OrderItem oi " +
             "JOIN menuItem mi ON oi.dishID = mi.dishID " +
-            "JOIN dish d ON oi.dishID = d.dishID " +
+            "left JOIN dish d ON oi.dishID = d.dishID " +
             "JOIN menuPrice mp ON mi.menuItemId = mp.menuItemID " +
             "WHERE oi.OrderID = #{orderId} " +
+            "AND mp.effectiveDate = " +
+            "(SELECT MAX(effectiveDate) " +
+            "FROM menuPrice " +
+            "WHERE menuItemId = mi.menuItemId) "
 //            "AND d.merchantId = #{path} " +
-            "AND mp.effectiveDate <= NOW() " +
-            "AND (mp.endDate IS NULL OR mp.endDate >= NOW())")
+//            "AND mp.effectiveDate <= NOW() " +
+//            "AND (mp.endDate IS NULL OR mp.endDate >= NOW())"
+            )
     List<OrderItem> getOrderItemsByOrderId(String path, Long orderId);
 
     @Select("SELECT SUM(oi.Quantity) " +
@@ -92,5 +93,6 @@ public interface OrderMapper {
     @Delete("DELETE FROM OrderItem WHERE OrderID = #{orderId} AND DishID = #{dishId}")
     void deleteOrderItem(Long orderId, Long dishId);
 
-
+    @Update("UPDATE MyOrder SET status = 'Completed' WHERE orderId = #{orderId}")
+    void orderSubmitUpdateCompleted(Long orderId);
 }
