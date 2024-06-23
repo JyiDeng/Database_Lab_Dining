@@ -126,7 +126,7 @@ public class UserController {
 
     @RequestMapping("/{userId}/dishFavoriteCounts")
     public String getDishFavoriteCounts(Model model, @PathVariable Long userId, @RequestParam Long merchantId) {
-        List<UserFavoriteDish> dishFavoriteCounts = merchantMapper.findDishFavoriteCountsByMerchant(merchantId);
+        List<UserFavoriteDish> dishFavoriteCounts = favoriteMapper.findDishFavoriteCountsByMerchant(merchantId);
         model.addAttribute("dishFavoriteCounts", dishFavoriteCounts);
         return "favoriteDishCount";
     }

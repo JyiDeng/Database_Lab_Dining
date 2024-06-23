@@ -78,14 +78,9 @@ public class OrderController {
 //        return new SalesData(onlineSales, queueSales);
 //    }
 
-    @GetMapping("/merchant/{merchantId}/dishes/ratings-sales")
-    public List<Map<String, Object>> getDishRatingsAndSalesByMerchantId(@PathVariable Long merchantId) {
-        return orderMapper.getDishRatingsAndSalesByMerchantId(merchantId);
-    }
-
     @GetMapping("/dish/{dishId}/top-buyer")
     public Map<String, Object> getTopBuyerForDish(@PathVariable Long dishId) {
-        return orderMapper.getTopBuyerForDish(dishId);
+        return dishMapper.getTopBuyerForDish(dishId);
     }
 
     public static class SalesData {

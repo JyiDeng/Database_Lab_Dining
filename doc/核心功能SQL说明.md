@@ -24,6 +24,31 @@ FROM Review
 WHERE dishId = #{dishId}  # 当前菜品id
 ```
 
+### 查询某个商户所有菜品通过排队点餐和在线点餐的销量
+通过连接订单、订单项、菜品和商户表，并按菜品ID分组，按`OrderType`分别统计每个菜品的排队和在线订单销量。
+```sql
+SELECT oi.DishID AS dishId, d.dishName AS DishName, m.MerchantName AS merchantName,
+SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END) AS QueueSales,
+SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END) AS OnlineSales
+FROM MyOrder o
+JOIN OrderItem oi ON o.OrderID = oi.OrderID
+JOIN Dish d ON oi.DishID = d.DishID
+LEFT JOIN merchant m on d.merchantId = m.merchantId
+GROUP BY oi.DishID, d.dishName
+```
+
+### 查询某个商户购买所有菜品次数最多的人
+通过连接订单和订单项表，按照用户ID分组，计算每个用户购买该菜品的次数，然后按照购买次数降序排列，并限制结果为1条，即购买次数最多的用户。
+```sql
+SELECT oi.DishID, o.UserID, COUNT(*) as purchaseCount
+FROM OrderItem oi
+JOIN MyOrder o ON oi.OrderID = o.OrderID
+WHERE oi.DishID = #{dishId}
+GROUP BY o.UserID
+ORDER BY purchaseCount DESC
+LIMIT 1
+```
+
 
 ## FavoriteMapper
 - **主要负责**：与*收藏*相关的操作、查询
@@ -37,17 +62,21 @@ JOIN dish d ON fd.dishId = d.dishId
 WHERE fd.userId = #{userId}  # 当前用户id
 ```
 
-### 查询商户所有菜品的收藏量
-```sql
-
-```
-
 ### 收藏商户
 在收藏记录表（`FavoriteMerchant`）里插入新数据。
 ```sql
 INSERT INTO FavoriteMerchant (userId, merchantID, FavoriteDate) VALUES (#{userId}, #{merchantId}, NOW())
 ```
 
+### 查询某个商户所有菜品的收藏量
+使用`COUNT`聚合函数，计算每个菜品被收藏的次数；如果某个菜品没有被收藏，COUNT(f.userId)将为0。通过左连接收藏表与菜品表，指定商家的所有菜品的收藏量都会被返回。
+```sql
+SELECT d.DishID, d.DishName, COUNT(f.userId) as count
+FROM Dish d
+LEFT JOIN FavoriteDish f ON d.DishID = f.dishId
+WHERE d.MerchantID = #{merchantId}
+GROUP BY d.DishID, d.DishName
+```
 
 ## LoginMapper
 - **主要负责**：与*登录*相关的操作
@@ -69,32 +98,19 @@ WHERE userId = #{userId} AND password = #{password}
 INSERT INTO MyOrder (UserID, merchantID, OrderDate, Status, OrderType, TotalPrice) VALUES (#{userId}, #{merchantId}, #{orderDate}, #{status}, #{orderType}, #{totalPrice})
 ```
 
-### 获取订单中的每一项
+### 获取订单中的每一项以及当前有效的价格
+通过查找菜品价格的有效日期`MAX`值（日期值最大即最新），筛选出当前订单中每个菜品的有效价格。
 ```sql
 SELECT oi.*, mp.price AS price,d.dishName as dishName
 FROM OrderItem oi
 JOIN menuItem mi ON oi.dishID = mi.dishID
-JOIN dish d ON oi.dishID = d.dishID
+left JOIN dish d ON oi.dishID = d.dishID
 JOIN menuPrice mp ON mi.menuItemId = mp.menuItemID
 WHERE oi.OrderID = #{orderId}
-    AND mp.effectiveDate <= NOW()
-    AND (mp.endDate IS NULL OR mp.endDate >= NOW())
-```
-
-### 查询某个商户购买所有菜品次数最多的人
-```sql
-SELECT oi.DishID, o.UserID, COUNT(*) as purchaseCount
-FROM OrderItem oi
-JOIN MyOrder o ON oi.OrderID = o.OrderID
-WHERE oi.DishID = #{dishId}
-GROUP BY o.UserID
-ORDER BY purchaseCount DESC
-LIMIT 1
-```
-
-### 查询某个商户所有菜品的销量
-```sql
-
+AND mp.effectiveDate =
+    (SELECT MAX(effectiveDate)
+     FROM menuPrice
+     WHERE menuItemId = mi.menuItemId) 
 ```
 
 
@@ -113,6 +129,7 @@ WHERE UserID = #{userId}
 - **主要负责**：与*菜单*相关的操作、查询
 
 ### 查询指定菜品的所有历史价格
+连接菜单价格、菜单项和菜品表，获得指定菜品的所有历史价格。
 ```sql
 SELECT mp.*, d.DishName AS dishName
 FROM menuPrice mp
@@ -124,9 +141,11 @@ WHERE mi.menuItemId = #{menuItemId}
 ## MerchantMapper
 - **主要负责**：与*商家*相关的操作、查询
 
-### 
+### 查询商家的详细信息
 ```sql
-
+SELECT *
+FROM merchant
+WHERE MerchantID = #{merchantId}
 ```
 
 ## MessageMapper
