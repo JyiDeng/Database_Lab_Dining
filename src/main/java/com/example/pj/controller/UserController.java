@@ -196,7 +196,7 @@ public class UserController {
 //    }
 
     @RequestMapping("/{path}/updateOrder3")
-    public String updateOrder3( @PathVariable String path,@RequestParam Long dishId,Long merchantId,Long count) {
+    public String updateOrder3( @PathVariable String path,@RequestParam Long dishId,Long merchantId,Long delta) {
 
 //        for(MenuItem menuItem: menuItems){
 //            Long menuItemId = menuItem.getMenuItemId();
@@ -205,14 +205,19 @@ public class UserController {
             Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
             OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
 
-            if (orderItem == null) {
-                orderMapper.insertOrderItem(orderId, dishId, count);
+            if (delta==1 && orderItem == null) {
+                orderMapper.insertOrderItem(orderId, dishId, delta);
             } else {
-//                Long quantity = orderItem.getQuantity();
-                if (count > 0) {
-                    orderMapper.updateOrderItemQuantity(orderId, dishId, count);
+                // 根据是增还是减讨论：
+                if (delta > 0) {
+                    orderMapper.updateOrderItemQuantity(orderId, dishId, 1L);
                 } else {
-                    orderMapper.deleteOrderItem(orderId, dishId);
+                    // 如果减，那么不能超过0
+                    if(orderItem.getQuantity()>1) {
+                        orderMapper.updateOrderItemQuantity(orderId, dishId, -1L);
+                    }else{
+                        orderMapper.deleteOrderItem(orderId,dishId);
+                    }
                 }
             }
         }catch(Exception e){

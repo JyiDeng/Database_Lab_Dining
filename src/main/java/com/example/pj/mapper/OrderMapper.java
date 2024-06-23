@@ -87,7 +87,7 @@ public interface OrderMapper {
     @Options(useGeneratedKeys = true, keyProperty = "orderItemId")
     void insertOrderItem(Long orderId, Long dishId, Long quantity);
 
-    @Update("UPDATE OrderItem SET Quantity = #{quantity} WHERE OrderID = #{orderId} AND DishID = #{dishId}")
+    @Update("UPDATE OrderItem SET Quantity = quantity + #{quantity} WHERE OrderID = #{orderId} AND DishID = #{dishId}")
     void updateOrderItemQuantity(Long orderId, Long dishId, Long quantity);
 
     @Delete("DELETE FROM OrderItem WHERE OrderID = #{orderId} AND DishID = #{dishId}")
