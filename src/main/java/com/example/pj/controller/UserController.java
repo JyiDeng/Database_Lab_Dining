@@ -231,6 +231,7 @@ public class UserController {
     }
 
     // 查询菜品的最新价格
+    // or 查询菜品的历史价格变化？
     @RequestMapping("{path}/latestPrice/{menuItemId}")
     public String getLatestPriceByMenuItemId(Model model,@PathVariable Long menuItemId,@PathVariable Long path) {
         // MenuPrice menuprice = menuMapper.findLatestPriceByMenuItemId(menuItemId);
@@ -238,7 +239,6 @@ public class UserController {
         model.addAttribute("allMenuPrice",allMenuPrice);
         return "latestPrice";
     }
-
 
     @RequestMapping("/{path}/allMenus")
     public String getMenus(@PathVariable Long path, Model model) {
