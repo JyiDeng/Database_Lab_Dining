@@ -83,7 +83,6 @@ public class MerchantController {
         }
     }
 
-
     // 新增菜品到菜单
 //    @PostMapping("/item/add")
 //    public MenuItem addMenuItem(@RequestBody MenuItem menuItem) {
@@ -112,7 +111,6 @@ public class MerchantController {
 //        return menuMapper.findAllMenus(path);
 //    }
 
-
     // 删除菜单中的菜品
     @RequestMapping("/{path}/deleteMenuItem/{menuItemId}")
     public String deleteMenuItem(@PathVariable Long path, @PathVariable Long menuItemId) {
@@ -139,9 +137,11 @@ public class MerchantController {
 
         // 查找最新的价格记录
         MenuPrice latestMenuPrice = menuMapper.findLatestByMenuItemId(menuItemId);
-        if (latestMenuPrice != null) {
-            menuMapper.insertMenuPrice(latestMenuPrice);
-        }
+        // if (latestMenuPrice != null) {
+            // 更新结束时间
+            // latestMenuPrice.setEndDate(now);
+            // menuMapper.insertMenuPrice(latestMenuPrice);
+        // }
 
         // 插入新的价格记录
         MenuPrice menuPrice = new MenuPrice(null, menuItemId, newPrice, now, null);
