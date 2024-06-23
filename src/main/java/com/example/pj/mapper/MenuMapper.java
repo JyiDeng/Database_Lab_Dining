@@ -55,11 +55,11 @@ public interface MenuMapper {
     @Select("SELECT * FROM menuPrice WHERE menuItemID = #{menuItemId} ORDER BY effectiveDate DESC LIMIT 1")
     MenuPrice findLatestByMenuItemId(Long menuItemId);
 
-    @Insert("INSERT INTO menuPrice (menuItemID, price, effectiveDate, endDate) VALUES (#{menuItemId}, #{price}, #{effectiveDate}, #{endDate})")
+    @Insert("INSERT INTO menuPrice (menuItemID, price, effectiveDate, endDate) VALUES (#{menuItemId}, #{price}, #{effectiveDate})")
     @Options(useGeneratedKeys = true, keyProperty = "menuPriceId")
     void insertMenuPrice(MenuPrice menuPrice);
 
-    @Select("SELECT * FROM menuPrice WHERE menuItemId = #{menuItemId} AND endDate IS NULL")
+    @Select("SELECT * FROM menuPrice WHERE menuItemId = #{menuItemId}")
     MenuPrice findLatestPriceByMenuItemId(Long menuItemId);
 
     @Select("SELECT mp.*, d.DishName AS dishName " +

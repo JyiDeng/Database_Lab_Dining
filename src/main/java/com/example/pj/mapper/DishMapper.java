@@ -43,7 +43,6 @@ public interface DishMapper {
     void deleteDish(@Param("dishId") Long dishId);
 
 
-
     @Select("SELECT AVG(rating) AS average_rating FROM Review WHERE dishId = #{dishId}")
     Float getAvgRating(@Param("dishId") Long dishId);
 
@@ -55,18 +54,18 @@ public interface DishMapper {
     List<Map<String, Object>> getFavoriteCountsByMerchantId(Long merchantId);
 
     // 查询各个菜品通过排队点餐和在线点餐的销量
-    @Select("SELECT \n" +
-            "    oi.DishID,\n" +
-            "    d.Name AS DishName,\n" +
-            "    SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END) AS QueueSales,\n" +
-            "    SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END) AS OnlineSales\n" +
-            "FROM \n" +
-            "    Order o\n" +
-            "JOIN \n" +
-            "    OrderItem oi ON o.OrderID = oi.OrderID\n" +
-            "JOIN \n" +
-            "    Dish d ON oi.DishID = d.DishID\n" +
-            "GROUP BY \n" +
+    @Select("SELECT " +
+            "    oi.DishID," +
+            "    d.Name AS DishName," +
+            "    SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END) AS QueueSales," +
+            "    SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END) AS OnlineSales" +
+            "FROM " +
+            "    Order o" +
+            "JOIN " +
+            "    OrderItem oi ON o.OrderID = oi.OrderID" +
+            "JOIN " +
+            "    Dish d ON oi.DishID = d.DishID" +
+            "GROUP BY " +
             "    oi.DishID, d.Name;")
     List<Map<String, Object>> getSalesByDishId(Long dishId);
 }
