@@ -15,8 +15,6 @@ import java.util.List;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-
-
     @Autowired
     UserMapper userMapper;
 
@@ -29,7 +27,6 @@ public class UserController {
     MenuMapper menuMapper;
     @Autowired
     OrderMapper orderMapper;
-
 
 //    @RequestMapping("/id={id}")
 //    public User getUserById(@PathVariable Long id) {
@@ -268,5 +265,8 @@ public class UserController {
     public void addOrderItem2Order(){
 
     }
-
+    @GetMapping("/user")
+    public List<Message> getUserMessages(@RequestParam int userId) {
+        return userMapper.getMessagesByUserId(userId);
+    }
 }
