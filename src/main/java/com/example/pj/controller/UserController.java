@@ -285,4 +285,10 @@ public class UserController {
         orderMapper.orderSubmitUpdateCompleted(orderId);
         return "orderSubmitSuccess";
     }
+
+    @RequestMapping("/{path}/confirmAcceptation")
+    public String confirmAcceptation(Model model,@PathVariable String path,@RequestParam Long orderId) {
+        orderMapper.orderAcceptUpdateEnded(orderId);
+        return "orderEndSuccess";
+    }
 }

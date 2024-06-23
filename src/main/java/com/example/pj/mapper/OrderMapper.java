@@ -95,4 +95,7 @@ public interface OrderMapper {
 
     @Update("UPDATE MyOrder SET status = 'Completed' WHERE orderId = #{orderId}")
     void orderSubmitUpdateCompleted(Long orderId);
+
+    @Update("UPDATE MyOrder SET status = 'Ended' WHERE orderId = #{orderId}")
+    void orderAcceptUpdateEnded(Long orderId);
 }

@@ -132,7 +132,7 @@ CREATE TABLE menuPrice (
     FOREIGN KEY (menuItemID) REFERENCES menuItem(menuItemID)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `menuPrice` (menuPriceID,menuItemID, price, effectiveDate) VALUES
-(1, 1,18, '2024-05-01 00:00:00',),
+(1, 1,18, '2024-05-01 00:00:00'),
 (2, 1,19, '2024-05-02 00:00:00'),
 (3, 2,13.8, '2024-05-01 00:00:00'),
 (4, 2,14.8, '2024-05-05 00:00:00'),
@@ -261,14 +261,14 @@ CREATE TABLE MyOrder (
     UserID INT,
     merchantID INT,
     OrderDate DATETIME NOT NULL,
-    Status ENUM('Pending','Completed','Cancelled') NOT NULL,
+    Status ENUM('Pending','Completed','Ended') NOT NULL,
     OrderType ENUM('Queue','Online'),
     TotalPrice DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID),
     FOREIGN KEY (merchantID) REFERENCES merchant(merchantID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `MyOrder` VALUES(1,1,1,'2024-5-1 6:32:29','Completed','Queue',0);  # totalPrice应该由查询得出
-INSERT INTO `MyOrder` VALUES(2,3,2,'2024-5-8 18:10:10','Cancelled','Queue',0);
+INSERT INTO `MyOrder` VALUES(2,3,2,'2024-5-8 18:10:10','Ended','Queue',0);
 INSERT INTO `MyOrder` VALUES(3,2,3,'2024-5-17 13:29:20','Pending','Online',0);
 
 DROP TABLE IF EXISTS `OrderItem`;
