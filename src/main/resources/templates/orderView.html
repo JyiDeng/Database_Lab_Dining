@@ -59,6 +59,13 @@
             var newUrl = baseUrl + 'confirmAcceptation?orderId=' + orderId ;
             window.location.href = newUrl;
         }
+
+        function reviewDish(orderId){
+            var currentUrl = window.location.href;
+            var baseUrl = currentUrl.replace(/viewOrders$/, '');
+            var newUrl = baseUrl + 'reviewDish?orderId=' + orderId ;
+            window.location.href = newUrl;
+        }
     </script>
 </head>
 <body>
@@ -89,7 +96,6 @@
         <td>
             <button type="button" th:attr="onclick=|redirectToOrderItems([[${order.orderId}]])|">查看订单详情</button>
             <button type="button" th:if="${order.status=='Completed'}" th:attr="onclick=|confirmAcceptation([[${order.orderId}]])|">确认收到餐品</button>
-            <button type="button" th:if="${order.status=='Ended'}" th:attr="onclick=|reviewMerchant([[${order.orderId}]])|">评价商家</button>
             <button type="button" th:if="${order.status=='Ended'}" th:attr="onclick=|reviewDish([[${order.orderId}]])|">评价菜品</button>
         </td>
     </tr>

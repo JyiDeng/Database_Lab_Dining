@@ -143,7 +143,7 @@ public class MerchantController {
         return "Price updated successfully!";
     }
 
-    // 查询所有菜品的收藏量
+//     查询所有菜品的收藏量
     @GetMapping("/{merchantId}/favoriteCounts")
     public List<Map<String, Object>> getFavoriteCounts(@PathVariable Long merchantId) {
         return dishMapper.getFavoriteCountsByMerchantId(merchantId);

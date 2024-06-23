@@ -43,14 +43,14 @@ public interface DishMapper {
     @Select("SELECT AVG(rating) AS average_rating FROM Review WHERE dishId = #{dishId}")
     Float getAvgRating(@Param("dishId") Long dishId);
 
-    /*
+//    /*
     @Select("SELECT d.DishID, d.DishName, COUNT(fd.dishID) as favoriteCount " +
             "FROM FavoriteDish fd " +
             "JOIN Dish d ON fd.DishID = d.DishID " +
             "WHERE d.MerchantID = #{merchantId} " +
             "GROUP BY d.DishID, d.DishName")
     List<Map<String, Object>> getFavoriteCountsByMerchantId(Long merchantId);
-     */
+//     */
 
     // 查询各个菜品通过排队点餐和在线点餐的销量
     @Select("SELECT oi.DishID AS dishId, d.dishName AS DishName, m.MerchantName AS merchantName " +

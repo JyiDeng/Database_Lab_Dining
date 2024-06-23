@@ -140,7 +140,7 @@ public class UserController {
     }
 
     @RequestMapping("/{path}/orderDetail")
-    public String orderDetail(@PathVariable String path, Model model, @RequestParam Long orderId) {
+    public String orderDetail(@PathVariable Long path, Model model, @RequestParam Long orderId) {
         List<OrderItem> orderItems = orderMapper.getOrderItemsByOrderId(path,orderId);
         model.addAttribute("orderItems", orderItems);
 
@@ -234,6 +234,15 @@ public class UserController {
         model.addAttribute("rating", rating);
         return "reviews"; // 返回模板文件名
     }
+
+    @RequestMapping("/{path}/reviewDish")
+    public String makeDishReview(@RequestParam Long orderId,Model model,@PathVariable Long path){
+
+        List<OrderItem> orderItems = orderMapper.getOrderItemsNameOnlyByOrderId(path,orderId);
+        model.addAttribute("orderItems", orderItems);
+        return "reviewDish"; // 返回模板文件名
+    }
+
 
     // 查询菜品的最新价格
     // or 查询菜品的历史价格变化？

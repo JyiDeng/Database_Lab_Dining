@@ -46,7 +46,19 @@ public interface OrderMapper {
 //            "AND mp.effectiveDate <= NOW() " +
 //            "AND (mp.endDate IS NULL OR mp.endDate >= NOW())"
             )
-    List<OrderItem> getOrderItemsByOrderId(String path, Long orderId);
+    List<OrderItem> getOrderItemsByOrderId(Long path, Long orderId);
+
+    @Select("SELECT d.dishName as dishName " +
+            "FROM OrderItem oi " +
+            "JOIN menuItem mi ON oi.dishID = mi.dishID " +
+            "left JOIN dish d ON oi.dishID = d.dishID " +
+            "JOIN menuPrice mp ON mi.menuItemId = mp.menuItemID " +
+            "WHERE oi.OrderID = #{orderId} " +
+            "AND mp.effectiveDate = " +
+            "(SELECT MAX(effectiveDate) " +
+            "FROM menuPrice " +
+            "WHERE menuItemId = mi.menuItemId) ")
+    List<OrderItem> getOrderItemsNameOnlyByOrderId(Long path, Long orderId);
 
     @Select("SELECT SUM(oi.Quantity) " +
             "FROM OrderItem oi " +

@@ -49,9 +49,9 @@
 <div class="container">
 <h1>订单评价页面</h1>
 <form th:action="@{/submitReview}" method="post">
-    <label for="dish">选择菜品:</label>
-    <select id="dish" name="dish">
-        <option th:each="dish : ${dishes}" th:text="${dish}" th:value="${dish}"></option>
+    <label for="orderItems">选择菜品:</label>
+    <select id="orderItems" name="orderItems">
+        <option th:each="orderItem : ${orderItems}" th:text="${orderItem.dishName}" th:value="${orderItem.dishName}"></option>
     </select>
     <br><br>
     <label for="rating">选择评分:</label>
@@ -66,7 +66,8 @@
     <label for="review">评价内容:</label>
     <textarea id="review" name="review"></textarea>
     <br><br>
-    <button type="submit">提交评价</button>
+
+    <button type="submit" th:attr="onclick=|submitReview()|">提交评价</button>
 </form>
 </div>
 </body>

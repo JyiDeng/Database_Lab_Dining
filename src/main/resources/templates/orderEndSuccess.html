@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>订单结束！</title>
+</head>
+<body>
+<h1>您已确认收到餐品，订单结束！</h1>
+<button type="button" th:attr="onclick=|redirectToAllOrders()|">返回查看所有订单</button>
+
+<script>
+  function redirectToAllOrders(){
+    var currentUrl = window.location.href;
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/confirmAcceptation')) + `/viewOrders`;
+    console.log(createOrderUrl);
+    window.location.href = createOrderUrl;
+  }
+</script>
+</body>
+</html>
