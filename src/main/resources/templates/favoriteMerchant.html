@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>用户收藏的菜品</title>
+  <title>用户收藏的商家</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -48,20 +48,20 @@
 </head>
 <body>
 <div class="container">
-  <h1>用户收藏的菜品</h1>
+  <h1>用户收藏的商家</h1>
   <table>
     <thead>
     <tr>
       <th>菜品收藏编号</th>
-      <th>菜品名称</th>
+      <th>商家名称</th>
       <th>收藏日期</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="userFavoriteDish : ${userFavoriteDishes}">
-      <td th:text="${userFavoriteDish.favoriteDishId}">菜品收藏编号</td>
-      <td th:text="${userFavoriteDish.dishName}">菜品名称</td>
-      <td th:text="${userFavoriteDish.favoriteDate}">收藏日期</td>
+    <tr th:each="userFavoriteMerchant : ${userFavoriteMerchants}">
+      <td th:text="${userFavoriteMerchant.favoriteMerchantId}">菜品收藏编号</td>
+      <td th:text="${userFavoriteMerchant.merchantName}">商家名称</td>
+      <td th:text="${userFavoriteMerchant.favoriteDate}">收藏日期</td>
     </tr>
 
     </tbody>

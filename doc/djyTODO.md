@@ -5,7 +5,8 @@
 
 ## 菜单
 
-- [ ] 把menuItems页面的url.match不是function，和updateOrder页面No static resource 404问题解决 http://localhost:8080/user/2/menuItems?id=2
+- [x] 把menuItems页面的url.match不是function解决 http://localhost:8080/user/2/menuItems?id=2
+- [ ] 把updateOrder页面No static resource 404问题解决 
 
 
 ## 收藏、评价

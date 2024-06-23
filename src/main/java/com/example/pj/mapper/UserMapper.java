@@ -19,7 +19,7 @@ public interface UserMapper {
 
     @Insert("INSERT INTO user (UserId,UserName,Gender,EcardId,Role,Age,Password) VALUES (#{userId},#{userName},#{gender},#{ecardID},#{role},#{age},#{password})")
     void insert(User user);
-    // 为了让数据库真的加进去这个人，既可以传user又可以传参数吗
+    // 为了让数据库真的加进去这个人，既可以传user又可以传参数吗，可以的 TODO
 
     @Update("UPDATE user SET UserName = #{userName}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{role}, Age = #{age}, Password = #{password} WHERE UserID = #{userId}")
     void update(User user);
@@ -38,18 +38,32 @@ public interface UserMapper {
             "FROM FavoriteDish fd " +
             "JOIN dish d ON fd.dishId = d.dishId " +
             "WHERE fd.userId = #{userId} ")
-    List<UserFavoriteDish> findFavoriteDish(@Param("userId") Long userId);
+    List<UserFavoriteDish> findAllFavoriteDish(@Param("userId") Long userId);
 
     @Insert("INSERT INTO FavoriteDish (userId, dishID, FavoriteDate) " +
             "VALUES (#{userId}, #{dishId}, NOW())")
-    List<UserFavoriteDish> addFavoriteDish(@Param("userId") Long userId, @Param("dishId") Long dishId);
+    @Options(useGeneratedKeys = true, keyProperty = "favoriteDishId")
+    void addFavoriteDish(@Param("userId") Long userId, @Param("dishId") Long dishId);
+
+    @Select("SELECT COUNT(*) FROM FavoriteDish " +
+            "WHERE userId = #{userId} AND dishId = #{dishId}")
+    int findFavoriteDish(@Param("userId") Long userId, @Param("dishId") Long dishId);
+
 
     // 收藏商户
-    @Select("SELECT * FROM FavoriteMerchant")
-    List<UserFavoriteMerchant> findFavoriteMerchant(@Param("userId") Long userId);
+    @Select("SELECT fm.*, m.merchantName as merchantName " +
+            "FROM FavoriteMerchant fm " +
+            "JOIN Merchant m ON fm.merchantId = m.merchantId " +
+            "WHERE fm.userId = #{userId} ")
+    List<UserFavoriteMerchant> findAllFavoriteMerchant(@Param("userId") Long userId);
+
+    @Select("SELECT COUNT(*) FROM FavoriteMerchant WHERE userId = #{userId} AND merchantId = #{merchantId}")
+    int findFavoriteMerchant(@Param("userId") Long userId, @Param("merchantId") Long merchantId);
+
 
     @Insert("INSERT INTO FavoriteMerchant (userId, merchantID, FavoriteDate) VALUES (#{userId}, #{merchantId}, NOW())")
-    List<UserFavoriteMerchant> addFavoriteMerchant(@Param("userId") Long userId, @Param("merchantId") Long merchantId);
+    @Options(useGeneratedKeys = true, keyProperty = "favoriteMerchantId")
+    void addFavoriteMerchant(@Param("userId") Long userId, @Param("merchantId") Long merchantId);
 
     @Select("SELECT * FROM Review WHERE dishId = #{dishId}")
     List<Review> dishReview(@Param("dishId") Long dishId);

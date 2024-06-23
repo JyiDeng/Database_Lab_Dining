@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>收藏菜品成功！</title>
+    <title>收藏结果</title>
     <script>
         // function redirectBackToMenuItems() {
         //     var currentUrl = window.location.href;
@@ -19,7 +19,15 @@
     </script>
 </head>
 <body>
-<h1>收藏菜品成功！</h1>
+<div>
+    <h1>收藏成功!</h1>
+    <div th:if="${message}">
+        <p th:text="${message}"></p>
+    </div>
+</div>
+<div>
+
+</div>
 <!--<button type="button" th:attr="onclick=|redirectBackToMenuItems()|">-->
 <!--    返回菜单概览-您的界面</button>-->
 

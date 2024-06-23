@@ -3,8 +3,6 @@ package com.example.pj.controller;
 import com.example.pj.entity.*;
 import com.example.pj.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -78,24 +76,48 @@ public class UserController {
     // 收藏菜品
     @RequestMapping("/{userId}/findFavoriteDish")
     public String findFavoriteDish(Model model,@PathVariable Long userId) {
-        List<UserFavoriteDish> userFavoriteDishes = userMapper.findFavoriteDish(userId);
+        List<UserFavoriteDish> userFavoriteDishes = userMapper.findAllFavoriteDish(userId);
         model.addAttribute("userFavoriteDishes",userFavoriteDishes);
         return "favoriteDish";
     }
 
     @RequestMapping("/{userId}/addFavoriteDish")
     public String addFavoriteDish(Model model,@PathVariable Long userId, @RequestParam Long dishId) {
-        List<UserFavoriteDish> userFavoriteDishes = userMapper.addFavoriteDish(userId,dishId);
-        model.addAttribute("userFavoriteDishes",userFavoriteDishes);
-        return "favoriteDishAddSuccess";
+        int count = userMapper.findFavoriteDish(userId,dishId);
+        if(count > 0){
+
+            model.addAttribute("message", "您已收藏过该菜品");
+        }else{
+            model.addAttribute("message", "菜品收藏成功！");
+            userMapper.addFavoriteDish(userId, dishId);
+        }
+
+        return "favoriteAddSuccess";
     }
 
-    // 收藏商户
-//    @RequestMapping("/{userId}/favoriteMerchant")
-//    public String favoriteMerchant(@PathVariable Long userId, @RequestParam Long merchantId) {
-//        userMapper.findFavoriteMerchant(userId);
-////        return "商户"+ merchantId +"已收藏!";
-//    }
+//     收藏商户
+    @RequestMapping("/{userId}/findFavoriteMerchant")
+    public String findFavoriteMerchant(Model model,@PathVariable Long userId) {
+        userMapper.findAllFavoriteMerchant(userId);
+        List<UserFavoriteMerchant> userFavoriteMerchants = userMapper.findAllFavoriteMerchant(userId);
+        model.addAttribute("userFavoriteMerchants",userFavoriteMerchants);
+        return "favoriteMerchant";
+    }
+
+    @RequestMapping("/{userId}/addFavoriteMerchant")
+    public String addFavoriteMerchant(Model model,@PathVariable Long userId, @RequestParam Long merchantId) {
+        int count = userMapper.findFavoriteMerchant(userId,merchantId);
+        if(count > 0){
+
+            model.addAttribute("message", "您已收藏过该商家");
+        }else{
+            model.addAttribute("message", "菜品收藏成功！");
+            userMapper.addFavoriteMerchant(userId, merchantId);
+        }
+
+        return "favoriteAddSuccess";
+    }
+
 
     // 查询用户订单
     @RequestMapping("/{userId}/viewOrders")
