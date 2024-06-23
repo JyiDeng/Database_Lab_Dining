@@ -8,6 +8,8 @@ import java.util.Map;
 
 @Mapper
 public interface OrderMapper {
+
+
     @Insert("INSERT INTO MyOrder (UserID, merchantID, OrderDate, Status, OrderType, TotalPrice) VALUES (#{userId}, #{merchantId}, #{orderDate}, #{status}, #{orderType}, #{totalPrice})")
     @Options(useGeneratedKeys = true, keyProperty = "orderId")
     void createOrder(MyOrder order);
@@ -17,6 +19,12 @@ public interface OrderMapper {
 
     @Select("SELECT COUNT(*) FROM myOrder WHERE merchantID = #{merchantID} AND Status = 'Pending'")
     Long countPendingOrders(@Param("merchantID") Long merchantId);
+
+
+    // 查询订单
+    @Select("SELECT * FROM MyOrder WHERE UserID = #{userId}")
+    List<MyOrder> findOrdersByUserId(Long userId);
+
 
     @Select("SELECT * FROM myOrder o LEFT JOIN OrderItem oi ON o.OrderID = oi.OrderID WHERE o.merchantID = #{merchantID}")
     List<Map<String, Object>> getOrdersByMerchantId(@Param("merchantID") Long merchantId);

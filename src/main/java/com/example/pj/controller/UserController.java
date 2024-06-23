@@ -27,6 +27,11 @@ public class UserController {
     MenuMapper menuMapper;
     @Autowired
     OrderMapper orderMapper;
+    @Autowired
+    MessageMapper messageMapper;
+    @Autowired
+    FavoriteMapper favoriteMapper;
+
 
 //    @RequestMapping("/id={id}")
 //    public User getUserById(@PathVariable Long id) {
@@ -73,20 +78,20 @@ public class UserController {
     // 收藏菜品
     @RequestMapping("/{userId}/findFavoriteDish")
     public String findFavoriteDish(Model model,@PathVariable Long userId) {
-        List<UserFavoriteDish> userFavoriteDishes = userMapper.findAllFavoriteDish(userId);
+        List<UserFavoriteDish> userFavoriteDishes = favoriteMapper.findAllFavoriteDish(userId);
         model.addAttribute("userFavoriteDishes",userFavoriteDishes);
         return "favoriteDish";
     }
 
     @RequestMapping("/{userId}/addFavoriteDish")
     public String addFavoriteDish(Model model,@PathVariable Long userId, @RequestParam Long dishId) {
-        int count = userMapper.findFavoriteDish(userId,dishId);
+        int count = favoriteMapper.findFavoriteDish(userId,dishId);
         if(count > 0){
 
             model.addAttribute("message", "您已收藏过该菜品");
         }else{
             model.addAttribute("message", "菜品收藏成功！");
-            userMapper.addFavoriteDish(userId, dishId);
+            favoriteMapper.addFavoriteDish(userId, dishId);
         }
 
         return "favoriteAddSuccess";
@@ -95,21 +100,21 @@ public class UserController {
 //     收藏商户
     @RequestMapping("/{userId}/findFavoriteMerchant")
     public String findFavoriteMerchant(Model model,@PathVariable Long userId) {
-        userMapper.findAllFavoriteMerchant(userId);
-        List<UserFavoriteMerchant> userFavoriteMerchants = userMapper.findAllFavoriteMerchant(userId);
+        favoriteMapper.findAllFavoriteMerchant(userId);
+        List<UserFavoriteMerchant> userFavoriteMerchants = favoriteMapper.findAllFavoriteMerchant(userId);
         model.addAttribute("userFavoriteMerchants",userFavoriteMerchants);
         return "favoriteMerchant";
     }
 
     @RequestMapping("/{userId}/addFavoriteMerchant")
     public String addFavoriteMerchant(Model model,@PathVariable Long userId, @RequestParam Long merchantId) {
-        int count = userMapper.findFavoriteMerchant(userId,merchantId);
+        int count = favoriteMapper.findFavoriteMerchant(userId,merchantId);
         if(count > 0){
 
             model.addAttribute("message", "您已收藏过该商家");
         }else{
             model.addAttribute("message", "菜品收藏成功！");
-            userMapper.addFavoriteMerchant(userId, merchantId);
+            favoriteMapper.addFavoriteMerchant(userId, merchantId);
         }
 
         return "favoriteAddSuccess";
@@ -117,7 +122,7 @@ public class UserController {
 
     @RequestMapping("/{userId}/dishFavoriteCounts")
     public String getDishFavoriteCounts(Model model, @PathVariable Long userId, @RequestParam Long merchantId) {
-        List<UserFavoriteDish> dishFavoriteCounts = userMapper.findDishFavoriteCountsByMerchant(merchantId);
+        List<UserFavoriteDish> dishFavoriteCounts = merchantMapper.findDishFavoriteCountsByMerchant(merchantId);
         model.addAttribute("dishFavoriteCounts", dishFavoriteCounts);
         return "favoriteDishCount";
     }
@@ -125,7 +130,7 @@ public class UserController {
     // 查询用户订单
     @RequestMapping("/{userId}/viewOrders")
     public String getOrdersByUserId(@PathVariable Long userId,Model model) {
-        List<MyOrder> orders = userMapper.findOrdersByUserId(userId);
+        List<MyOrder> orders = orderMapper.findOrdersByUserId(userId);
         model.addAttribute("orders",orders);
         return "orderView";
     }
@@ -234,7 +239,7 @@ public class UserController {
     
     @RequestMapping("/{path}/review/{dishId}")
     public String getDishReview(@PathVariable Long dishId,Model model,@PathVariable Long path){
-        List<Review> reviews = userMapper.dishReview(dishId);
+        List<Review> reviews = dishMapper.dishReview(dishId);
         model.addAttribute("reviews", reviews);
         Float rating = dishMapper.getAvgRating(dishId);
         model.addAttribute("rating", rating);
@@ -268,11 +273,11 @@ public class UserController {
         return "menuItems";
     }
 
-    public void addOrderItem2Order(){
 
-    }
-    @GetMapping("/user")
-    public List<Message> getUserMessages(@RequestParam int userId) {
-        return userMapper.getMessagesByUserId(userId);
+    @RequestMapping("/{path}/msg")
+    public String getUserMessages( Model model,@RequestParam int userId,@PathVariable String path) {
+        List<Message> messages = messageMapper.getMessagesByUserId(userId);
+        model.addAttribute("messages",messages);
+        return "messages";
     }
 }

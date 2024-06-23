@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>消息列表</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+      color: #333;
+    }
+    h3 {
+      text-align: center;
+      color: #333;
+    }
+    button {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+</head>
+<body>
+<h1>消息列表</h1>
+<table>
+  <thead>
+  <tr>
+    <th>消息ID</th>
+    <!--<th>用户ID</th>-->
+    <!--<th>管理员ID</th>-->
+    <th>消息内容</th>
+    <th>日期</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="message : ${messages}">
+    <td th:text="${message.messageId}"></td>
+    <!--<td th:text="${message.userId}"></td>-->
+    <!--<td th:text="${message.adminId}"></td>-->
+    <td th:text="${message.content}"></td>
+    <td th:text="${#dates.format(message.messageDate, 'yyyy-MM-dd HH:mm:ss')}"></td>
+  </tr>
+  </tbody>
+</table>
+</body>
+</html>

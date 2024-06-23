@@ -15,6 +15,9 @@ public interface DishMapper {
 //    @Select("SELECT * FROM dish WHERE dishId = #{dishId}")
 //    Dish findById(@Param("dishId") Long dishId);
 
+    @Select("SELECT * FROM Review WHERE dishId = #{dishId}")
+    List<Review> dishReview(@Param("dishId") Long dishId);
+
     @Select("SELECT * FROM dish")
     List<Dish> getAllDishes();
 
