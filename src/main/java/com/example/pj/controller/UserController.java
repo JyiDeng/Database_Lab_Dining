@@ -220,9 +220,6 @@ public class UserController {
         }
         return "orderUpdateSuccess";
     }
-
-    
-    
     
     @RequestMapping("/{path}/review/{dishId}")
     public String getDishReview(@PathVariable Long dishId,Model model,@PathVariable Long path){
@@ -236,7 +233,7 @@ public class UserController {
     // 查询菜品的最新价格
     @RequestMapping("{path}/latestPrice/{menuItemId}")
     public String getLatestPriceByMenuItemId(Model model,@PathVariable Long menuItemId,@PathVariable Long path) {
-//        MenuPrice menuprice = menuMapper.findLatestPriceByMenuItemId(menuItemId);
+        // MenuPrice menuprice = menuMapper.findLatestPriceByMenuItemId(menuItemId);
         List<MenuPrice> allMenuPrice = menuMapper.findAllPriceByMenuItemId(menuItemId);
         model.addAttribute("allMenuPrice",allMenuPrice);
         return "latestPrice";
