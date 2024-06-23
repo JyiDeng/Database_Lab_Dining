@@ -17,6 +17,6 @@ public class MenuPrice {
     private Long menuItemId;
     private Float price;
     private LocalDateTime effectiveDate;
-    private LocalDateTime endDate;
+    // private LocalDateTime endDate;
     private String dishName; // 查询用
 }

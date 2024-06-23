@@ -83,7 +83,6 @@ public class MerchantController {
         }
     }
 
-
     // 新增菜品到菜单
 //    @PostMapping("/item/add")
 //    public MenuItem addMenuItem(@RequestBody MenuItem menuItem) {
@@ -112,10 +111,6 @@ public class MerchantController {
 //        return menuMapper.findAllMenus(path);
 //    }
 
-
-
-
-
     // 删除菜单中的菜品
     @RequestMapping("/{path}/deleteMenuItem/{menuItemId}")
     public String deleteMenuItem(@PathVariable Long path, @PathVariable Long menuItemId) {
@@ -130,29 +125,26 @@ public class MerchantController {
 
     }
 
-
-
     // 修改菜品价格
     @RequestMapping("/{path}/updateMenuItemPrice/{menuItemId}")
     public String updateMenuItemPrice(@PathVariable Long path, @PathVariable Long menuItemId, @RequestParam Float newPrice) {
         if(menuMapper.findMenuItemById(menuItemId) == null){
             return "Menu " + menuItemId + " does not exist!";
         }
-
         // TODO 增加报错判断
         // 获取当前时间作为生效日期
         LocalDateTime now = LocalDateTime.now();
 
         // 查找最新的价格记录
         MenuPrice latestMenuPrice = menuMapper.findLatestByMenuItemId(menuItemId);
-        if (latestMenuPrice != null) {
+        // if (latestMenuPrice != null) {
             // 更新结束时间
-            latestMenuPrice.setEndDate(now);
-            menuMapper.insertMenuPrice(latestMenuPrice);
-        }
+            // latestMenuPrice.setEndDate(now);
+            // menuMapper.insertMenuPrice(latestMenuPrice);
+        // }
 
         // 插入新的价格记录
-        MenuPrice menuPrice = new MenuPrice(null, menuItemId, newPrice, now, null,null);
+        MenuPrice menuPrice = new MenuPrice(null, menuItemId, newPrice, now, null);
         menuMapper.insertMenuPrice(menuPrice);
 
         // 更新 menuItem 表中的价格

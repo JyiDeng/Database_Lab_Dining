@@ -52,16 +52,18 @@ public interface MenuMapper {
     @Select("SELECT * FROM menuPrice WHERE menuPriceID = #{menuPriceId}")
     MenuPrice findMenuPriceById(Long menuPriceId);
 
+    // 找到指定菜品最新的价格记录
     @Select("SELECT * FROM menuPrice WHERE menuItemID = #{menuItemId} ORDER BY effectiveDate DESC LIMIT 1")
     MenuPrice findLatestByMenuItemId(Long menuItemId);
 
-    @Insert("INSERT INTO menuPrice (menuItemID, price, effectiveDate, endDate) VALUES (#{menuItemId}, #{price}, #{effectiveDate}, #{endDate})")
+    @Insert("INSERT INTO menuPrice (menuItemID, price, effectiveDate, endDate) VALUES (#{menuItemId}, #{price}, #{effectiveDate})")
     @Options(useGeneratedKeys = true, keyProperty = "menuPriceId")
     void insertMenuPrice(MenuPrice menuPrice);
 
-    @Select("SELECT * FROM menuPrice WHERE menuItemId = #{menuItemId} AND endDate IS NULL")
+    @Select("SELECT * FROM menuPrice WHERE menuItemId = #{menuItemId}")
     MenuPrice findLatestPriceByMenuItemId(Long menuItemId);
 
+    // 查询指定菜品的所有历史价格
     @Select("SELECT mp.*, d.DishName AS dishName " +
             "FROM menuPrice mp " +
             "JOIN menuItem mi on mi.menuItemId = mp.menuItemId " +
