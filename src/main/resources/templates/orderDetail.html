@@ -78,20 +78,18 @@
 
   </table>
   <br><br><br><br>
-  <button type="button" th:attr="onclick=|submitOrder()|">增加1份</button>
+  <button type="button" th:attr="onclick=|submitOrder()|">提交订单</button>
 </div>
 <script>
   function submitOrder(){
     var currentUrl = window.location.href;
+    // var orderId = currentUrl.substring(1, currentUrl.indexOf('orderId='));
+    const match = currentUrl.match(/[?&]orderId=([^&]+)/);
+    const orderId = match ? match[1] : null;
     createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/orderDetail')) + `/orderSubmitSuccess?orderId=${orderId}`;
     // 获取orderId=6那个6，传进去是不是就能把orderId提交？其实提交只是改一个status=completed
     console.log(createOrderUrl);
     window.location.href = createOrderUrl;
-
-    var msg;
-    if (change===1) msg = "增加成功！";
-    else msg = "减少成功！（最低为0份）";
-
 
     fetch(createOrderUrl, {
       method: 'POST'

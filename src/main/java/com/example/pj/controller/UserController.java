@@ -134,7 +134,7 @@ public class UserController {
     // 查询用户订单
     @RequestMapping("/{userId}/viewOrders")
     public String getOrdersByUserId(@PathVariable Long userId,Model model) {
-        List<MyOrder> orders = orderMapper.findOrdersByUserId(userId);
+        List<MyOrder> orders = orderMapper.getOrdersByUserId(userId);
         model.addAttribute("orders",orders);
         return "orderView";
     }
@@ -172,28 +172,28 @@ public class UserController {
 //        }
 //    }
 
-    @RequestMapping("/{path}/updateOrder2")
-    public void updateOrder2( @PathVariable String path,@RequestParam Long menuItemId, Long quantity,Long merchantId) {
-//        try {
-//            updateOrder(menuItemId, quantity,merchantId);
-//            return ResponseEntity.ok().body("Order updated successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order: " + e.getMessage());
+//    @RequestMapping("/{path}/updateOrder2")
+//    public void updateOrder2( @PathVariable String path,@RequestParam Long menuItemId, Long quantity,Long merchantId) {
+////        try {
+////            updateOrder(menuItemId, quantity,merchantId);
+////            return ResponseEntity.ok().body("Order updated successfully");
+////        } catch (Exception e) {
+////            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order: " + e.getMessage());
+////        }
+//        Long dishId = orderMapper.findDishIdByMenuItemId(menuItemId);
+//        Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
+//        OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
+//
+//        if (orderItem == null) {
+//            orderMapper.insertOrderItem(orderId, dishId, quantity);
+//        } else {
+//            if (quantity > 0) {
+//                orderMapper.updateOrderItemQuantity(orderId, dishId, quantity);
+//            } else {
+//                orderMapper.deleteOrderItem(orderId, dishId);
+//            }
 //        }
-        Long dishId = orderMapper.findDishIdByMenuItemId(menuItemId);
-        Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
-        OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
-
-        if (orderItem == null) {
-            orderMapper.insertOrderItem(orderId, dishId, quantity);
-        } else {
-            if (quantity > 0) {
-                orderMapper.updateOrderItemQuantity(orderId, dishId, quantity);
-            } else {
-                orderMapper.deleteOrderItem(orderId, dishId);
-            }
-        }
-    }
+//    }
 
     @RequestMapping("/{path}/updateOrder3")
     public String updateOrder3( @PathVariable String path,@RequestParam Long dishId,Long merchantId,Long count) {
@@ -262,8 +262,8 @@ public class UserController {
 
 
     @RequestMapping("/{path}/msg")
-    public String getUserMessages( Model model,@RequestParam Long userId,@PathVariable String path) {
-        List<Message> messages = messageMapper.getMessagesByUserId(userId);
+    public String getUserMessages( Model model,@PathVariable Long path) {
+        List<Message> messages = messageMapper.getMessagesByUserId(path);
         model.addAttribute("messages",messages);
         return "messages";
     }
@@ -275,4 +275,9 @@ public class UserController {
         return "sales";
     }
 
+    @RequestMapping("/{path}/orderSubmitSuccess")
+    public String orderSubmit( Model model,@PathVariable String path,@RequestParam Long orderId) {
+        orderMapper.orderSubmitUpdateCompleted(orderId);
+        return "orderSubmitSuccess";
+    }
 }

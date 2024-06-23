@@ -12,9 +12,6 @@ public interface DishMapper {
     @Select("SELECT * FROM dish WHERE merchantId = #{merchantId} AND dishName LIKE CONCAT('%', #{keyword}, '%')")
     List<Dish> searchDishes(@Param("merchantId") Long merchantId, @Param("keyword") String keyword);
 
-//    @Select("SELECT * FROM dish WHERE dishId = #{dishId}")
-//    Dish findById(@Param("dishId") Long dishId);
-
     @Select("SELECT * FROM Review WHERE dishId = #{dishId}")
     List<Review> dishReview(@Param("dishId") Long dishId);
 
@@ -41,7 +38,6 @@ public interface DishMapper {
 
     @Delete("DELETE FROM Dish WHERE DishID = #{dishId}")
     void deleteDish(@Param("dishId") Long dishId);
-
 
 
     @Select("SELECT AVG(rating) AS average_rating FROM Review WHERE dishId = #{dishId}")

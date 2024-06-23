@@ -84,11 +84,6 @@ public class MerchantController {
     }
 
     // 新增菜品到菜单
-//    @PostMapping("/item/add")
-//    public MenuItem addMenuItem(@RequestBody MenuItem menuItem) {
-//        menuMapper.insertMenuItem(menuItem);
-//        return menuItem;
-//    }
     @RequestMapping("/{path}/addMenuItem")
     public String addMenuItem(@PathVariable Long path, @RequestParam Long dishId,Long menuItemId,Float price) {
         if(menuMapper.findMenuById(path) == null){
@@ -105,11 +100,6 @@ public class MerchantController {
 
     }
 
-//    // 查询菜单
-//    @RequestMapping("/{path}/allMenus")
-//    public List<Menu> getMenus(@PathVariable Long path) {
-//        return menuMapper.findAllMenus(path);
-//    }
 
     // 删除菜单中的菜品
     @RequestMapping("/{path}/deleteMenuItem/{menuItemId}")
