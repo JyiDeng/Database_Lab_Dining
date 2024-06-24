@@ -61,6 +61,7 @@ public class MerchantController {
 
     // 删除菜品
     @RequestMapping("/{path}/deleteDish")
+    // TODO 新的外键出现，需要同样排除 FOREIGN KEY (dishId)
     public String deleteDish(@PathVariable Long path,@RequestParam Long dishId) {
         if (dishMapper.getDishById(dishId) != null) {
             dishMapper.deleteDish(dishId);
@@ -105,6 +106,7 @@ public class MerchantController {
     @RequestMapping("/{path}/deleteMenuItem/{menuItemId}")
     public String deleteMenuItem(@PathVariable Long path, @PathVariable Long menuItemId) {
     // 注意外键，需要先删除MenuPrice
+        // TODO 新的外键出现，需要同样排除 4个FOREIGN KEY (menuItemId)
         if (menuMapper.findMenuItemById(menuItemId) != null ) {
             menuMapper.deleteMenuPrice(menuItemId);
             menuMapper.deleteMenuItemId(menuItemId);
@@ -119,9 +121,9 @@ public class MerchantController {
     @RequestMapping("/{path}/updateMenuItemPrice/{menuItemId}")
     public String updateMenuItemPrice(@PathVariable Long path, @PathVariable Long menuItemId, @RequestParam Float newPrice) {
         if(menuMapper.findMenuItemById(menuItemId) == null){
-            return "Menu " + menuItemId + " does not exist!";
+            return "MenuItem " + menuItemId + " does not exist!";
         }
-        // TODO 增加报错判断
+
         // 获取当前时间作为生效日期
         LocalDateTime now = LocalDateTime.now();
 

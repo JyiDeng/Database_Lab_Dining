@@ -58,6 +58,7 @@ public class AdminController {
     @RequestMapping("/{path}/deleteUser/{id}")
 
     public String deleteUser(@PathVariable Long id, @PathVariable String path) {
+        if(我有订单，那么我删除订单，一共5个FOREIGN KEY (UserID)) //TODO
         if (userMapper.findByID(id) != null){
             userMapper.delete(id);
             return "User" + id + " is deleted successfully!";

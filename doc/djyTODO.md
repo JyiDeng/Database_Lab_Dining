@@ -15,11 +15,12 @@
   + 在fetch中删除json部分才不报错；
   + 避免使用quantity-${menuItemId}这样的编号，会查找不到——>直接删除了表格中显示的quantity，避免复杂的操作（而且有null的Left JOIN有点问题）
   + 删除增删项目的提交按钮，每次按增删都会使用弹窗提示添加成功
-- [ ] 修复：menuItem导致的 orderDetail页查出来null http://localhost:8080/user/1/menuItems?id=3 http://localhost:8080/user/1/orderDetail?orderId=6
+- [x] 修复：menuItem导致的 orderDetail页查出来null http://localhost:8080/user/1/menuItems?id=3 http://localhost:8080/user/1/orderDetail?orderId=6
+  + "然后日期的查询经常查出来是空"说的应该是订单里面没数据？解决了
 
 ## 收藏、评价
 - [x] 用户收藏商家、菜品、查看商家下属所有菜品的收藏量
-- [ ] 用户进行评价
+- [ ] 用户进行评价：完全实现评价提交界面
 
 
 ## 高级查询
