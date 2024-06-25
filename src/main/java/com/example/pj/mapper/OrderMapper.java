@@ -83,8 +83,12 @@ public interface OrderMapper {
     @Select("SELECT dishID FROM menuItem WHERE menuItemId = #{menuItemId}")
     Long findDishIdByMenuItemId(Long menuItemId);
 
-    @Select("SELECT OrderID FROM MyOrder WHERE merchantID = #{merchantId} AND Status = 'Pending' LIMIT 1")
-    Long findOrderIdByMerchantId(Long merchantId);
+    @Select("SELECT OrderID " +
+            "FROM MyOrder " +
+            "WHERE merchantID = #{merchantId} " +
+            "AND userId = #{userId} " +
+            "AND Status = 'Pending' LIMIT 1")
+    Long findOrderIdByMerchantId(Long userId, Long merchantId);
 
     @Select("SELECT * FROM OrderItem WHERE OrderID = #{orderId} AND DishID = #{dishId}")
     OrderItem findOrderItem(Long orderId, Long dishId);

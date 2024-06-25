@@ -197,13 +197,13 @@ public class UserController {
 //    }
 
     @RequestMapping("/{path}/updateOrder3")
-    public String updateOrder3( @PathVariable String path,@RequestParam Long dishId,Long merchantId,Long delta) {
+    public String updateOrder3( @PathVariable Long path,@RequestParam Long dishId,Long merchantId,Long delta) {
 
 //        for(MenuItem menuItem: menuItems){
 //            Long menuItemId = menuItem.getMenuItemId();
 //            Long dishId = menuItem.getDishId();
         try{
-            Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
+            Long orderId = orderMapper.findOrderIdByMerchantId(path,merchantId);
             OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
 
             if (delta==1 && orderItem == null) {
