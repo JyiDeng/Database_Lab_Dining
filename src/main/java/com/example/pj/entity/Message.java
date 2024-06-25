@@ -15,7 +15,7 @@ import org.springframework.stereotype.Component;
 public class Message {
     private Integer messageId;
     private Integer userId;
-    private Integer adminId;
+//    private Integer adminId;
     private String content;
     private String messageDate;
 }

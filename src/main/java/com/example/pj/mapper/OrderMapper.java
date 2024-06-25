@@ -30,7 +30,7 @@ public interface OrderMapper {
     List<Map<String, Object>> getOrdersByMerchantId(@Param("merchantID") Long merchantId);
 
     // 查询订单
-    @Select("SELECT * FROM MyOrder WHERE UserID = #{userId}")
+    @Select("SELECT * FROM MyOrder WHERE UserID = #{userId} order by orderId desc ")
     List<MyOrder> getOrdersByUserId(Long userId);
 
     @Select("SELECT oi.*, mp.price AS price,d.dishName as dishName " +
@@ -104,6 +104,15 @@ public interface OrderMapper {
 
     @Update("UPDATE MyOrder SET status = 'Ended' WHERE orderId = #{orderId}")
     void orderAcceptUpdateEnded(Long orderId);
+
+    @Select("select count(status) from MyOrder where status = 'Completed' and  orderId = #{orderId}")
+    int confirmNoDuplicateCompleted(Long orderId);
+
+
+
+    @Select("select count(status) from MyOrder where status = 'Ended' and  orderId = #{orderId}")
+    int confirmNoDuplicateEnded(Long orderId);
+
 
     @Insert("INSERT INTO review (userId,  dishId, rating, content, reviewDate) " +
             "VALUES (#{userId},  #{dishId}, #{rating}, #{content}, #{reviewDate})")

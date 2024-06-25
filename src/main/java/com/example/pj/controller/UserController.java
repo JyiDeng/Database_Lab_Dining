@@ -286,14 +286,30 @@ public class UserController {
     }
 
     @RequestMapping("/{path}/orderSubmitSuccess")
-    public String orderSubmit( Model model,@PathVariable String path,@RequestParam Long orderId) {
-        orderMapper.orderSubmitUpdateCompleted(orderId);
+    public String orderSubmit( Model model,@PathVariable Long path,@RequestParam Long orderId) {
+        int count = orderMapper.confirmNoDuplicateCompleted(orderId);
+        if (count == 0){
+            orderMapper.orderSubmitUpdateCompleted(orderId);
+            String msg = "您的订单（ID=" + orderId + "）的状态已经更新为Completed！";
+            LocalDateTime now = LocalDateTime.now();
+            messageMapper.updateOrderStatus2Completed(path, msg, now);
+            messageMapper.deleteDuplicateMessages();
+        }
+        model.addAttribute("count",count);
         return "orderSubmitSuccess";
     }
 
     @RequestMapping("/{path}/confirmAcceptation")
-    public String confirmAcceptation(Model model,@PathVariable String path,@RequestParam Long orderId) {
-        orderMapper.orderAcceptUpdateEnded(orderId);
+    public String confirmAcceptation(Model model,@PathVariable Long path,@RequestParam Long orderId) {
+
+        int count = orderMapper.confirmNoDuplicateEnded(orderId);
+        if (count == 0){
+            orderMapper.orderAcceptUpdateEnded(orderId);
+            String msg = "您的订单（ID=" + orderId + "）的状态已经更新为Ended！";
+            LocalDateTime now = LocalDateTime.now();
+            messageMapper.updateOrderStatus2Ended(path, msg, now);
+        }
+        model.addAttribute("count",count);
         return "orderEndSuccess";
     }
 
@@ -307,6 +323,9 @@ public class UserController {
     @RequestMapping("/{path}/reserve")
     public String reserve(@RequestParam Long id,@PathVariable Long path){
         orderMapper.reserve(path,id);
+        String msg = "您已预订成功餐厅，商户ID=" + id + "！";
+        LocalDateTime now = LocalDateTime.now();
+        messageMapper.insertReserveConfirmation(path,msg,now);
         return "reserveSuccess";
     }
     @RequestMapping("/{path}/reserveDetail")
