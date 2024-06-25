@@ -60,7 +60,7 @@ CREATE TABLE if not exists Dish (
     Allergens VARCHAR(50),
     NutritionInfo VARCHAR(50),
     MerchantID INT,
-    FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID)
+    FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 Insert into `Dish` VALUES (1,'Braised Chicken','Chinese food','sauce delicious','examplePic1.com','original','chicken, green pepper, potatoes, ginger','','delicious chicken, green pepper vitamin high',  1);
 Insert into `Dish` VALUES (2,'Hachii','sweet','classic, small expensive','examplePic2.com','chocolate','milk, cocoa, sugar, additives','milk','high calcium content', 2);
@@ -100,7 +100,7 @@ INSERT INTO `Dish` (DishName, Category, Description, Picture, Flavor, Ingredient
 # CREATE TABLE menu (
 #     menuID INT AUTO_INCREMENT PRIMARY KEY,
 #     merchantID INT,
-#     FOREIGN KEY (merchantID) REFERENCES merchant(merchantID)
+#     FOREIGN KEY (merchantID) REFERENCES merchant(merchantID) ON DELETE CASCADE
 # )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 # Insert into `menu` VALUES (1,1);
 # Insert into `menu` VALUES (2,2);
@@ -110,7 +110,7 @@ DROP TABLE IF EXISTS `menuItem`;
 CREATE TABLE menuItem (
     menuItemId INT AUTO_INCREMENT PRIMARY KEY,
     dishID INT,
-    FOREIGN KEY (dishID) REFERENCES dish(dishID)
+    FOREIGN KEY (dishID) REFERENCES dish(dishID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 # Insert into `menuItem` VALUES (1,1,18);
 # Insert into `menuItem` VALUES (2,2,13.8);
@@ -129,7 +129,7 @@ CREATE TABLE menuPrice (
     price DECIMAL(10, 2) NOT NULL,
     effectiveDate DATETIME NOT NULL,
     # endDate DATETIME DEFAULT NULL,
-    FOREIGN KEY (menuItemID) REFERENCES menuItem(menuItemID)
+    FOREIGN KEY (menuItemID) REFERENCES menuItem(menuItemID) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `menuPrice` (menuPriceID,menuItemID, price, effectiveDate) VALUES
 (1, 1,18, '2024-05-01 00:00:00'),
@@ -173,9 +173,9 @@ INSERT INTO `menuPrice` (menuItemID, price, effectiveDate) VALUES
 #     DishID INT,
 #     FavoriteDate DATETIME NOT NULL,
 #     PRIMARY KEY (UserID, MerchantID, DishID),
-#     FOREIGN KEY (UserID) REFERENCES User(UserID),
-#     FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID),
-#     FOREIGN KEY (DishID) REFERENCES Dish(DishID)
+#     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
+#     FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID) ON DELETE CASCADE,
+#     FOREIGN KEY (DishID) REFERENCES Dish(DishID) ON DELETE CASCADE
 # )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 # INSERT INTO `Favorite` VALUES (1,2,2,'2024-4-30 5:30:25');
 # INSERT INTO `Favorite` VALUES (2,1,1,'2024-5-6 7:30:00');
@@ -187,8 +187,8 @@ CREATE TABLE FavoriteMerchant (
     userID INT,
     merchantID INT,
     FavoriteDate DATETIME NOT NULL,
-    FOREIGN KEY (userID) REFERENCES user(userID),
-    FOREIGN KEY (merchantID) REFERENCES merchant(merchantID)
+    FOREIGN KEY (userID) REFERENCES user(userID) ON DELETE CASCADE,
+    FOREIGN KEY (merchantID) REFERENCES merchant(merchantID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `FavoriteMerchant` VALUES (1,2,2,'2024-4-30 5:30:25');
 INSERT INTO `FavoriteMerchant` VALUES (2,1,1,'2024-5-6 7:30:00');
@@ -204,8 +204,8 @@ CREATE TABLE FavoriteDish (
     userID INT,
     dishID INT,
     FavoriteDate DATETIME NOT NULL,
-    FOREIGN KEY (userID) REFERENCES user(userID),
-    FOREIGN KEY (dishID) REFERENCES Dish(dishID)
+    FOREIGN KEY (userID) REFERENCES user(userID) ON DELETE CASCADE,
+    FOREIGN KEY (dishID) REFERENCES Dish(dishID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `FavoriteDish` VALUES (1,2,1,'2024-5-30 15:30:25');
 INSERT INTO `FavoriteDish` VALUES (2,1,1,'2024-6-6 7:50:00');
@@ -227,9 +227,9 @@ CREATE TABLE Review (
     Rating DECIMAL(2, 1),
     Content TEXT,
     ReviewDate DATETIME NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES User(UserID),
-    FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID),
-    FOREIGN KEY (DishID) REFERENCES Dish(DishID)
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID) ON DELETE CASCADE,
+    FOREIGN KEY (DishID) REFERENCES Dish(DishID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `Review` VALUES (1,3,2,2,4.5,'Good taste, will come again next time','2024-5-3 0:25:34');
 INSERT INTO `Review` VALUES (2,1,1,1,4,'Nice. A little salty','2024-5-16 8:39:10');
@@ -264,8 +264,8 @@ CREATE TABLE MyOrder (
     Status ENUM('Pending','Completed','Ended') NOT NULL,
     OrderType ENUM('Queue','Online'),
     TotalPrice DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES User(UserID),
-    FOREIGN KEY (merchantID) REFERENCES merchant(merchantID)
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (merchantID) REFERENCES merchant(merchantID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `MyOrder` VALUES(1,1,1,'2024-5-1 6:32:29','Completed','Queue',0);  # totalPrice应该由查询得出
 INSERT INTO `MyOrder` VALUES(2,3,2,'2024-5-8 18:10:10','Ended','Queue',0);
@@ -279,8 +279,8 @@ CREATE TABLE OrderItem (
     Quantity INT NOT NULL,
 #     Price DECIMAL(10, 2) NOT NULL,
 --     PRIMARY KEY (OrderID, DishID),
-    FOREIGN KEY (OrderID) REFERENCES MyOrder(OrderID),
-    FOREIGN KEY (DishID) REFERENCES Dish(DishID)
+    FOREIGN KEY (OrderID) REFERENCES MyOrder(OrderID) ON DELETE CASCADE,
+    FOREIGN KEY (DishID) REFERENCES Dish(DishID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 # INSERT INTO `OrderItem` VALUES (1,1,2,3,4.9);
 # INSERT INTO `OrderItem` VALUES (2,2,2,5,8);
@@ -304,8 +304,8 @@ CREATE TABLE Message (
     AdminID INT,
     Content TEXT NOT NULL,
     MessageDate DATETIME NOT NULL,
-    FOREIGN KEY (UserID) REFERENCES User(UserID),
-    FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (AdminID) REFERENCES Admin(AdminID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `message` VALUES(1,1,1,'Your meal is ready, please take it!','2024-5-15 22:39:10');
 INSERT INTO `message` VALUES(2,2,1,'How was your dining experience, dear? Click to fill in the Dining Experience->','2024-5-19 21:32:12');
@@ -318,7 +318,7 @@ CREATE TABLE AdminActionLog (
     ActionType ENUM('ADD_USER','DELETE_USER','UPDATE_USER','ADD_MERCHANT','DELETE_MERCHANT','UPDATE_MERCHANT'),
     TargetID INT,
     Timestamp DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (AdminID) REFERENCES Admin(AdminID)
+    FOREIGN KEY (AdminID) REFERENCES Admin(AdminID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `AdminActionLog` VALUES(1,1,'ADD_USER',1,'2004-5-5 21:34:45');
 INSERT INTO `AdminActionLog` VALUES(2,1,'UPDATE_MERCHANT',2,'2004-5-23 18:34:59');

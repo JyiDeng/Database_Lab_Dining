@@ -105,10 +105,9 @@ public class MerchantController {
     // 删除菜单中的菜品
     @RequestMapping("/{path}/deleteMenuItem/{menuItemId}")
     public String deleteMenuItem(@PathVariable Long path, @PathVariable Long menuItemId) {
-    // 注意外键，需要先删除MenuPrice
         // TODO 新的外键出现，需要同样排除 4个FOREIGN KEY (menuItemId)
         if (menuMapper.findMenuItemById(menuItemId) != null ) {
-            menuMapper.deleteMenuPrice(menuItemId);
+            // menuMapper.deleteMenuPrice(menuItemId);
             menuMapper.deleteMenuItemId(menuItemId);
             return "MenuItem " + menuItemId + " deleted!";
         }else{

@@ -11,13 +11,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/admin")
 public class AdminController {
-
-//    @Autowired
-//    private UserService userService;
     @Autowired
     UserMapper userMapper;
-//    @Autowired
-//    private MerchantService merchantService;
     @Autowired
     MerchantMapper merchantMapper;
 
@@ -58,7 +53,7 @@ public class AdminController {
     @RequestMapping("/{path}/deleteUser/{id}")
 
     public String deleteUser(@PathVariable Long id, @PathVariable String path) {
-        if(我有订单，那么我删除订单，一共5个FOREIGN KEY (UserID)) //TODO
+        // TODO if(我有订单，那么我删除订单，一共5个FOREIGN KEY (UserID))
         if (userMapper.findByID(id) != null){
             userMapper.delete(id);
             return "User" + id + " is deleted successfully!";
