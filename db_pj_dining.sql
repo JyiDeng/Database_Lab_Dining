@@ -2,7 +2,7 @@
 SET FOREIGN_KEY_CHECKS=0;
 
 -- ----------------------------
--- Table structure for message
+-- Table structure
 -- ----------------------------
 DROP TABLE IF EXISTS `User`;
 CREATE TABLE if not exists User (
@@ -292,7 +292,7 @@ INSERT INTO MyOrder (UserID, MerchantID, OrderDate, status, OrderType, TotalPric
 (4, 4, '2024-06-10 12:00:00','Completed', 'Online',0),
 (4, 4, '2024-06-12 14:00:00','Completed', 'Online',0),
 (4, 4, '2024-06-14 16:00:00','Completed', 'Online',0),
-(4, 4, '2024-06-16 18:00:00','Completed', 'Online',0,
+(4, 4, '2024-06-16 18:00:00','Completed', 'Online',0),
 (4, 4, '2024-06-18 20:00:00','Completed', 'Online',0);
 INSERT INTO MyOrder (UserID, MerchantID, OrderDate, status, OrderType, TotalPrice) VALUES
 (5, 5, '2024-06-10 12:00:00','Completed', 'Queue',0),
@@ -332,9 +332,9 @@ DROP TABLE IF EXISTS `message`;
 CREATE TABLE Message (
     MessageID INT PRIMARY KEY AUTO_INCREMENT,
     UserID INT,
-    AdminID INT,
+    AdminID INT DEFAULT 1,
     Content TEXT NOT NULL,
-    MessageDate DATETIME NOT NULL,
+    MessageDate DATETIME,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
     FOREIGN KEY (AdminID) REFERENCES Admin(AdminID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -362,8 +362,19 @@ CREATE TABLE LoyalCustomers (
     MerchantID INT,
     PurchaseCount INT,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
-    FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID) ON DELETE CASCADE,
+    FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DROP TABLE IF EXISTS `Reserve`;
+CREATE TABLE Reserve (
+    ReserveId INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT,
+    MerchantID INT,
+    ReserveDate DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID) ON DELETE CASCADE
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 
 DELIMITER //
 
