@@ -254,12 +254,7 @@ public class UserController {
         return "latestPrice";
     }
 
-    @RequestMapping("/{path}/allMenus")
-    public String getMenus(@PathVariable Long path, Model model) {
-        List<Menu> menus = menuMapper.findAllMenus(path);
-        model.addAttribute("menus",menus);
-        return "menuIntro";
-    }
+
     @RequestMapping("/{path}/menuItems")
     public String enterMenu(@PathVariable Long path, Model model,@RequestParam Long id) {
         List<MenuItem> menuItems = menuMapper.getMenuItemsByMerchantId(id);
