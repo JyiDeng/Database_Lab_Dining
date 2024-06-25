@@ -59,5 +59,5 @@ public interface FavoriteMapper {
             "AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}) " +
             "GROUP BY d.DishID, d.DishName " +
             "ORDER BY d.DishID")
-    List<DishSales> getFavoriteDishSales(@Param("userId") int userId, @Param("timePeriod") String timePeriod);
+    List<DishSales> getFavoriteDishSales(@Param("userId") Long userId, @Param("timePeriod") String timePeriod);
 }

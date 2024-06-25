@@ -6,7 +6,8 @@
 </head>
 <body>
 
-欢迎来到用户索引页！<br>以下为操作示例：
+<h1>欢迎来到用户索引页！</h1>
+<h2>以下为操作示例和基础查询入口：</h2>
 <br>-------------------<br>
 查询该用户用户信息：<br>
 <button onclick="redirectTo('/userSelfInfo')">查询该用户用户信息</button>
@@ -41,9 +42,6 @@
 查看当前id为4的商户的所有菜品收藏量：<br>
 <button onclick="redirectTo('/dishFavoriteCounts?merchantId=4')">查看当前id为4的商户的所有菜品收藏量</button>
 <br>-------------------<br>
-查看所有菜品销量统计：<br>
-<button onclick="redirectTo('/sales')">查看所有菜品销量统计</button>
-<br>-------------------<br>
 预定id为2的餐厅：<br>
 <button onclick="redirectTo('/reserve?id=2')">预定id为2的餐厅</button>
 <br>-------------------<br>
@@ -59,14 +57,41 @@
 查询当前消息列表：<br>
 <button onclick="redirectTo('/msg')">查询当前消息列表</button>
 <br>-------------------<br>
-
+<h2>以下为进阶查询入口：</h2>
+<br>-------------------<br>
+查看id=3的商户所有菜品销量统计：<br>
+<button onclick="redirectTo('/sales?merchantId=3')">查看id=3的商户所有菜品销量统计</button>
+<br>-------------------<br>
+用户群体特征分析（评价习惯：评价的数量/评分给出的分数）：<br>
+<button onclick="redirectToJson('/user-characteristics/reviews')">用户群体特征分析（评价习惯：评价的数量/评分给出的分数）</button>
+<br>-------------------<br>
+用户群体特征分析（身份区分：用户年龄）：意义不明<br>
+<button onclick="redirectToJson('/user-characteristics/age')">用户群体特征分析（根据用户年龄）</button>
+<br>-------------------<br>
+用户群体特征分析（身份区分：根据用户性别）：<br>
+<button onclick="redirectToJson('/user-characteristics/gender')">用户群体特征分析（根据用户性别）</button>
+<br>-------------------<br>
+用户群体特征分析（身份区分：根据用户角色）：<br>
+<button onclick="redirectToJson('/user-characteristics/role')">用户群体特征分析（根据用户角色）</button>
+<br>-------------------<br>
+查询用户id=3在一个月内的购买记录：报SQL语法错误<br>
+<button onclick="redirectToJson('/favoriteSales?userId=3&timePeriod=MONTH')">查询用户id=3在一个月内的购买记录</button>
+<br>-------------------<br>
+查询用户id=3在一周内不同点餐方式的销量：有NULL<br>
+<button onclick="redirectToJson('/user-activity/weekly')">查询用户id=3在一个月内的购买记录</button>
+<br>-------------------<br>
 
 
 <script>
-    // Function to append the given path to the current URL and redirect
     function redirectTo(path) {
         const currentUrl = window.location.href;
         const newUrl = currentUrl + path;
+        window.location.href = newUrl;
+    }
+    function redirectToJson(path){
+        const currentUrl = window.location.href;
+        createOrderUrl = currentUrl.replace('/user', '/userAdvanced');
+        const newUrl = createOrderUrl + path;
         window.location.href = newUrl;
     }
 </script>

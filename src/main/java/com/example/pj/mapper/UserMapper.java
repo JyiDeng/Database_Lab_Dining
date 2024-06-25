@@ -30,7 +30,7 @@ public interface UserMapper {
     int save(@Param("user") User user);
 
     // 用户活跃度分析
-    @Select("SELECT UserID, YEARWEEK(OrderDate, 1) AS YearWeek, COUNT(*) AS OrderCount " +
+    @Select("SELECT UserID, YEARWEEK(OrderDate, 1) AS YEARWEEK, COUNT(*) AS OrderCount " +
             "FROM MyOrder " +
             "GROUP BY UserID, YEARWEEK(OrderDate, 1) " +
             "ORDER BY UserID, YearWeek")
@@ -55,7 +55,7 @@ public interface UserMapper {
     List<UserActivity> getActivityByTimeOfDay();
 
     // 用户群体特征分析
-    @Select("SELECT u.Age, d.DishID, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
+    @Select("SELECT u.Age as characteristic, d.DishID, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
             "FROM User u " +
             "JOIN MyOrder o ON u.UserID = o.UserID " +
             "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
@@ -64,7 +64,7 @@ public interface UserMapper {
             "ORDER BY u.Age, d.DishID")
     List<UserCharacteristic> getCharacteristicsByAge();
 
-    @Select("SELECT u.Gender, d.DishID, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
+    @Select("SELECT u.Gender as characteristic, d.DishID, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
             "FROM User u " +
             "JOIN MyOrder o ON u.UserID = o.UserID " +
             "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
@@ -73,7 +73,7 @@ public interface UserMapper {
             "ORDER BY u.Gender, d.DishID")
     List<UserCharacteristic> getCharacteristicsByGender();
 
-    @Select("SELECT u.Role, d.DishID, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
+    @Select("SELECT u.Role as characteristic, d.DishID, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
             "FROM User u " +
             "JOIN MyOrder o ON u.UserID = o.UserID " +
             "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
@@ -88,4 +88,25 @@ public interface UserMapper {
             "GROUP BY u.Role, u.Age, u.Gender " +
             "ORDER BY u.Role, u.Age, u.Gender")
     List<UserReviewCharacteristic> getReviewCharacteristics();
+
+// 商户忠实粉丝的消费分布
+    @Select("WITH LoyalCustomers AS (" +
+            "    SELECT o.UserID " +
+            "    FROM MyOrder o " +
+            "    WHERE o.MerchantID = #{merchantId} " +
+            "    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}) " +
+            "    GROUP BY o.UserID " +
+            "    HAVING COUNT(o.OrderID) > #{threshold} " +
+            ") " +
+            "SELECT d.DishID, d.DishName, lc.UserID, SUM(oi.Quantity) AS PurchaseCount " +
+            "FROM LoyalCustomers lc " +
+            "JOIN MyOrder o ON lc.UserID = o.UserID " +
+            "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
+            "JOIN Dish d ON oi.DishID = d.DishID " +
+            "WHERE o.MerchantID = #{merchantId} " +
+            "AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}) " +
+            "GROUP BY d.DishID, d.DishName, lc.UserID " +
+            "ORDER BY d.DishID, lc.UserID")
+    List<PurchaseDistribution> getLoyalCustomerDistribution(@Param("merchantId") Long merchantId, @Param("timePeriod") String timePeriod, @Param("threshold") Long threshold);
 }
+

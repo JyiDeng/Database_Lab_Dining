@@ -163,39 +163,6 @@ public class UserController {
 //        return "redirect:/orders/" + merchantID;
     }
 
-//    @PostMapping("/{path}/updateOrder")
-//    public ResponseEntity<?> updateOrder(@RequestBody MyOrder request, @PathVariable String path,@RequestParam Long menuItemId, Long quantity,Long merchantId) {
-//        try {
-//            updateOrder(menuItemId, quantity,merchantId);
-//            return ResponseEntity.ok().body("Order updated successfully");
-//        } catch (Exception e) {
-//            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order: " + e.getMessage());
-//        }
-//    }
-
-//    @RequestMapping("/{path}/updateOrder2")
-//    public void updateOrder2( @PathVariable String path,@RequestParam Long menuItemId, Long quantity,Long merchantId) {
-////        try {
-////            updateOrder(menuItemId, quantity,merchantId);
-////            return ResponseEntity.ok().body("Order updated successfully");
-////        } catch (Exception e) {
-////            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error updating order: " + e.getMessage());
-////        }
-//        Long dishId = orderMapper.findDishIdByMenuItemId(menuItemId);
-//        Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
-//        OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
-//
-//        if (orderItem == null) {
-//            orderMapper.insertOrderItem(orderId, dishId, quantity);
-//        } else {
-//            if (quantity > 0) {
-//                orderMapper.updateOrderItemQuantity(orderId, dishId, quantity);
-//            } else {
-//                orderMapper.deleteOrderItem(orderId, dishId);
-//            }
-//        }
-//    }
-
     @RequestMapping("/{path}/updateOrder3")
     public String updateOrder3( @PathVariable Long path,@RequestParam Long dishId,Long merchantId,Long delta) {
 
@@ -279,8 +246,8 @@ public class UserController {
     }
 
     @RequestMapping("/{path}/sales")
-    public String getSales( Model model,@PathVariable String path) {
-        List<Sales> sales = dishMapper.getSales();
+    public String getSales( Model model,@PathVariable String path,@RequestParam Long merchantId) {
+        List<Sales> sales = dishMapper.getSales(merchantId);
         model.addAttribute("sales",sales);
         return "sales";
     }
@@ -335,55 +302,28 @@ public class UserController {
         return "reserve";
     }
 
-    @GetMapping("/favorites/sales")
-    public ResponseEntity<List<DishSales>> getFavoriteDishSales(
-            @RequestParam int userId,
-            @RequestParam String timePeriod) {
-        List<DishSales> sales = favoriteMapper.getFavoriteDishSales(userId, timePeriod);
-        return ResponseEntity.ok(sales);
-    }
-
-    // 用户活跃度分析
-    @GetMapping("/user-activity/weekly")
-    public ResponseEntity<List<UserActivity>> getWeeklyActivity() {
-        List<UserActivity> activity = userMapper.getWeeklyActivity();
-        return ResponseEntity.ok(activity);
-    }
-
-    @GetMapping("/user-activity/monthly")
-    public ResponseEntity<List<UserActivity>> getMonthlyActivity() {
-        List<UserActivity> activity = userMapper.getMonthlyActivity();
-        return ResponseEntity.ok(activity);
-    }
-
-    @GetMapping("/user-activity/timeofday")
-    public ResponseEntity<List<UserActivity>> getActivityByTimeOfDay() {
-        List<UserActivity> activity = userMapper.getActivityByTimeOfDay();
-        return ResponseEntity.ok(activity);
-    }
-
     // 用户群体特征分析
-    @GetMapping("/user-characteristics/age")
-    public ResponseEntity<List<UserCharacteristic>> getCharacteristicsByAge() {
-        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByAge();
-        return ResponseEntity.ok(characteristics);
-    }
-
-    @GetMapping("/user-characteristics/gender")
-    public ResponseEntity<List<UserCharacteristic>> getCharacteristicsByGender() {
-        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByGender();
-        return ResponseEntity.ok(characteristics);
-    }
-
-    @GetMapping("/user-characteristics/role")
-    public ResponseEntity<List<UserCharacteristic>> getCharacteristicsByRole() {
-        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByRole();
-        return ResponseEntity.ok(characteristics);
-    }
-
-    @GetMapping("/user-characteristics/reviews")
-    public ResponseEntity<List<UserReviewCharacteristic>> getReviewCharacteristics() {
-        List<UserReviewCharacteristic> characteristics = userMapper.getReviewCharacteristics();
-        return ResponseEntity.ok(characteristics);
-    }
+//    @GetMapping("/user-characteristics/age")
+//    public ResponseEntity<List<UserCharacteristic>> getCharacteristicsByAge() {
+//        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByAge();
+//        return ResponseEntity.ok(characteristics);
+//    }
+//
+//    @GetMapping("/user-characteristics/gender")
+//    public ResponseEntity<List<UserCharacteristic>> getCharacteristicsByGender() {
+//        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByGender();
+//        return ResponseEntity.ok(characteristics);
+//    }
+//
+//    @GetMapping("/user-characteristics/role")
+//    public ResponseEntity<List<UserCharacteristic>> getCharacteristicsByRole() {
+//        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByRole();
+//        return ResponseEntity.ok(characteristics);
+//    }
+//
+//    @GetMapping("/user-characteristics/reviews")
+//    public ResponseEntity<List<UserReviewCharacteristic>> getReviewCharacteristics() {
+//        List<UserReviewCharacteristic> characteristics = userMapper.getReviewCharacteristics();
+//        return ResponseEntity.ok(characteristics);
+//    }
 }

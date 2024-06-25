@@ -63,8 +63,9 @@ public interface DishMapper {
             "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
             "JOIN Dish d ON oi.DishID = d.DishID " +
             "LEFT JOIN merchant m on d.merchantId = m.merchantId " +
+            "WHERE m.merchantId = #{merchantId} " +
             "GROUP BY oi.DishID, d.dishName ;")
-    List<Sales> getSales();
+    List<Sales> getSales(Long merchantId);
 
     @Select("SELECT oi.DishID, o.UserID, COUNT(*) as purchaseCount " +
             "FROM OrderItem oi " +
