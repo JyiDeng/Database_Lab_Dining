@@ -259,47 +259,47 @@ DROP TABLE IF EXISTS `MyOrder`; # 以免和Order保留字重复
 CREATE TABLE MyOrder (
     OrderID INT PRIMARY KEY AUTO_INCREMENT,
     UserID INT,
-    merchantID INT,
+    MerchantID INT,
     OrderDate DATETIME NOT NULL,
     Status ENUM('Pending','Completed','Ended') NOT NULL,
     OrderType ENUM('Queue','Online'),
     TotalPrice DECIMAL(10, 2) NOT NULL,
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
-    FOREIGN KEY (merchantID) REFERENCES merchant(merchantID) ON DELETE CASCADE
+    FOREIGN KEY (merchantID) REFERENCES Merchant(MerchantID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `MyOrder` VALUES(1,1,1,'2024-5-1 6:32:29','Completed','Queue',0);  # totalPrice应该由查询得出
 INSERT INTO `MyOrder` VALUES(2,3,2,'2024-5-8 18:10:10','Ended','Queue',0);
 INSERT INTO `MyOrder` VALUES(3,2,3,'2024-5-17 13:29:20','Pending','Online',0);
-INSERT INTO MyOrder (UserID, MerchantID, DishID, OrderDate, Quantity, TotalPrice) VALUES
-(1, 1, 1, '2024-06-10 12:00:00', 2, 36.00),
-(1, 1, 1, '2024-06-12 14:00:00', 1, 18.00),
-(1, 1, 1, '2024-06-14 16:00:00', 3, 54.00),
-(1, 1, 1, '2024-06-16 18:00:00', 1, 18.00),
-(1, 1, 1, '2024-06-18 20:00:00', 2, 36.00);
-INSERT INTO MyOrder (UserID, MerchantID, DishID, OrderDate, Quantity, TotalPrice) VALUES
-(2, 2, 2, '2024-06-10 12:00:00', 1, 13.80),
-(2, 2, 2, '2024-06-12 14:00:00', 2, 27.60),
-(2, 2, 2, '2024-06-14 16:00:00', 3, 41.40),
-(2, 2, 2, '2024-06-16 18:00:00', 1, 13.80),
-(2, 2, 2, '2024-06-18 20:00:00', 2, 27.60);
-INSERT INTO MyOrder (UserID, MerchantID, DishID, OrderDate, Quantity, TotalPrice) VALUES
-(3, 3, 3, '2024-06-10 12:00:00', 1, 68.00),
-(3, 3, 3, '2024-06-12 14:00:00', 2, 136.00),
-(3, 3, 3, '2024-06-14 16:00:00', 1, 68.00),
-(3, 3, 3, '2024-06-16 18:00:00', 3, 204.00),
-(3, 3, 3, '2024-06-18 20:00:00', 2, 136.00);
-INSERT INTO MyOrder (UserID, MerchantID, DishID, OrderDate, Quantity, TotalPrice) VALUES
-(4, 4, 4, '2024-06-10 12:00:00', 1, 20.00),
-(4, 4, 4, '2024-06-12 14:00:00', 2, 40.00),
-(4, 4, 4, '2024-06-14 16:00:00', 1, 20.00),
-(4, 4, 4, '2024-06-16 18:00:00', 3, 60.00),
-(4, 4, 4, '2024-06-18 20:00:00', 2, 40.00);
-INSERT INTO MyOrder (UserID, MerchantID, DishID, OrderDate, Quantity, TotalPrice) VALUES
-(5, 5, 5, '2024-06-10 12:00:00', 2, 30.00),
-(5, 5, 5, '2024-06-12 14:00:00', 1, 15.00),
-(5, 5, 5, '2024-06-14 16:00:00', 3, 45.00),
-(5, 5, 5, '2024-06-16 18:00:00', 2, 30.00),
-(5, 5, 5, '2024-06-18 20:00:00', 1, 15.00);
+INSERT INTO MyOrder (UserID, MerchantID, OrderDate, status, OrderType, TotalPrice) VALUES
+(1, 1, '2024-06-10 12:00:00','Completed', 'Queue',0),
+(1, 1, '2024-06-12 14:00:00','Completed', 'Queue',0),
+(1, 1, '2024-06-14 16:00:00','Completed', 'Queue',0),
+(1, 1, '2024-06-16 18:00:00','Completed', 'Queue',0),
+(1, 1, '2024-06-18 20:00:00','Completed', 'Queue',0);
+INSERT INTO MyOrder (UserID, MerchantID, OrderDate, status, OrderType, TotalPrice) VALUES
+(2, 2, '2024-06-10 12:00:00','Completed', 'Queue',0),
+(2, 2, '2024-06-12 14:00:00','Completed', 'Queue',0),
+(2, 2,  '2024-06-14 16:00:00','Completed', 'Online',0),
+(2, 2, '2024-06-16 18:00:00','Completed', 'Online',0),
+(2, 2, '2024-06-18 20:00:00','Completed', 'Online',0);
+INSERT INTO MyOrder (UserID, MerchantID, OrderDate, status, OrderType, TotalPrice) VALUES
+(3, 3, '2024-06-10 12:00:00','Completed', 'Queue',0),
+(3, 3, '2024-06-12 14:00:00','Completed', 'Queue',0),
+(3, 3, '2024-06-14 16:00:00','Completed', 'Queue',0),
+(3, 3, '2024-06-16 18:00:00','Completed', 'Queue',0),
+(3, 3, '2024-06-18 20:00:00','Completed', 'Queue',0);
+INSERT INTO MyOrder (UserID, MerchantID, OrderDate, status, OrderType, TotalPrice) VALUES
+(4, 4, '2024-06-10 12:00:00','Completed', 'Online',0),
+(4, 4, '2024-06-12 14:00:00','Completed', 'Online',0),
+(4, 4, '2024-06-14 16:00:00','Completed', 'Online',0),
+(4, 4, '2024-06-16 18:00:00','Completed', 'Online',0,
+(4, 4, '2024-06-18 20:00:00','Completed', 'Online',0);
+INSERT INTO MyOrder (UserID, MerchantID, OrderDate, status, OrderType, TotalPrice) VALUES
+(5, 5, '2024-06-10 12:00:00','Completed', 'Queue',0),
+(5, 5, '2024-06-12 14:00:00','Completed', 'Online',0),
+(5, 5, '2024-06-14 16:00:00','Completed', 'Online',0),
+(5, 5, '2024-06-16 18:00:00','Completed', 'Queue',0),
+(5, 5, '2024-06-18 20:00:00','Completed', 'Online',0);
 
 
 DROP TABLE IF EXISTS `OrderItem`;
