@@ -3,6 +3,7 @@ package com.example.pj.mapper;
 import com.example.pj.entity.*;
 import org.apache.ibatis.annotations.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,7 @@ public interface OrderMapper {
             )
     List<OrderItem> getOrderItemsByOrderId(Long path, Long orderId);
 
-    @Select("SELECT d.dishName as dishName " +
+    @Select("SELECT d.dishName as dishName, d.dishId as dishId " +
             "FROM OrderItem oi " +
             "JOIN menuItem mi ON oi.dishID = mi.dishID " +
             "left JOIN dish d ON oi.dishID = d.dishID " +
@@ -103,4 +104,9 @@ public interface OrderMapper {
 
     @Update("UPDATE MyOrder SET status = 'Ended' WHERE orderId = #{orderId}")
     void orderAcceptUpdateEnded(Long orderId);
+
+    @Insert("INSERT INTO review (userId,  dishId, rating, content, reviewDate) " +
+            "VALUES (#{userId},  #{dishId}, #{rating}, #{content}, #{reviewDate})")
+    @Options(useGeneratedKeys = true, keyProperty = "reviewId")
+    void reviewSuccess(Long userId, Long dishId, Float rating, String content, LocalDateTime reviewDate);
 }

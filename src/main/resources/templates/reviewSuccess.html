@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>评价成功！</title>
+</head>
+<body>
+<h1>您已评价成功！</h1>
+<button type="button" th:attr="onclick=|redirectBackToReviews()|">
+  返回所有评价页</button>
+<script>
+    function getDishIdFromUrl(url) {
+        const regex = /dishId=(\d+)/;
+        const match = url.match(regex);
+        if (match) {
+            return match[1];
+        }
+        return null; // 如果未找到 dishId，返回 null
+    }
+  function redirectBackToReviews(){
+    var currentUrl = window.location.href;
+      const dishId = getDishIdFromUrl(currentUrl);
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/reviewUpload')) + `/review/${dishId}`;
+    console.log(createOrderUrl);
+    window.location.href = createOrderUrl;
+  }
+</script>
+</body>
+</html>
