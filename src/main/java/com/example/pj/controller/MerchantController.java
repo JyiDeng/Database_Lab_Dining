@@ -6,6 +6,7 @@ import com.example.pj.mapper.MerchantMapper;
 import com.example.pj.mapper.UserMapper;
 import com.example.pj.mapper.DishMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -147,4 +148,13 @@ public class MerchantController {
         return dishMapper.getFavoriteCountsByMerchantId(merchantId);
     }
 
+    // 商户忠实粉丝的消费分布
+    @GetMapping("/loyal-customers-distribution")
+    public ResponseEntity<List<PurchaseDistribution>> getLoyalCustomerDistribution(
+            @RequestParam int merchantId,
+            @RequestParam String timePeriod,
+            @RequestParam int threshold) {
+        List<PurchaseDistribution> distribution = merchantMapper.getLoyalCustomerDistribution(merchantId, timePeriod, threshold);
+        return ResponseEntity.ok(distribution);
+    }
 }

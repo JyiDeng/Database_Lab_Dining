@@ -3,6 +3,7 @@ package com.example.pj.controller;
 import com.example.pj.entity.*;
 import com.example.pj.mapper.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -294,5 +295,57 @@ public class UserController {
     public String confirmAcceptation(Model model,@PathVariable String path,@RequestParam Long orderId) {
         orderMapper.orderAcceptUpdateEnded(orderId);
         return "orderEndSuccess";
+    }
+
+    @GetMapping("/favorites/sales")
+    public ResponseEntity<List<DishSales>> getFavoriteDishSales(
+            @RequestParam int userId,
+            @RequestParam String timePeriod) {
+        List<DishSales> sales = favoriteMapper.getFavoriteDishSales(userId, timePeriod);
+        return ResponseEntity.ok(sales);
+    }
+
+    // 用户活跃度分析
+    @GetMapping("/user-activity/weekly")
+    public ResponseEntity<List<UserActivity>> getWeeklyActivity() {
+        List<UserActivity> activity = userMapper.getWeeklyActivity();
+        return ResponseEntity.ok(activity);
+    }
+
+    @GetMapping("/user-activity/monthly")
+    public ResponseEntity<List<UserActivity>> getMonthlyActivity() {
+        List<UserActivity> activity = userMapper.getMonthlyActivity();
+        return ResponseEntity.ok(activity);
+    }
+
+    @GetMapping("/user-activity/timeofday")
+    public ResponseEntity<List<UserActivity>> getActivityByTimeOfDay() {
+        List<UserActivity> activity = userMapper.getActivityByTimeOfDay();
+        return ResponseEntity.ok(activity);
+    }
+
+    // 用户群体特征分析
+    @GetMapping("/user-characteristics/age")
+    public ResponseEntity<List<UserCharacteristic>> getCharacteristicsByAge() {
+        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByAge();
+        return ResponseEntity.ok(characteristics);
+    }
+
+    @GetMapping("/user-characteristics/gender")
+    public ResponseEntity<List<UserCharacteristic>> getCharacteristicsByGender() {
+        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByGender();
+        return ResponseEntity.ok(characteristics);
+    }
+
+    @GetMapping("/user-characteristics/role")
+    public ResponseEntity<List<UserCharacteristic>> getCharacteristicsByRole() {
+        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByRole();
+        return ResponseEntity.ok(characteristics);
+    }
+
+    @GetMapping("/user-characteristics/reviews")
+    public ResponseEntity<List<UserReviewCharacteristic>> getReviewCharacteristics() {
+        List<UserReviewCharacteristic> characteristics = userMapper.getReviewCharacteristics();
+        return ResponseEntity.ok(characteristics);
     }
 }

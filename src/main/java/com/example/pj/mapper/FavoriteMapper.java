@@ -1,5 +1,6 @@
 package com.example.pj.mapper;
 
+import com.example.pj.entity.DishSales;
 import com.example.pj.entity.UserFavoriteDish;
 import com.example.pj.entity.UserFavoriteMerchant;
 import org.apache.ibatis.annotations.*;
@@ -47,4 +48,16 @@ public interface FavoriteMapper {
             "GROUP BY d.DishID, d.DishName")
     List<UserFavoriteDish> findDishFavoriteCountsByMerchant(@Param("merchantId") Long merchantId);
 
+    @Select("SELECT d.DishID, d.DishName, " +
+            "SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END) AS QueueSales, " +
+            "SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END) AS OnlineSales " +
+            "FROM FavoriteDish fd " +
+            "JOIN Dish d ON fd.DishID = d.DishID " +
+            "JOIN OrderItem oi ON d.DishID = oi.DishID " +
+            "JOIN MyOrder o ON oi.OrderID = o.OrderID " +
+            "WHERE fd.UserID = #{userId} " +
+            "AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}) " +
+            "GROUP BY d.DishID, d.DishName " +
+            "ORDER BY d.DishID")
+    List<DishSales> getFavoriteDishSales(@Param("userId") int userId, @Param("timePeriod") String timePeriod);
 }
