@@ -231,8 +231,8 @@ public class UserController {
     public String getDishReview(@PathVariable Long dishId,Model model,@PathVariable Long path){
         List<Review> reviews = dishMapper.dishReview(dishId);
         model.addAttribute("reviews", reviews);
-        Float rating = dishMapper.getAvgRating(dishId);
-        model.addAttribute("rating", rating);
+        Float avgRating = dishMapper.getAvgRating(dishId);
+        model.addAttribute("rating", (float)(Math.round(avgRating*100))/100);
         return "reviews"; // 返回模板文件名
     }
 
@@ -295,6 +295,13 @@ public class UserController {
     public String confirmAcceptation(Model model,@PathVariable String path,@RequestParam Long orderId) {
         orderMapper.orderAcceptUpdateEnded(orderId);
         return "orderEndSuccess";
+    }
+
+    @RequestMapping("/{path}/reviewUpload")
+    public String reviewSuccess( Model model,@PathVariable Long path,@RequestParam  Long dishId, Float rating, String content) {
+        LocalDateTime now = LocalDateTime.now();
+        orderMapper.reviewSuccess(path,dishId,rating,content,now);
+        return "reviewSuccess";
     }
 
     @GetMapping("/favorites/sales")

@@ -12,7 +12,10 @@ public interface DishMapper {
     @Select("SELECT * FROM dish WHERE merchantId = #{merchantId} AND dishName LIKE CONCAT('%', #{keyword}, '%')")
     List<Dish> searchDishes(@Param("merchantId") Long merchantId, @Param("keyword") String keyword);
 
-    @Select("SELECT * FROM Review WHERE dishId = #{dishId}")
+    @Select("SELECT r.*, d.dishName " +
+            "FROM Review r " +
+            "JOIN dish d on d.dishId = r.dishId " +
+            "WHERE r.dishId = #{dishId}")
     List<Review> dishReview(@Param("dishId") Long dishId);
 
     @Select("SELECT * FROM dish")

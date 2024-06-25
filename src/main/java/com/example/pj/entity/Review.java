@@ -15,9 +15,10 @@ import org.springframework.stereotype.Component;
 public class Review {
     private Long reviewId;
     private Long userId;
-    private Long merchantId;
+//    private Long merchantId;
     private Long dishId;
     private Float rating;
     private String content;
     private String reviewDate;
+    private String dishName; // 查询用
 }

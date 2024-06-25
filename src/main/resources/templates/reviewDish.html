@@ -48,11 +48,14 @@
 <body>
 <div class="container">
 <h1>订单评价页面</h1>
-<form th:action="@{/submitReview}" method="post">
+<!--<form th:action="@{/submitReview}" method="post">-->
+<form>
     <label for="orderItems">选择菜品:</label>
-    <select id="orderItems" name="orderItems">
-        <option th:each="orderItem : ${orderItems}" th:text="${orderItem.dishName}" th:value="${orderItem.dishName}"></option>
+    <select id="orderItems" name="orderItems" >
+        <option id="orderItem" th:each="orderItem : ${orderItems}" th:text="${orderItem.dishName}" th:value="${orderItem.dishId}"></option>
+        <!--<option id="orderItem2" th:each="orderItem : ${orderItems}" th:text="${orderItem.dishName}" th:value="${orderItem.dishName}"></option>-->
     </select>
+    <input type="hidden" id="dishId" name="dishId">
     <br><br>
     <label for="rating">选择评分:</label>
     <select id="rating" name="rating">
@@ -63,12 +66,46 @@
         <option value="5">5星</option>
     </select>
     <br><br>
-    <label for="review">评价内容:</label>
-    <textarea id="review" name="review"></textarea>
+    <label for="content">评价内容:</label>
+    <input id="content" name="review">
     <br><br>
 
-    <button type="submit" th:attr="onclick=|submitReview()|">提交评价</button>
+    <button type="button" th:attr="onclick=|submitReview()|">提交评价</button>
 </form>
 </div>
+<script>
+    var rating = document.getElementById('rating').value;
+    var content = document.getElementById('content').value;
+    var orderItem = document.getElementById('orderItem').value;
+
+    let dishId;
+
+    async function updateDishId() {
+        const selectElement = document.getElementById('orderItems');
+        dishId = selectElement.value;
+        document.getElementById('dishId').value = dishId;
+    }
+
+    function submitReview(){
+        var currentUrl = window.location.href;
+
+        createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/reviewDish')) + `/reviewUpload?dishId=${orderItem}&rating=${rating}&content=${document.getElementById('content').value}`;
+        // createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/menuItems')) + `/createOrder?userId=${userId}&merchantId=${merchantId}&status=${status}&orderType=${orderType}`;
+        // fetch(createOrderUrl, {
+        //     method: 'POST'
+        //
+        // })
+        //     .then(data => {
+        //         console.log('Success:', data);
+        //     })
+        //     .catch((error) => {
+        //         console.error('Error:', error);
+        //     });
+
+        // redirectUrl = currentUrl.substring(0, currentUrl.indexOf('/reviewDish')) + `/reviewSuccess`;
+        //     console.log(redirectUrl);
+        window.location.href = createOrderUrl;
+    }
+</script>
 </body>
 </html>
