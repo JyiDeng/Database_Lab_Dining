@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+  <title>预定详情</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9f9f9;
+    }
+    .container {
+      width: 80%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+    }
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ccc;
+    }
+    th, td {
+      padding: 10px;
+      text-align: left;
+    }
+    th {
+      background-color: #f2f2f2;
+    }
+    tr:nth-child(even) {
+      background-color: #f9f9f9;
+    }
+    tr:hover {
+      background-color: #f1f1f1;
+    }
+  </style>
+
+</head>
+<body>
+<div class="container">
+  <h1>预定详情</h1>
+  <table>
+    <thead>
+    <tr>
+      <th>预定编号</th>
+      <th>预定商家</th>
+      <th>预定时间</th>
+
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="reserve : ${reserves}">
+      <td th:text="${reserve.reserveId}">预定编号</td>
+      <td th:text="${reserve.merchantName}">预定商家</td>
+      <td th:text="${reserve.reserveDate}">预定时间</td>
+
+    </tr>
+    <!--应该用sql计算出总价-->
+    <!--<tr>-->
+    <!--  <td colspan="4" style="text-align:right;"><strong>总价:</strong></td>-->
+    <!--  <td th:text="${#numbers.formatDecimal(orderItems.stream().mapToDouble( item.quantity * item.price).sum(), 2, 'POINT', 'COMMA')}">总价</td>-->
+    <!--</tr>-->
+    </tbody>
+
+
+
+  </table>
+
+</div>
+<script>
+
+</script>
+</body>
+</html>
+
+

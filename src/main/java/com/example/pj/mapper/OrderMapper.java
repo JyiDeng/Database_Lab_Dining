@@ -109,4 +109,15 @@ public interface OrderMapper {
             "VALUES (#{userId},  #{dishId}, #{rating}, #{content}, #{reviewDate})")
     @Options(useGeneratedKeys = true, keyProperty = "reviewId")
     void reviewSuccess(Long userId, Long dishId, Float rating, String content, LocalDateTime reviewDate);
+
+    @Insert("INSERT INTO reserve (userId,  merchantId) " +
+            "VALUES (#{userId}, #{merchantId})")
+    @Options(useGeneratedKeys = true, keyProperty = "reserveId")
+    void reserve(Long userId, Long merchantId);
+
+    @Select("Select r.*, m.merchantName " +
+            "from reserve r " +
+            "join merchant m on r.merchantId = m.merchantId " +
+            "and r.userId = #{userId}")
+    List<Reserve> reserveDetail(Long userId);
 }

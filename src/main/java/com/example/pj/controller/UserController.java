@@ -304,6 +304,18 @@ public class UserController {
         return "reviewSuccess";
     }
 
+    @RequestMapping("/{path}/reserve")
+    public String reserve(@RequestParam Long id,@PathVariable Long path){
+        orderMapper.reserve(path,id);
+        return "reserveSuccess";
+    }
+    @RequestMapping("/{path}/reserveDetail")
+    public String reserveDetail(Model model,@PathVariable Long path){
+        List<Reserve> reserves = orderMapper.reserveDetail(path);
+        model.addAttribute("reserves",reserves);
+        return "reserve";
+    }
+
     @GetMapping("/favorites/sales")
     public ResponseEntity<List<DishSales>> getFavoriteDishSales(
             @RequestParam int userId,
