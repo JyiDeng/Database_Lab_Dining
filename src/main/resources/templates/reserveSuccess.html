@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>预定成功！</title>
+</head>
+<body>
+<h1>您已预定成功！</h1>
+<button type="button" th:attr="onclick=|redirectBackToReserves()|">
+  返回所有预定页</button>
+<script>
+
+  function redirectBackToReserves(){
+    var currentUrl = window.location.href;
+
+    createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/reserve')) + `/reserveDetail`;
+    console.log(createOrderUrl);
+    window.location.href = createOrderUrl;
+  }
+</script>
+</body>
+</html>

@@ -197,13 +197,13 @@ public class UserController {
 //    }
 
     @RequestMapping("/{path}/updateOrder3")
-    public String updateOrder3( @PathVariable String path,@RequestParam Long dishId,Long merchantId,Long delta) {
+    public String updateOrder3( @PathVariable Long path,@RequestParam Long dishId,Long merchantId,Long delta) {
 
 //        for(MenuItem menuItem: menuItems){
 //            Long menuItemId = menuItem.getMenuItemId();
 //            Long dishId = menuItem.getDishId();
         try{
-            Long orderId = orderMapper.findOrderIdByMerchantId(merchantId);
+            Long orderId = orderMapper.findOrderIdByMerchantId(path,merchantId);
             OrderItem orderItem = orderMapper.findOrderItem(orderId, dishId);
 
             if (delta==1 && orderItem == null) {
@@ -286,14 +286,30 @@ public class UserController {
     }
 
     @RequestMapping("/{path}/orderSubmitSuccess")
-    public String orderSubmit( Model model,@PathVariable String path,@RequestParam Long orderId) {
-        orderMapper.orderSubmitUpdateCompleted(orderId);
+    public String orderSubmit( Model model,@PathVariable Long path,@RequestParam Long orderId) {
+        int count = orderMapper.confirmNoDuplicateCompleted(orderId);
+        if (count == 0){
+            orderMapper.orderSubmitUpdateCompleted(orderId);
+            String msg = "您的订单（ID=" + orderId + "）的状态已经更新为Completed！";
+            LocalDateTime now = LocalDateTime.now();
+            messageMapper.updateOrderStatus2Completed(path, msg, now);
+            messageMapper.deleteDuplicateMessages();
+        }
+        model.addAttribute("count",count);
         return "orderSubmitSuccess";
     }
 
     @RequestMapping("/{path}/confirmAcceptation")
-    public String confirmAcceptation(Model model,@PathVariable String path,@RequestParam Long orderId) {
-        orderMapper.orderAcceptUpdateEnded(orderId);
+    public String confirmAcceptation(Model model,@PathVariable Long path,@RequestParam Long orderId) {
+
+        int count = orderMapper.confirmNoDuplicateEnded(orderId);
+        if (count == 0){
+            orderMapper.orderAcceptUpdateEnded(orderId);
+            String msg = "您的订单（ID=" + orderId + "）的状态已经更新为Ended！";
+            LocalDateTime now = LocalDateTime.now();
+            messageMapper.updateOrderStatus2Ended(path, msg, now);
+        }
+        model.addAttribute("count",count);
         return "orderEndSuccess";
     }
 
@@ -302,6 +318,21 @@ public class UserController {
         LocalDateTime now = LocalDateTime.now();
         orderMapper.reviewSuccess(path,dishId,rating,content,now);
         return "reviewSuccess";
+    }
+
+    @RequestMapping("/{path}/reserve")
+    public String reserve(@RequestParam Long id,@PathVariable Long path){
+        orderMapper.reserve(path,id);
+        String msg = "您已预订成功餐厅，商户ID=" + id + "！";
+        LocalDateTime now = LocalDateTime.now();
+        messageMapper.insertReserveConfirmation(path,msg,now);
+        return "reserveSuccess";
+    }
+    @RequestMapping("/{path}/reserveDetail")
+    public String reserveDetail(Model model,@PathVariable Long path){
+        List<Reserve> reserves = orderMapper.reserveDetail(path);
+        model.addAttribute("reserves",reserves);
+        return "reserve";
     }
 
     @GetMapping("/favorites/sales")

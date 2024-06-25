@@ -30,7 +30,7 @@ public interface OrderMapper {
     List<Map<String, Object>> getOrdersByMerchantId(@Param("merchantID") Long merchantId);
 
     // 查询订单
-    @Select("SELECT * FROM MyOrder WHERE UserID = #{userId}")
+    @Select("SELECT * FROM MyOrder WHERE UserID = #{userId} order by orderId desc ")
     List<MyOrder> getOrdersByUserId(Long userId);
 
     @Select("SELECT oi.*, mp.price AS price,d.dishName as dishName " +
@@ -83,8 +83,12 @@ public interface OrderMapper {
     @Select("SELECT dishID FROM menuItem WHERE menuItemId = #{menuItemId}")
     Long findDishIdByMenuItemId(Long menuItemId);
 
-    @Select("SELECT OrderID FROM MyOrder WHERE merchantID = #{merchantId} AND Status = 'Pending' LIMIT 1")
-    Long findOrderIdByMerchantId(Long merchantId);
+    @Select("SELECT OrderID " +
+            "FROM MyOrder " +
+            "WHERE merchantID = #{merchantId} " +
+            "AND userId = #{userId} " +
+            "AND Status = 'Pending' LIMIT 1")
+    Long findOrderIdByMerchantId(Long userId, Long merchantId);
 
     @Select("SELECT * FROM OrderItem WHERE OrderID = #{orderId} AND DishID = #{dishId}")
     OrderItem findOrderItem(Long orderId, Long dishId);
@@ -105,8 +109,28 @@ public interface OrderMapper {
     @Update("UPDATE MyOrder SET status = 'Ended' WHERE orderId = #{orderId}")
     void orderAcceptUpdateEnded(Long orderId);
 
+    @Select("select count(status) from MyOrder where status = 'Completed' and  orderId = #{orderId}")
+    int confirmNoDuplicateCompleted(Long orderId);
+
+
+
+    @Select("select count(status) from MyOrder where status = 'Ended' and  orderId = #{orderId}")
+    int confirmNoDuplicateEnded(Long orderId);
+
+
     @Insert("INSERT INTO review (userId,  dishId, rating, content, reviewDate) " +
             "VALUES (#{userId},  #{dishId}, #{rating}, #{content}, #{reviewDate})")
     @Options(useGeneratedKeys = true, keyProperty = "reviewId")
     void reviewSuccess(Long userId, Long dishId, Float rating, String content, LocalDateTime reviewDate);
+
+    @Insert("INSERT INTO reserve (userId,  merchantId) " +
+            "VALUES (#{userId}, #{merchantId})")
+    @Options(useGeneratedKeys = true, keyProperty = "reserveId")
+    void reserve(Long userId, Long merchantId);
+
+    @Select("Select r.*, m.merchantName " +
+            "from reserve r " +
+            "join merchant m on r.merchantId = m.merchantId " +
+            "and r.userId = #{userId}")
+    List<Reserve> reserveDetail(Long userId);
 }

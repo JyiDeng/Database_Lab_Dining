@@ -149,8 +149,8 @@
     var currentUrl = window.location.href;
     createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/menuItems')) + `/updateOrder3?&merchantId=${merchantId}&dishId=${dishId}&delta=${change}`;
     var msg;
-    if (change===1) msg = "增加成功！";
-    else msg = "减少成功！（最低为0份）";
+    if (change===1) msg = "增加成功！（本弹窗3秒后消失）";
+    else msg = "减少成功！（最低为0份）（本弹窗3秒后消失）";
 
 
     fetch(createOrderUrl, {

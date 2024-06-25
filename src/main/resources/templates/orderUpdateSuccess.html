@@ -12,7 +12,7 @@
             var endIndex = currentUrl.indexOf("&", startIndex) !== -1 ? currentUrl.indexOf("&", startIndex) : currentUrl.length;
             var merchantId = currentUrl.substring(startIndex, endIndex);
             console.log(merchantId);
-            createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/updateOrder')) + `/menuItems?id=${merchantId}`;
+            createOrderUrl = currentUrl.substring(0, currentUrl.indexOf('/updateOrder3')) + `/menuItems?id=${merchantId}`;
             console.log(createOrderUrl);
             window.location.href = createOrderUrl;
         }

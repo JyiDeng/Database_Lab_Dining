@@ -4,7 +4,8 @@
   <title>订单提交成功！</title>
 </head>
 <body>
-<h1>订单提交成功！</h1>
+<h1 th:if="${count}==0">订单提交成功！</h1>
+<h1 th:if="${count}==1">已经提交过该订单了！</h1>
 <button type="button" th:attr="onclick=|redirectToAllOrders()|">返回查看所有订单</button>
 
 <script>
