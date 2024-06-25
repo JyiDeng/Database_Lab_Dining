@@ -6,13 +6,14 @@ import com.example.pj.entity.MenuPrice;
 import com.example.pj.entity.User;
 import org.apache.ibatis.annotations.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Mapper
 public interface MenuMapper {
 
-    @Select("SELECT * FROM menu where merchantId = #{merchantId}")
-    List<Menu> findAllMenus(Long merchantId);
+//    @Select("SELECT * FROM menu where merchantId = #{merchantId}")
+//    List<Menu> findAllMenus(Long merchantId);
 
 //    @Insert("INSERT INTO menu (merchantID) VALUES (#{merchantId})")
 //    @Options(useGeneratedKeys = true, keyProperty = "menuId")
@@ -36,12 +37,15 @@ public interface MenuMapper {
 //    @Options(useGeneratedKeys = true, keyProperty = "menuItemId")
 //    void insertMenuItem(MenuItem menuItem);
 
-    @Insert("INSERT INTO MenuItem(menuItemId, menuId, dishId,price) VALUES (#{menuItemId}, #{menuId}, #{dishId}, #{price})")
+    @Insert("INSERT INTO MenuItem(menuItemId,  dishId) VALUES (#{menuItemId}, #{dishId})")
 //    @Options(useGeneratedKeys = true, keyProperty = "menuItemId")
     void insertMenuItem(MenuItem menuItem);
 
-    @Update("UPDATE menuItem SET price = #{price} WHERE menuItemID = #{menuItemId}")
-    void updatePrice(@Param("menuItemId") Long menuItemId, @Param("price") Float price);
+    @Insert("INSERT INTO menuPrice (menuItemId, price, effectiveDate) " +
+            "VALUES (#{menuItemId}, #{price}, #{now} )"
+            )
+    @Options(useGeneratedKeys = true, keyProperty = "menuPriceId")
+    void updatePrice(@Param("menuItemId") Long menuItemId, @Param("price") Float price, @Param("now") LocalDateTime now);
 
     @Delete("DELETE FROM menuPrice WHERE menuItemId = #{menuItemId}")
     void deleteMenuPrice(Long menuItemId);

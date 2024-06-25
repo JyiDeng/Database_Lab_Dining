@@ -88,9 +88,9 @@ public class MerchantController {
     // 新增菜品到菜单
     @RequestMapping("/{path}/addMenuItem")
     public String addMenuItem(@PathVariable Long path, @RequestParam Long dishId,Long menuItemId,Float price) {
-        if(menuMapper.findMenuById(path) == null){
-            return "Menu " + path + "does not exist!";
-        }
+//        if(menuMapper.findMenuById(path) == null){
+//            return "Menu " + path + "does not exist!";
+//        }
 
         if (menuMapper.findMenuItemById(menuItemId) == null) {
             MenuItem menuItem = new MenuItem(menuItemId,dishId,null,null);  //测试dishName，后续查询了可以显示dishName！
@@ -128,23 +128,20 @@ public class MerchantController {
         LocalDateTime now = LocalDateTime.now();
 
         // 查找最新的价格记录
-        MenuPrice latestMenuPrice = menuMapper.findLatestByMenuItemId(menuItemId);
-        // if (latestMenuPrice != null) {
-            // 更新结束时间
-            // latestMenuPrice.setEndDate(now);
-            // menuMapper.insertMenuPrice(latestMenuPrice);
-        // }
-
-        // 插入新的价格记录
-        MenuPrice menuPrice = new MenuPrice(null, menuItemId, newPrice, now, null);
-        menuMapper.insertMenuPrice(menuPrice);
+//        MenuPrice latestMenuPrice = menuMapper.findLatestByMenuItemId(menuItemId);
 
         // 更新 menuItem 表中的价格
-        menuMapper.updatePrice(menuItemId, newPrice);
+        menuMapper.updatePrice(menuItemId, newPrice,now);
 
         return "Price updated successfully!";
     }
 
+//    @RequestMapping("/{path}/allMenuItems")
+//    public List<MenuItem> getMenus(@PathVariable Long path, Model model) {
+//        return  menuMapper.findAllMenuItems(path);
+////        model.addAttribute("menuItems",menuItems);
+////        return "menuIntro";
+//    }
 //     查询所有菜品的收藏量
     @GetMapping("/{merchantId}/favoriteCounts")
     public List<Map<String, Object>> getFavoriteCounts(@PathVariable Long merchantId) {
