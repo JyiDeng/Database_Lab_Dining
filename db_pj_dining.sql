@@ -270,6 +270,37 @@ CREATE TABLE MyOrder (
 INSERT INTO `MyOrder` VALUES(1,1,1,'2024-5-1 6:32:29','Completed','Queue',0);  # totalPrice应该由查询得出
 INSERT INTO `MyOrder` VALUES(2,3,2,'2024-5-8 18:10:10','Ended','Queue',0);
 INSERT INTO `MyOrder` VALUES(3,2,3,'2024-5-17 13:29:20','Pending','Online',0);
+INSERT INTO MyOrder (UserID, MerchantID, DishID, OrderDate, Quantity, TotalPrice) VALUES
+(1, 1, 1, '2024-06-10 12:00:00', 2, 36.00),
+(1, 1, 1, '2024-06-12 14:00:00', 1, 18.00),
+(1, 1, 1, '2024-06-14 16:00:00', 3, 54.00),
+(1, 1, 1, '2024-06-16 18:00:00', 1, 18.00),
+(1, 1, 1, '2024-06-18 20:00:00', 2, 36.00);
+INSERT INTO MyOrder (UserID, MerchantID, DishID, OrderDate, Quantity, TotalPrice) VALUES
+(2, 2, 2, '2024-06-10 12:00:00', 1, 13.80),
+(2, 2, 2, '2024-06-12 14:00:00', 2, 27.60),
+(2, 2, 2, '2024-06-14 16:00:00', 3, 41.40),
+(2, 2, 2, '2024-06-16 18:00:00', 1, 13.80),
+(2, 2, 2, '2024-06-18 20:00:00', 2, 27.60);
+INSERT INTO MyOrder (UserID, MerchantID, DishID, OrderDate, Quantity, TotalPrice) VALUES
+(3, 3, 3, '2024-06-10 12:00:00', 1, 68.00),
+(3, 3, 3, '2024-06-12 14:00:00', 2, 136.00),
+(3, 3, 3, '2024-06-14 16:00:00', 1, 68.00),
+(3, 3, 3, '2024-06-16 18:00:00', 3, 204.00),
+(3, 3, 3, '2024-06-18 20:00:00', 2, 136.00);
+INSERT INTO MyOrder (UserID, MerchantID, DishID, OrderDate, Quantity, TotalPrice) VALUES
+(4, 4, 4, '2024-06-10 12:00:00', 1, 20.00),
+(4, 4, 4, '2024-06-12 14:00:00', 2, 40.00),
+(4, 4, 4, '2024-06-14 16:00:00', 1, 20.00),
+(4, 4, 4, '2024-06-16 18:00:00', 3, 60.00),
+(4, 4, 4, '2024-06-18 20:00:00', 2, 40.00);
+INSERT INTO MyOrder (UserID, MerchantID, DishID, OrderDate, Quantity, TotalPrice) VALUES
+(5, 5, 5, '2024-06-10 12:00:00', 2, 30.00),
+(5, 5, 5, '2024-06-12 14:00:00', 1, 15.00),
+(5, 5, 5, '2024-06-14 16:00:00', 3, 45.00),
+(5, 5, 5, '2024-06-16 18:00:00', 2, 30.00),
+(5, 5, 5, '2024-06-18 20:00:00', 1, 15.00);
+
 
 DROP TABLE IF EXISTS `OrderItem`;
 CREATE TABLE OrderItem (
@@ -324,3 +355,62 @@ INSERT INTO `AdminActionLog` VALUES(1,1,'ADD_USER',1,'2004-5-5 21:34:45');
 INSERT INTO `AdminActionLog` VALUES(2,1,'UPDATE_MERCHANT',2,'2004-5-23 18:34:59');
 INSERT INTO `AdminActionLog` VALUES(3,1,'DELETE_USER',3,'2004-5-26 15:39:51');
 
+DROP TABLE IF EXISTS `LoyalCustomers`;
+CREATE TABLE LoyalCustomers (
+    LoyalCustomerID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT,
+    MerchantID INT,
+    PurchaseCount INT,
+    FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
+    FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID) ON DELETE CASCADE,
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+DELIMITER //
+
+CREATE TRIGGER InsertLoyalCustomer
+AFTER INSERT ON MyOrder
+FOR EACH ROW
+BEGIN
+    DECLARE purchase_count INT;
+
+    -- 计算用户在商户的总消费次数
+    SELECT COUNT(*) INTO purchase_count
+    FROM MyOrder
+    WHERE UserID = NEW.UserID AND MerchantID = NEW.MerchantID;
+
+    -- 如果消费次数超过阈值且LoyalCustomers表中没有该记录，则插入
+    IF purchase_count >= 5 THEN
+        IF NOT EXISTS (
+            SELECT 1 FROM LoyalCustomers
+            WHERE UserID = NEW.UserID AND MerchantID = NEW.MerchantID
+        ) THEN
+            INSERT INTO LoyalCustomers (UserID, MerchantID, PurchaseCount)
+            VALUES (NEW.UserID, NEW.MerchantID, purchase_count);
+        END IF;
+    END IF;
+END //
+
+DELIMITER ;
+
+DELIMITER //
+
+CREATE TRIGGER UpdateLoyalCustomer
+AFTER INSERT ON MyOrder
+FOR EACH ROW
+BEGIN
+    DECLARE purchase_count INT;
+
+    -- 计算用户在商户的总消费次数
+    SELECT COUNT(*) INTO purchase_count
+    FROM MyOrder
+    WHERE UserID = NEW.UserID AND MerchantID = NEW.MerchantID;
+
+    -- 如果消费次数超过阈值且LoyalCustomers表中有该记录，则更新
+    IF purchase_count >= 5 THEN
+        UPDATE LoyalCustomers
+        SET PurchaseCount = purchase_count
+        WHERE UserID = NEW.UserID AND MerchantID = NEW.MerchantID;
+    END IF;
+END //
+
+DELIMITER ;
