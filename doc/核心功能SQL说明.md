@@ -82,17 +82,30 @@ GROUP BY d.DishID, d.DishName
 
 通过连接收藏表、订单项表和订单表，按照不同点餐方式（Queue和Online）分别统计用户收藏的每个菜品的销量，并按照菜品ID和菜品名称分组。
 ```sql
-SELECT d.DishID, d.DishName, 
-    SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END) AS QueueSales,
-    SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END) AS OnlineSales
-FROM FavoriteDish fd
-JOIN Dish d ON fd.DishID = d.DishID
-JOIN OrderItem oi ON d.DishID = oi.DishID
-JOIN MyOrder o ON oi.OrderID = o.OrderID
-WHERE fd.UserID = #{userId}
-AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod})
-GROUP BY d.DishID, d.DishName
-ORDER BY d.DishID
+SELECT
+    fd.UserID,
+    YEARWEEK(o.OrderDate, 1) AS period,
+    d.DishID,
+    d.DishName,
+    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END), 0) AS QueueSales,
+    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END), 0) AS OnlineSales
+FROM
+    FavoriteDish fd
+    JOIN Dish d ON fd.DishID = d.DishID
+    JOIN OrderItem oi ON d.DishID = oi.DishID
+    JOIN MyOrder o ON oi.OrderID = o.OrderID
+WHERE
+    fd.UserID = #{userId}
+    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL 1 #{timePeriod})  # e.g. timePeriod = MONTH, 即获得近一月内不同点餐方式的销量
+GROUP BY
+    fd.UserID,
+    YEARWEEK(o.OrderDate, 1),
+    d.DishID,
+    d.DishName
+ORDER BY
+    fd.UserID,
+    YEARWEEK(o.OrderDate, 1),
+    d.DishID;
 ```
 
 
@@ -142,24 +155,33 @@ SET UserName = #{userName}, Gender = #{gender}, EcardID = #{ecardID}, Role = #{r
 WHERE UserID = #{userId}
 ```
 
-### 用户活跃度分析 - 每周活跃度
-
-通过按用户ID和订单日期的周数分组，计算每个用户每周的订单数量，并按照用户ID和周数排序。
-```sql
-SELECT UserID, YEARWEEK(OrderDate, 1) AS YearWeek, COUNT(*) AS OrderCount
-FROM MyOrder
-GROUP BY UserID, YEARWEEK(OrderDate, 1)
-ORDER BY UserID, YearWeek
-```
-
 ### 用户活跃度分析 - 每月活跃度
 
 通过按用户ID和订单日期的月份分组，计算每个用户每月的订单数量，并按照用户ID和月份排序。
 ```sql
-SELECT UserID, DATE_FORMAT(OrderDate, '%Y-%m') AS YearMonth, COUNT(*) AS OrderCount
-FROM MyOrder
-GROUP BY UserID, DATE_FORMAT(OrderDate, '%Y-%m')
-ORDER BY UserID, YearMonth
+SELECT
+    o.UserID,
+    YEARWEEK(o.OrderDate, 1) AS period,
+    d.DishID,
+    d.DishName,
+    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END), 0) AS QueueSales,
+    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END), 0) AS OnlineSales
+FROM
+    Dish d
+    JOIN OrderItem oi ON d.DishID = oi.DishID
+    JOIN MyOrder o ON oi.OrderID = o.OrderID
+WHERE
+    o.UserID = #{userId}
+    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+GROUP BY
+    o.UserID,
+    YEARWEEK(o.OrderDate, 1),
+    d.DishID,
+    d.DishName
+ORDER BY
+    o.UserID,
+    YEARWEEK(o.OrderDate, 1),
+    d.DishID;
 ```
 
 ### 用户活跃度分析 - 不同时间段活跃度
