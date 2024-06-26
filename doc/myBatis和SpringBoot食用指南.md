@@ -30,7 +30,8 @@ PJ1-根目录
 
 ## Controller实现细节
 
-开头加的注解中，@RestController应该是用于调网页的。@RequestMapping或者@GetMapping的括号里表明当访问到这个开头的网页时，会执行什么内容。
++ 开头加的注解中，@RestController应该是用于调网页（json）的；@Controller用于调html的网页。
++ @RequestMapping或者@GetMapping的括号里表明当访问到这个开头的网页时，会执行什么内容。
 ```java
 @RestController
 @RequestMapping("/admin")

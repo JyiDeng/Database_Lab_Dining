@@ -12,7 +12,7 @@ CREATE TABLE if not exists User (
     EcardID INT NOT NULL,
     Role ENUM('Student','Staff') NOT NULL,
     Age INT,
-    Password VARCHAR(50) NOT NULL
+    Password VARCHAR(50) NOT NULL DEFAULT 12345
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `user` VALUES (1,'Alice1','Female',75,'Student',20,'12345');
 INSERT INTO `user` VALUES (2,'Tom1','Male',50,'Student',25,'54321');
