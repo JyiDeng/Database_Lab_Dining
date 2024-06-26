@@ -62,13 +62,19 @@ public class AdvancedUserController {
     // 用户活跃度分析
     @GetMapping("/{path}/user-activity/weekly")
     public List<UserActivity> getWeeklyActivity(@PathVariable Long path) {
-        return userMapper.getWeeklyActivity();
+        return userMapper.getWeeklyActivity(path);
 //        return ResponseEntity.ok(activity);
     }
 
     @GetMapping("/{path}/user-activity/monthly")
     public List<UserActivity>getMonthlyActivity(@PathVariable Long path) {
-        return userMapper.getMonthlyActivity();
+        return userMapper.getMonthlyActivity(path);
+//        return ResponseEntity.ok(activity);
+    }
+
+    @GetMapping("/{path}/user-activity/yearly")
+    public List<UserActivity>getYearlyActivity(@PathVariable Long path) {
+        return userMapper.getYearlyActivity(path);
 //        return ResponseEntity.ok(activity);
     }
 
@@ -78,8 +84,8 @@ public class AdvancedUserController {
 //        return ResponseEntity.ok(activity);
     }
 
-    @GetMapping("/loyal-customers-distribution")
-    public List<PurchaseDistribution> getLoyalCustomerDistribution(
+    @GetMapping("/{path}/loyal-customers-distribution")
+    public List<PurchaseDistribution> getLoyalCustomerDistribution(@PathVariable Long path,
             @RequestParam Long merchantId,
             @RequestParam String timePeriod,
             @RequestParam Long threshold) {

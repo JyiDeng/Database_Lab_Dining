@@ -56,7 +56,7 @@ public interface FavoriteMapper {
             "JOIN OrderItem oi ON d.DishID = oi.DishID " +
             "JOIN MyOrder o ON oi.OrderID = o.OrderID " +
             "WHERE fd.UserID = #{userId} " +
-            "AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}) " +
+            "AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod} DAY ) " +
             "GROUP BY d.DishID, d.DishName " +
             "ORDER BY d.DishID")
     List<DishSales> getFavoriteDishSales(@Param("userId") Long userId, @Param("timePeriod") String timePeriod);

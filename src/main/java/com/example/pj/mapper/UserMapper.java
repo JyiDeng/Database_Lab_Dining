@@ -30,17 +30,95 @@ public interface UserMapper {
     int save(@Param("user") User user);
 
     // 用户活跃度分析
-    @Select("SELECT UserID, YEARWEEK(OrderDate, 1) AS YEARWEEK, COUNT(*) AS OrderCount " +
-            "FROM MyOrder " +
-            "GROUP BY UserID, YEARWEEK(OrderDate, 1) " +
-            "ORDER BY UserID, YearWeek")
-    List<UserActivity> getWeeklyActivity();
+//    @Select("SELECT UserID, YEARWEEK(OrderDate, 1) AS YEARWEEK, COUNT(*) AS OrderCount " +
+//            "FROM MyOrder " +
+//            "GROUP BY UserID, YEARWEEK(OrderDate, 1) " +
+//            "ORDER BY UserID, YearWeek")
+    @Select("SELECT " +
+            "    fd.UserID, " +
+            "    YEARWEEK(o.OrderDate, 1) AS period, " +
+            "    d.DishID, " +
+            "    d.DishName, " +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END), 0) AS QueueSales, " +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END), 0) AS OnlineSales " +
+            "FROM " +
+            "    FavoriteDish fd " +
+            "    JOIN Dish d ON fd.DishID = d.DishID " +
+            "    JOIN OrderItem oi ON d.DishID = oi.DishID " +
+            "    JOIN MyOrder o ON oi.OrderID = o.OrderID " +
+            "WHERE " +
+            "    fd.UserID = #{userId} " +
+            "    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL 1 WEEK) " +
+            "GROUP BY " +
+            "    fd.UserID, " +
+            "    YEARWEEK(o.OrderDate, 1), " +
+            "    d.DishID, " +
+            "    d.DishName " +
+            "ORDER BY " +
+            "    fd.UserID, " +
+            "    YEARWEEK(o.OrderDate, 1), " +
+            "    d.DishID; ")
+    List<UserActivity> getWeeklyActivity(Long userId);
 
-    @Select("SELECT UserID, DATE_FORMAT(OrderDate, '%Y-%m') AS YearMonth, COUNT(*) AS OrderCount " +
-            "FROM MyOrder " +
-            "GROUP BY UserID, DATE_FORMAT(OrderDate, '%Y-%m') " +
-            "ORDER BY UserID, YearMonth")
-    List<UserActivity> getMonthlyActivity();
+    @Select("SELECT " +
+            "    fd.UserID, " +
+            "    YEARWEEK(o.OrderDate, 1) AS period, " +
+            "    d.DishID, " +
+            "    d.DishName, " +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END), 0) AS QueueSales, " +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END), 0) AS OnlineSales " +
+            "FROM " +
+            "    FavoriteDish fd " +
+            "    JOIN Dish d ON fd.DishID = d.DishID " +
+            "    JOIN OrderItem oi ON d.DishID = oi.DishID " +
+            "    JOIN MyOrder o ON oi.OrderID = o.OrderID " +
+            "WHERE " +
+            "    fd.UserID = #{userId} " +
+            "    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL 1 MONTH) " +
+            "GROUP BY " +
+            "    fd.UserID, " +
+            "    YEARWEEK(o.OrderDate, 1), " +
+            "    d.DishID, " +
+            "    d.DishName " +
+            "ORDER BY " +
+            "    fd.UserID, " +
+            "    YEARWEEK(o.OrderDate, 1), " +
+            "    d.DishID; ")
+//    @Select("SELECT UserID, DATE_FORMAT(OrderDate, '%Y-%m') AS YearMonth, COUNT(*) AS OrderCount " +
+//            "FROM MyOrder " +
+//            "GROUP BY UserID, DATE_FORMAT(OrderDate, '%Y-%m') " +
+//            "ORDER BY UserID, YearMonth")
+    List<UserActivity> getMonthlyActivity(Long userId);
+
+    @Select("SELECT " +
+            "    fd.UserID, " +
+            "    YEARWEEK(o.OrderDate, 1) AS period, " +
+            "    d.DishID, " +
+            "    d.DishName, " +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END), 0) AS QueueSales, " +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END), 0) AS OnlineSales " +
+            "FROM " +
+            "    FavoriteDish fd " +
+            "    JOIN Dish d ON fd.DishID = d.DishID " +
+            "    JOIN OrderItem oi ON d.DishID = oi.DishID " +
+            "    JOIN MyOrder o ON oi.OrderID = o.OrderID " +
+            "WHERE " +
+            "    fd.UserID = #{userId} " +
+            "    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL 1 YEAR) " +
+            "GROUP BY " +
+            "    fd.UserID, " +
+            "    YEARWEEK(o.OrderDate, 1), " +
+            "    d.DishID, " +
+            "    d.DishName " +
+            "ORDER BY " +
+            "    fd.UserID, " +
+            "    YEARWEEK(o.OrderDate, 1), " +
+            "    d.DishID; ")
+//    @Select("SELECT UserID, DATE_FORMAT(OrderDate, '%Y-%m') AS YearMonth, COUNT(*) AS OrderCount " +
+//            "FROM MyOrder " +
+//            "GROUP BY UserID, DATE_FORMAT(OrderDate, '%Y-%m') " +
+//            "ORDER BY UserID, YearMonth")
+    List<UserActivity> getYearlyActivity(Long userId);
 
     @Select("SELECT UserID, " +
             "CASE " +
