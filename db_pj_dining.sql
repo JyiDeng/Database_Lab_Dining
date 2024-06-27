@@ -177,9 +177,6 @@ INSERT INTO `menuPrice` (menuItemID, price, effectiveDate) VALUES
 #     FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID) ON DELETE CASCADE,
 #     FOREIGN KEY (DishID) REFERENCES Dish(DishID) ON DELETE CASCADE
 # )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-# INSERT INTO `Favorite` VALUES (1,2,2,'2024-4-30 5:30:25');
-# INSERT INTO `Favorite` VALUES (2,1,1,'2024-5-6 7:30:00');
-# INSERT INTO `Favorite` VALUES (3,3,3,'2024-5-15 23:59:58');
 
 DROP TABLE IF EXISTS `FavoriteMerchant`;
 CREATE TABLE FavoriteMerchant (
@@ -197,6 +194,16 @@ INSERT INTO `FavoriteMerchant` (userId,merchantId,favoriteDate)VALUES (2,4,'2024
 INSERT INTO `FavoriteMerchant` (userId,merchantId,favoriteDate)VALUES (5,4,'2024-5-16 3:59:58');
 INSERT INTO `FavoriteMerchant` (userId,merchantId,favoriteDate)VALUES (4,4,'2024-5-25 13:59:58');
 INSERT INTO `FavoriteMerchant` (userId,merchantId,favoriteDate)VALUES (3,5,'2024-5-5 23:59:58');
+INSERT INTO `FavoriteMerchant` (userId, merchantID, favoriteDate) VALUES (1, 2, '2024-06-10 08:45:00');
+INSERT INTO `FavoriteMerchant` (userId, merchantID, favoriteDate) VALUES (2, 3, '2024-06-13 09:15:30');
+INSERT INTO `FavoriteMerchant` (userId, merchantID, favoriteDate) VALUES (3, 1, '2024-06-16 10:05:20');
+INSERT INTO `FavoriteMerchant` (userId, merchantID, favoriteDate) VALUES (4, 2, '2024-06-20 11:25:45');
+INSERT INTO `FavoriteMerchant` (userId, merchantID, favoriteDate) VALUES (5, 3, '2024-06-20 12:30:10');
+INSERT INTO `FavoriteMerchant` (userId, merchantID, favoriteDate) VALUES (6, 1, '2024-06-21 13:45:30');
+INSERT INTO `FavoriteMerchant` (userId, merchantID, favoriteDate) VALUES (7, 2, '2024-06-23 14:50:50');
+INSERT INTO `FavoriteMerchant` (userId, merchantID, favoriteDate) VALUES (1, 3, '2024-06-23 15:30:20');
+INSERT INTO `FavoriteMerchant` (userId, merchantID, favoriteDate) VALUES (2, 4, '2024-06-24 16:40:00');
+INSERT INTO `FavoriteMerchant` (userId, merchantID, favoriteDate) VALUES (3, 5, '2024-06-26 17:50:15');
 
 DROP TABLE IF EXISTS `FavoriteDish`;
 CREATE TABLE FavoriteDish (
@@ -216,7 +223,16 @@ INSERT INTO `FavoriteDish` (userId,dishId,favoriteDate) VALUES (6,4,'2024-6-15 3
 INSERT INTO `FavoriteDish` (userId,dishId,favoriteDate) VALUES (7,9,'2024-5-15 13:59:00');
 INSERT INTO `FavoriteDish` (userId,dishId,favoriteDate) VALUES (6,9,'2024-6-10 13:59:58');
 INSERT INTO `FavoriteDish` (userId,dishId,favoriteDate) VALUES (4,9,'2024-6-5 13:59:40');
-
+INSERT INTO `FavoriteDish` (userId, dishId, favoriteDate) VALUES (1, 5, '2024-06-10 08:45:00');
+INSERT INTO `FavoriteDish` (userId, dishId, favoriteDate) VALUES (2, 6, '2024-06-20 09:15:30');
+INSERT INTO `FavoriteDish` (userId, dishId, favoriteDate) VALUES (3, 7, '2024-06-20 10:05:20');
+INSERT INTO `FavoriteDish` (userId, dishId, favoriteDate) VALUES (4, 8, '2024-06-20 11:25:45');
+INSERT INTO `FavoriteDish` (userId, dishId, favoriteDate) VALUES (5, 1, '2024-06-20 12:30:10');
+INSERT INTO `FavoriteDish` (userId, dishId, favoriteDate) VALUES (6, 2, '2024-06-22 13:45:30');
+INSERT INTO `FavoriteDish` (userId, dishId, favoriteDate) VALUES (7, 3, '2024-06-23 14:50:50');
+INSERT INTO `FavoriteDish` (userId, dishId, favoriteDate) VALUES (1, 4, '2024-06-24 15:30:20');
+INSERT INTO `FavoriteDish` (userId, dishId, favoriteDate) VALUES (2, 5, '2024-06-24 16:40:00');
+INSERT INTO `FavoriteDish` (userId, dishId, favoriteDate) VALUES (3, 6, '2024-06-26 17:50:15');
 
 DROP TABLE IF EXISTS `Review`;
 CREATE TABLE Review (
@@ -390,7 +406,7 @@ BEGIN
     WHERE UserID = NEW.UserID AND MerchantID = NEW.MerchantID;
 
     -- 如果消费次数超过阈值且LoyalCustomers表中没有该记录，则插入
-    IF purchase_count >= 5 THEN
+    IF purchase_count >= 3 THEN
         IF NOT EXISTS (
             SELECT 1 FROM LoyalCustomers
             WHERE UserID = NEW.UserID AND MerchantID = NEW.MerchantID
@@ -417,7 +433,7 @@ BEGIN
     WHERE UserID = NEW.UserID AND MerchantID = NEW.MerchantID;
 
     -- 如果消费次数超过阈值且LoyalCustomers表中有该记录，则更新
-    IF purchase_count >= 5 THEN
+    IF purchase_count >= 3 THEN
         UPDATE LoyalCustomers
         SET PurchaseCount = purchase_count
         WHERE UserID = NEW.UserID AND MerchantID = NEW.MerchantID;

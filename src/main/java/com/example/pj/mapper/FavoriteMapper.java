@@ -9,8 +9,6 @@ import java.util.List;
 
 @Mapper
 public interface FavoriteMapper {
-
-
     // 收藏菜品
     @Select("SELECT fd.*, d.dishName as dishName " +
             "FROM FavoriteDish fd " +

@@ -179,7 +179,7 @@ public interface UserMapper {
             "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
             "JOIN Dish d ON oi.DishID = d.DishID " +
             "WHERE o.MerchantID = #{merchantId} " +
-            "AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}) " +
+            "AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod} MONTH) " +
             "GROUP BY d.DishID, d.DishName, lc.UserID " +
             "ORDER BY d.DishID, lc.UserID")
     List<PurchaseDistribution> getLoyalCustomerDistribution(@Param("merchantId") Long merchantId, @Param("timePeriod") String timePeriod, @Param("threshold") Long threshold);
