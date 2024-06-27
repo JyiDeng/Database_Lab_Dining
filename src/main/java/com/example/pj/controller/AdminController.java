@@ -1,5 +1,6 @@
 package com.example.pj.controller;
 
+import com.example.pj.entity.Merchant;
 import com.example.pj.entity.User;
 import com.example.pj.mapper.MerchantMapper;
 import com.example.pj.mapper.UserMapper;
@@ -53,7 +54,6 @@ public class AdminController {
     @RequestMapping("/{path}/deleteUser/{id}")
 
     public String deleteUser(@PathVariable Long id, @PathVariable String path) {
-        // TODO if(我有订单，那么我删除订单，一共5个FOREIGN KEY (UserID))
         if (userMapper.findByID(id) != null){
             userMapper.delete(id);
             return "User" + id + " is deleted successfully!";
@@ -62,4 +62,46 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/{path}/allMerchantList")
+    public List<Merchant> merchantList(@PathVariable String path) {
+        return merchantMapper.findAll();
+    }
+
+    @RequestMapping("/{path}/addMerchant")
+    public String addMerchant(@RequestParam Long id, Long merchantId, String merchantName, String mainDishes, String address,String menuId, @PathVariable String path) {
+        if (merchantMapper.getMerchantByID(id) == null){
+            Merchant newMerchant = new Merchant(merchantId, merchantName, mainDishes, address, menuId);
+            merchantMapper.insert(newMerchant);
+            return "Merchant" + id + " is added successfully!";
+        }else{
+            return "Merchant" + id + " already exists!";
+        }
+    }
+
+    @RequestMapping("/{path}/updateMerchant")
+    public String updateMerchant(@RequestParam Long id, Long merchantId, String merchantName, String mainDishes, String address,String menuId, @PathVariable String path) {
+        if (merchantMapper.getMerchantByID(id) != null){
+            Merchant currentMerchant = merchantMapper.getMerchantByID(id);
+            currentMerchant.setMerchantId(merchantId);
+            currentMerchant.setMerchantName(merchantName);
+            currentMerchant.setMainDishes(mainDishes);
+            currentMerchant.setAddress(address);
+            currentMerchant.setMenuId(menuId);
+            merchantMapper.update(currentMerchant);
+            return "Merchant" + id + " is updated successfully!";
+        }else{
+            return "Merchant" + id + " does not exist!";
+        }
+    }
+
+
+    @RequestMapping("/{path}/deleteMerchant/{id}")
+    public String deleteMerchant(@PathVariable Long id, @PathVariable String path) {
+        if (merchantMapper.getMerchantByID(id) != null){
+            merchantMapper.delete(id);
+            return "Merchant" + id + " is deleted successfully!";
+        }else{
+            return "Merchant" + id + " does not exist!";
+        }
+    }
 }

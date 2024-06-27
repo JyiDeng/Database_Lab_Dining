@@ -48,16 +48,29 @@ public interface FavoriteMapper {
             "GROUP BY d.DishID, d.DishName")
     List<UserFavoriteDish> findDishFavoriteCountsByMerchant(@Param("merchantId") Long merchantId);
 
-    @Select("SELECT d.DishID, d.DishName, " +
-            "SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END) AS QueueSales, " +
-            "SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END) AS OnlineSales " +
-            "FROM FavoriteDish fd " +
-            "JOIN Dish d ON fd.DishID = d.DishID " +
-            "JOIN OrderItem oi ON d.DishID = oi.DishID " +
-            "JOIN MyOrder o ON oi.OrderID = o.OrderID " +
-            "WHERE fd.UserID = #{userId} " +
-            "AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod} DAY ) " +
-            "GROUP BY d.DishID, d.DishName " +
-            "ORDER BY d.DishID")
+    @Select("SELECT\n" +
+            "    fd.UserID,\n" +
+            "    YEARWEEK(o.OrderDate, 1) AS period,\n" +
+            "    d.DishID,\n" +
+            "    d.DishName,\n" +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END), 0) AS QueueSales,\n" +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END), 0) AS OnlineSales\n" +
+            "FROM\n" +
+            "    FavoriteDish fd\n" +
+            "    JOIN Dish d ON fd.DishID = d.DishID\n" +
+            "    JOIN OrderItem oi ON d.DishID = oi.DishID\n" +
+            "    JOIN MyOrder o ON oi.OrderID = o.OrderID\n" +
+            "WHERE\n" +
+            "    fd.UserID = #{userId}\n" +
+            "    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL 1 #{timePeriod})\n" +
+            "GROUP BY\n" +
+            "    fd.UserID,\n" +
+            "    YEARWEEK(o.OrderDate, 1),\n" +
+            "    d.DishID,\n" +
+            "    d.DishName\n" +
+            "ORDER BY\n" +
+            "    fd.UserID,\n" +
+            "    YEARWEEK(o.OrderDate, 1),\n" +
+            "    d.DishID;")
     List<DishSales> getFavoriteDishSales(@Param("userId") Long userId, @Param("timePeriod") String timePeriod);
 }

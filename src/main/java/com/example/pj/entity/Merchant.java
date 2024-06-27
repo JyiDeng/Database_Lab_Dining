@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 public class Merchant {
 
-    private Integer merchantId;
+    private Long merchantId;
 
     private String merchantName;
 
