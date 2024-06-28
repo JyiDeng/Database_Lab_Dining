@@ -84,13 +84,13 @@ public class AdvancedUserController {
 ////        return ResponseEntity.ok(activity);
 //    }
 
-//    @GetMapping("/{path}/loyal-customers-distribution")
-//    public List<PurchaseDistribution> getLoyalCustomerDistribution(@PathVariable Long path,
-//            @RequestParam Long merchantId,
-//            @RequestParam String timePeriod,
-//            @RequestParam Long threshold) {
-//        return userMapper.getLoyalCustomerDistribution(merchantId, timePeriod, threshold);
-////        return ResponseEntity.ok(distribution);
-//    }
+    @GetMapping("/{path}/loyal-customers-distribution")
+    public List<PurchaseDistribution> getLoyalCustomerDistribution(@PathVariable Long path,
+            @RequestParam Long merchantId,
+            @RequestParam String timePeriod,
+            @RequestParam Long threshold) {
+        return userMapper.getLoyalCustomerDistribution(merchantId, timePeriod, threshold);
+//        return ResponseEntity.ok(distribution);
+    }
 
 }

@@ -170,9 +170,9 @@ public interface UserMapper {
             "    SELECT o.UserID " +
             "    FROM MyOrder o " +
             "    WHERE o.MerchantID = #{merchantId} " +
-            "    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}) " +
+            "    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod} MONTH) " +
             "    GROUP BY o.UserID " +
-            "    HAVING COUNT(o.OrderID) > #{threshold} " +
+            "    HAVING COUNT(o.OrderId) > #{threshold} " +
             ") " +
             "SELECT d.DishID, d.DishName, lc.UserID, SUM(oi.Quantity) AS PurchaseCount " +
             "FROM LoyalCustomers lc " +
