@@ -38,13 +38,14 @@ GROUP BY oi.DishID, d.dishName
 ```
 
 ### 查询某个商户购买所有菜品次数最多的人
-通过连接订单和订单项表，按照用户ID分组，计算每个用户购买该菜品的次数，然后按照购买次数降序排列，并限制结果为1条，即购买次数最多的用户。
+通过连接订单、订单项和菜品表，按照用户ID和菜品ID分组，在指定商户中，计算每个用户购买该菜品的次数，然后按照购买次数降序排列，并限制结果为1条，即购买次数最多的用户。
 ```sql
 SELECT oi.DishID, o.UserID, COUNT(*) as purchaseCount
 FROM OrderItem oi
 JOIN MyOrder o ON oi.OrderID = o.OrderID
-WHERE oi.DishID = #{dishId}
-GROUP BY o.UserID
+JOIN Dish d ON oi.DishID = d.DishID
+WHERE d.MerchantID = #{merchantId}
+GROUP BY o.UserID, oi.DishID
 ORDER BY purchaseCount DESC
 LIMIT 1
 ```
