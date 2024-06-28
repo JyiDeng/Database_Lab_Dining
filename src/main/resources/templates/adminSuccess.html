@@ -20,9 +20,28 @@
 删除id为4的用户（如果不存在这个id的用户会给出提示信息）：<br>
 <button onclick="redirectTo('/deleteUser/4')">Delete User 4</button>
 <br>-------------------<br>
-<!--管理员增加商家！！！-->
-<!--商家索引页：`http://localhost:8014/merchant/`<br>-->
-<!--用户索引页：`http://localhost:8014/user/`<br>-->
+管理员增加商家：<br>
+
+<br>-------------------<br>
+查看id=3的商户所有菜品销量统计：<br>
+<button onclick="redirectTo('/sales?merchantId=3')">查看id=3的商户所有菜品销量统计</button>
+<br>-------------------<br>
+用户群体特征分析（评价习惯：评价的数量/评分给出的分数）：<br>
+<button onclick="redirectToJson('/user-characteristics/reviews')">用户群体特征分析（评价习惯：评价的数量/评分给出的分数）</button>
+<br>-------------------<br>
+用户群体特征分析（身份区分：用户年龄）：<br>
+<button onclick="redirectToJson('/user-characteristics/age')">用户群体特征分析（根据用户年龄）</button>
+<br>-------------------<br>
+用户群体特征分析（身份区分：根据用户性别）：<br>
+<button onclick="redirectToJson('/user-characteristics/gender')">用户群体特征分析（根据用户性别）</button>
+<br>-------------------<br>
+用户群体特征分析（身份区分：根据用户角色）：<br>
+<button onclick="redirectToJson('/user-characteristics/role')">用户群体特征分析（根据用户角色）</button>
+<br>-------------------<br>
+查询用户id=3在3个月内的购买记录：<br>
+<button onclick="redirectToJson('/favoriteSales?userId=3&timePeriod=3')">查询用户id=3在3个月内的购买记录</button>
+<br>-------------------<br>
+
 
 <script>
     // Function to append the given path to the current URL and redirect

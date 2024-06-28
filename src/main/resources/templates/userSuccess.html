@@ -59,24 +59,6 @@
 <br>-------------------<br>
 <h2>以下为进阶查询入口：</h2>
 -------------------<br>
-查看id=3的商户所有菜品销量统计：<br>
-<button onclick="redirectTo('/sales?merchantId=3')">查看id=3的商户所有菜品销量统计</button>
-<br>-------------------<br>
-用户群体特征分析（评价习惯：评价的数量/评分给出的分数）：<br>
-<button onclick="redirectToJson('/user-characteristics/reviews')">用户群体特征分析（评价习惯：评价的数量/评分给出的分数）</button>
-<br>-------------------<br>
-用户群体特征分析（身份区分：用户年龄）：<br>
-<button onclick="redirectToJson('/user-characteristics/age')">用户群体特征分析（根据用户年龄）</button>
-<br>-------------------<br>
-用户群体特征分析（身份区分：根据用户性别）：<br>
-<button onclick="redirectToJson('/user-characteristics/gender')">用户群体特征分析（根据用户性别）</button>
-<br>-------------------<br>
-用户群体特征分析（身份区分：根据用户角色）：<br>
-<button onclick="redirectToJson('/user-characteristics/role')">用户群体特征分析（根据用户角色）</button>
-<br>-------------------<br>
-查询用户id=3在3个月内的购买记录：<br>
-<button onclick="redirectToJson('/favoriteSales?userId=3&timePeriod=3')">查询用户id=3在3个月内的购买记录</button>
-<br>-------------------<br>
 查询当前用户在一周内不同点餐方式的销量：<br>
 <button onclick="redirectToJson('/user-activity/weekly')">查询当前用户在一周内不同点餐方式的销量</button>
 <br>-------------------<br>
@@ -86,7 +68,6 @@
 查询当前用户在一年内不同点餐方式的销量：<br>
 <button onclick="redirectToJson('/user-activity/yearly')">查询当前用户在一年内不同点餐方式的销量</button>
 <br>-------------------<br>
-
 
 <script>
     function redirectTo(path) {

@@ -130,7 +130,7 @@ public interface UserMapper {
     List<UserActivity> getActivityByTimeOfDay();
 
     // 用户群体特征分析
-    @Select("SELECT u.Age as characteristic, d.DishID, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
+    @Select("SELECT u.Age as characteristic, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
             "FROM User u " +
             "JOIN MyOrder o ON u.UserID = o.UserID " +
             "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
@@ -139,7 +139,7 @@ public interface UserMapper {
             "ORDER BY u.Age, d.DishID")
     List<UserCharacteristic> getCharacteristicsByAge();
 
-    @Select("SELECT u.Gender as characteristic, d.DishID, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
+    @Select("SELECT u.Gender as characteristic, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
             "FROM User u " +
             "JOIN MyOrder o ON u.UserID = o.UserID " +
             "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
@@ -148,7 +148,7 @@ public interface UserMapper {
             "ORDER BY u.Gender, d.DishID")
     List<UserCharacteristic> getCharacteristicsByGender();
 
-    @Select("SELECT u.Role as characteristic, d.DishID, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
+    @Select("SELECT u.Role as characteristic, d.DishName, COUNT(oi.Quantity) AS PurchaseCount " +
             "FROM User u " +
             "JOIN MyOrder o ON u.UserID = o.UserID " +
             "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
