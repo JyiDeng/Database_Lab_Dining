@@ -12,10 +12,7 @@ CREATE TABLE if not exists User (
     EcardID INT NOT NULL,
     Role ENUM('Student','Staff') NOT NULL,
     Age INT,
-    Password VARCHAR(50) NOT NULL DEFAULT 12345,
-    INDEX idx_name (UserName),
-    UNIQUE INDEX idx_unique_name (UserName),
-    FULLTEXT INDEX idx_name_fulltext (UserName)
+    Password VARCHAR(50) NOT NULL DEFAULT 12345
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `user` VALUES (1,'Alice1','Female',75,'Student',20,'12345');
 INSERT INTO `user` VALUES (2,'Tom1','Male',50,'Student',25,'54321');
@@ -37,11 +34,8 @@ CREATE TABLE if not exists Merchant(
     MainDishes VARCHAR(50) NOT NULL,
     Address VARCHAR(50) NOT NULL,
 #     MenuID INT,
-    Password VARCHAR(50) DEFAULT 12345,
+    Password VARCHAR(50) DEFAULT 12345
 #     FOREIGN KEY (menuID) REFERENCES menu(menuID)
-    INDEX idx_name (MerchantName),
-    UNIQUE INDEX idx_unique_name (MerchantName),
-    FULLTEXT INDEX idx_name_fulltext (MerchantName)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', '12345');
 insert into `Merchant` VALUES (2,'FamilyMart','Hachii','West of No. 60, ZhengSu Road','54321');
@@ -66,9 +60,6 @@ CREATE TABLE if not exists Dish (
     Allergens VARCHAR(50),
     NutritionInfo VARCHAR(50),
     MerchantID INT,
-    INDEX idx_name (DishName),
-    UNIQUE INDEX idx_unique_name (DishName),
-    FULLTEXT INDEX idx_name_fulltext (DishName),
     FOREIGN KEY (MerchantID) REFERENCES Merchant(MerchantID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 Insert into `Dish` VALUES (1,'Braised Chicken','Chinese food','sauce delicious','examplePic1.com','original','chicken, green pepper, potatoes, ginger','','delicious chicken, green pepper vitamin high',  1);
