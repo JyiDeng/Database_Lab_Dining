@@ -158,4 +158,10 @@ public class AdminController {
         return userMapper.getLoyalCustomerDistribution(merchantId, timePeriod, threshold);
 //        return ResponseEntity.ok(distribution);
     }
+
+    @RequestMapping("/{path}/user-activity/weekly")
+    public List<UserActivity> getWeeklyActivity( @PathVariable String path, @RequestParam Long userId) {
+        return userMapper.getWeeklyActivity(userId);
+
+    }
 }
