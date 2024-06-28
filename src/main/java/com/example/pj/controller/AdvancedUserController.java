@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,10 +61,18 @@ public class AdvancedUserController {
     }
 
     // 用户活跃度分析
-    @GetMapping("/{path}/user-activity/weekly")
     public List<UserActivity> getWeeklyActivity(@PathVariable Long path, @RequestParam int timePeriod) {
         return userMapper.getWeeklyActivity(path);
 //        return ResponseEntity.ok(activity);
+    }
+
+    @GetMapping("/{path}/user-activity/weekly")
+    public List<List<UserActivity>> getWeeklyActivityTrend(@PathVariable Long path, @RequestParam int timePeriod) {
+        List<List<UserActivity>> result = new ArrayList<>();
+        for (int i = 0; i < timePeriod; i++) {
+            result.add(getWeeklyActivity(path,i));
+        }
+        return result;
     }
 
     @GetMapping("/{path}/user-activity/monthly")
