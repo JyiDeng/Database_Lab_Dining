@@ -1,12 +1,15 @@
 package com.example.pj.controller;
 
 import com.example.pj.entity.*;
+import com.example.pj.mapper.DishMapper;
 import com.example.pj.mapper.MerchantMapper;
 import com.example.pj.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/admin")
@@ -15,7 +18,8 @@ public class AdminController {
     UserMapper userMapper;
     @Autowired
     MerchantMapper merchantMapper;
-
+    @Autowired
+    DishMapper dishMapper;
 
     @GetMapping("/{path}/allUserList")
     public List<User> userList(@PathVariable String path) {
@@ -135,5 +139,15 @@ public class AdminController {
     @RequestMapping("/{path}/user-activity/timeOfDay")
     public List<UserActivity> activityTimeOfDay(@RequestParam Long userId, @PathVariable Long path) {
         return userMapper.getActivityByTimeOfDay(path);
+    }
+
+    @GetMapping("/{path}/dish/{dishId}/top-buyer")
+    public Map<String, Object> getTopBuyerForDish(@PathVariable Long dishId, @PathVariable Long path) {
+        return dishMapper.getTopBuyerForDish(dishId);
+    }
+    @RequestMapping("/{path}/sales")
+    public List<Sales> getSales(Model model, @PathVariable String path, @RequestParam Long merchantId) {
+        return dishMapper.getSales(merchantId);
+
     }
 }

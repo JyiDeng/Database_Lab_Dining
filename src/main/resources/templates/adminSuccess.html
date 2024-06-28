@@ -35,8 +35,8 @@
 
 <h2>以下为进阶操作示例：</h2>
 
-查看id=3的商户所有菜品销量统计：<br>
-<button onclick="redirectTo('/sales?merchantId=3')">查看id=3的商户所有菜品销量统计</button>
+查看id=5的商户所有菜品销量统计：<br>
+<button onclick="redirectTo('/sales?merchantId=5')">查看id=5的商户所有菜品销量统计</button>
 <br>-------------------<br>
 用户群体特征分析（评价习惯：评价的数量/评分给出的分数）：<br>
 <button onclick="redirectToJson('/user-characteristics/reviews')">用户群体特征分析（评价习惯：评价的数量/评分给出的分数）</button>
@@ -52,6 +52,9 @@
 <br>-------------------<br>
 查询用户id=3在3个月内的购买记录：<br>
 <button onclick="redirectToJson('/favoriteSales?userId=3&timePeriod=3')">查询用户id=3在3个月内的购买记录</button>
+<br>-------------------<br>
+查询id=3的菜品购买最多的商家：<br>
+<button onclick="redirectToJson('/dish/3/top-buyer')">查询用户id=3在3个月内的购买记录</button>
 <br>-------------------<br>
 
 
