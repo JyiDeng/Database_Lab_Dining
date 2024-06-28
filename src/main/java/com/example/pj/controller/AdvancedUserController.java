@@ -20,33 +20,33 @@ public class AdvancedUserController {
 
     @Autowired
     UserMapper userMapper;
-    @RequestMapping("/{path}/user-characteristics/age")
-    public List<UserCharacteristic> getCharacteristicsByAge(@PathVariable Long path) {
-//        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByAge();
-//        return ResponseEntity.ok(characteristics);
-        return userMapper.getCharacteristicsByAge();
-    }
-
-    @GetMapping("/{path}/user-characteristics/gender")
-    public List<UserCharacteristic> getCharacteristicsByGender(@PathVariable Long path) {
-//        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByGender();
-//        return ResponseEntity.ok(characteristics);
-        return userMapper.getCharacteristicsByGender();
-    }
-
-    @GetMapping("/{path}/user-characteristics/role")
-    public List<UserCharacteristic> getCharacteristicsByRole(@PathVariable Long path) {
-//        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByRole();
-//        return ResponseEntity.ok(characteristics);
-        return userMapper.getCharacteristicsByRole();
-    }
-
-    @GetMapping("/{path}/user-characteristics/reviews")
-    public List<UserReviewCharacteristic>  getReviewCharacteristics(@PathVariable Long path) {
-//        List<UserReviewCharacteristic> characteristics = userMapper.getReviewCharacteristics();
-//        return ResponseEntity.ok(characteristics);
-        return userMapper.getReviewCharacteristics();
-    }
+//    @RequestMapping("/{path}/user-characteristics/age")
+//    public List<UserCharacteristic> getCharacteristicsByAge(@PathVariable Long path) {
+////        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByAge();
+////        return ResponseEntity.ok(characteristics);
+//        return userMapper.getCharacteristicsByAge();
+//    }
+//
+//    @GetMapping("/{path}/user-characteristics/gender")
+//    public List<UserCharacteristic> getCharacteristicsByGender(@PathVariable Long path) {
+////        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByGender();
+////        return ResponseEntity.ok(characteristics);
+//        return userMapper.getCharacteristicsByGender();
+//    }
+//
+//    @GetMapping("/{path}/user-characteristics/role")
+//    public List<UserCharacteristic> getCharacteristicsByRole(@PathVariable Long path) {
+////        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByRole();
+////        return ResponseEntity.ok(characteristics);
+//        return userMapper.getCharacteristicsByRole();
+//    }
+//
+//    @GetMapping("/{path}/user-characteristics/reviews")
+//    public List<UserReviewCharacteristic>  getReviewCharacteristics(@PathVariable Long path) {
+////        List<UserReviewCharacteristic> characteristics = userMapper.getReviewCharacteristics();
+////        return ResponseEntity.ok(characteristics);
+//        return userMapper.getReviewCharacteristics();
+//    }
 
     @Autowired
     FavoriteMapper favoriteMapper;
@@ -78,19 +78,19 @@ public class AdvancedUserController {
 //        return ResponseEntity.ok(activity);
     }
 
-    @GetMapping("/{path}/user-activity/timeofday")
-    public List<UserActivity> getActivityByTimeOfDay(@PathVariable Long path) {
-        return userMapper.getActivityByTimeOfDay();
-//        return ResponseEntity.ok(activity);
-    }
+//    @GetMapping("/{path}/user-activity/timeOfDay")
+//    public List<UserActivity> getActivityByTimeOfDay(@PathVariable Long path) {
+//        return userMapper.getActivityByTimeOfDay(path);
+////        return ResponseEntity.ok(activity);
+//    }
 
-    @GetMapping("/{path}/loyal-customers-distribution")
-    public List<PurchaseDistribution> getLoyalCustomerDistribution(@PathVariable Long path,
-            @RequestParam Long merchantId,
-            @RequestParam String timePeriod,
-            @RequestParam Long threshold) {
-        return userMapper.getLoyalCustomerDistribution(merchantId, timePeriod, threshold);
-//        return ResponseEntity.ok(distribution);
-    }
+//    @GetMapping("/{path}/loyal-customers-distribution")
+//    public List<PurchaseDistribution> getLoyalCustomerDistribution(@PathVariable Long path,
+//            @RequestParam Long merchantId,
+//            @RequestParam String timePeriod,
+//            @RequestParam Long threshold) {
+//        return userMapper.getLoyalCustomerDistribution(merchantId, timePeriod, threshold);
+////        return ResponseEntity.ok(distribution);
+//    }
 
 }

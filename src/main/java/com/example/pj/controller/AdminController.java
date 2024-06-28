@@ -1,7 +1,6 @@
 package com.example.pj.controller;
 
-import com.example.pj.entity.Merchant;
-import com.example.pj.entity.User;
+import com.example.pj.entity.*;
 import com.example.pj.mapper.MerchantMapper;
 import com.example.pj.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,9 +67,9 @@ public class AdminController {
     }
 
     @RequestMapping("/{path}/addMerchant")
-    public String addMerchant(@RequestParam Long id, Long merchantId, String merchantName, String mainDishes, String address,String menuId, @PathVariable String path) {
+    public String addMerchant(@RequestParam Long id, String merchantName, String mainDishes, String address, @PathVariable String path) {
         if (merchantMapper.getMerchantByID(id) == null){
-            Merchant newMerchant = new Merchant(merchantId, merchantName, mainDishes, address, menuId);
+            Merchant newMerchant = new Merchant(id, merchantName, mainDishes, address);
             merchantMapper.insert(newMerchant);
             return "Merchant" + id + " is added successfully!";
         }else{
@@ -79,14 +78,13 @@ public class AdminController {
     }
 
     @RequestMapping("/{path}/updateMerchant")
-    public String updateMerchant(@RequestParam Long id, Long merchantId, String merchantName, String mainDishes, String address,String menuId, @PathVariable String path) {
+    public String updateMerchant(@RequestParam Long id,  String merchantName, String mainDishes, String address, @PathVariable String path) {
         if (merchantMapper.getMerchantByID(id) != null){
             Merchant currentMerchant = merchantMapper.getMerchantByID(id);
-            currentMerchant.setMerchantId(merchantId);
+            currentMerchant.setMerchantId(id);
             currentMerchant.setMerchantName(merchantName);
             currentMerchant.setMainDishes(mainDishes);
             currentMerchant.setAddress(address);
-            currentMerchant.setMenuId(menuId);
             merchantMapper.update(currentMerchant);
             return "Merchant" + id + " is updated successfully!";
         }else{
@@ -103,5 +101,39 @@ public class AdminController {
         }else{
             return "Merchant" + id + " does not exist!";
         }
+    }
+
+
+    @RequestMapping("/{path}/user-characteristics/age")
+    public List<UserCharacteristic> getCharacteristicsByAge(@PathVariable Long path) {
+//        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByAge();
+//        return ResponseEntity.ok(characteristics);
+        return userMapper.getCharacteristicsByAge();
+    }
+
+    @GetMapping("/{path}/user-characteristics/gender")
+    public List<UserCharacteristic> getCharacteristicsByGender(@PathVariable Long path) {
+//        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByGender();
+//        return ResponseEntity.ok(characteristics);
+        return userMapper.getCharacteristicsByGender();
+    }
+
+    @GetMapping("/{path}/user-characteristics/role")
+    public List<UserCharacteristic> getCharacteristicsByRole(@PathVariable Long path) {
+//        List<UserCharacteristic> characteristics = userMapper.getCharacteristicsByRole();
+//        return ResponseEntity.ok(characteristics);
+        return userMapper.getCharacteristicsByRole();
+    }
+
+    @GetMapping("/{path}/user-characteristics/reviews")
+    public List<UserReviewCharacteristic>  getReviewCharacteristics(@PathVariable Long path) {
+//        List<UserReviewCharacteristic> characteristics = userMapper.getReviewCharacteristics();
+//        return ResponseEntity.ok(characteristics);
+        return userMapper.getReviewCharacteristics();
+    }
+
+    @RequestMapping("/{path}/user-activity/timeOfDay")
+    public List<UserActivity> activityTimeOfDay(@RequestParam Long userId, @PathVariable Long path) {
+        return userMapper.getActivityByTimeOfDay(path);
     }
 }

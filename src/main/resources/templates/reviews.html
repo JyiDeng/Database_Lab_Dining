@@ -57,7 +57,8 @@
 
 <body>
 <h1>所有订单评价</h1>
-<h2>本菜品目前星级为<a th:text="${rating}"></a>分</h2>
+<h2 th:if="${rating}!=0">本菜品目前星级为<a th:text="${rating}"></a>分</h2>
+<h2 th:if="${rating}==0">本菜品目前没有收到评价和评分。</h2>
 <table>
   <thead>
   <tr>

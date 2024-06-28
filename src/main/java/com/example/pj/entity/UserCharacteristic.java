@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserCharacteristic {
     private String characteristic; // Age or Gender or Role
-    private Long dishId;
+//    private Long dishId;
     private String dishName;
     private int purchaseCount;
 }

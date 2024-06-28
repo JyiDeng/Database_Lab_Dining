@@ -149,5 +149,11 @@ public class MerchantController {
     }
 
     // 商户忠实粉丝的消费分布
-
+    @GetMapping("/{path}/loyal-customers-distribution")
+    public List<PurchaseDistribution> getLoyalCustomerDistribution(@PathVariable Long path,
+        @RequestParam String timePeriod,
+        @RequestParam Long threshold) {
+        return userMapper.getLoyalCustomerDistribution(path, timePeriod, threshold);
+//        return ResponseEntity.ok(distribution);
+    }
 }
