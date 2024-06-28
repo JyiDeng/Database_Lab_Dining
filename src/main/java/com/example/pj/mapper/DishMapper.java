@@ -43,7 +43,7 @@ public interface DishMapper {
     void deleteDish(@Param("dishId") Long dishId);
 
 
-    @Select("SELECT AVG(rating) AS average_rating FROM Review WHERE dishId = #{dishId}")
+    @Select("SELECT COALESCE( AVG(rating),0) AS average_rating FROM Review WHERE dishId = #{dishId}")
     Float getAvgRating(@Param("dishId") Long dishId);
 
     @Select("SELECT d.DishID, d.DishName, COUNT(fd.dishID) as favoriteCount " +

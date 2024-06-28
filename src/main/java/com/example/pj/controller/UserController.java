@@ -245,12 +245,12 @@ public class UserController {
         return "messages";
     }
 
-    @RequestMapping("/{path}/sales")
-    public String getSales( Model model,@PathVariable String path,@RequestParam Long merchantId) {
-        List<Sales> sales = dishMapper.getSales(merchantId);
-        model.addAttribute("sales",sales);
-        return "sales";
-    }
+//    @RequestMapping("/{path}/sales")
+//    public String getSales( Model model,@PathVariable String path,@RequestParam Long merchantId) {
+//        List<Sales> sales = dishMapper.getSales(merchantId);
+//        model.addAttribute("sales",sales);
+//        return "sales";
+//    }
 
     @RequestMapping("/{path}/orderSubmitSuccess")
     public String orderSubmit( Model model,@PathVariable Long path,@RequestParam Long orderId) {

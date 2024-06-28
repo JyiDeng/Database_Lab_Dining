@@ -34,7 +34,7 @@ CREATE TABLE if not exists Merchant(
     MainDishes VARCHAR(50) NOT NULL,
     Address VARCHAR(50) NOT NULL,
 #     MenuID INT,
-    Password VARCHAR(50)
+    Password VARCHAR(50) DEFAULT 12345
 #     FOREIGN KEY (menuID) REFERENCES menu(menuID)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 insert into `Merchant` VALUES (1,'NanYuan Canteen','Braised Chicken','No. 200 GuoNian Road', '12345');

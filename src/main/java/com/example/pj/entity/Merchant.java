@@ -22,7 +22,7 @@ public class Merchant {
 
     private String address;
 
-    private String menuId;
+//    private String menuId;
 
 
 

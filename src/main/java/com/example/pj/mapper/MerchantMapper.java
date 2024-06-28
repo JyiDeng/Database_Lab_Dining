@@ -13,8 +13,8 @@ public interface MerchantMapper {
     @Select("SELECT MerchantId, MerchantName, MainDishes FROM merchant WHERE MerchantName LIKE CONCAT('%', #{keyword}, '%') OR Address LIKE CONCAT('%', #{keyword}, '%')")
     List<Merchant> searchMerchant(@Param("keyword") String keyword);
 
-    @Select("SELECT * FROM merchant WHERE MerchantID = #{id}")
-    Merchant getMerchantByID(@Param("id") Long id);
+    @Select("SELECT * FROM merchant WHERE MerchantID = #{merchantId}")
+    Merchant getMerchantByID(@Param("merchantId") Long merchantId);
 
     @Select("SELECT * FROM merchant WHERE MerchantID = #{merchantId}")
     Merchant getMerchantDetails(@Param("merchantId") Long merchantId);
@@ -24,12 +24,13 @@ public interface MerchantMapper {
     @Select("SELECT * FROM merchant")
     List<Merchant> findAll();
 
-    @Insert("INSERT INTO merchant (UserId,UserName,Gender,EcardId,Role,Age,Password) VALUES (#{userId},#{userName},#{gender},#{ecardId},#{role},#{age},#{password})")
+    @Insert("INSERT INTO merchant (merchantId,merchantName,mainDishes,address) VALUES (#{merchantId},#{merchantName},#{mainDishes},#{address})")
+//    @Options(useGeneratedKeys = true, keyProperty = "merchantId")
     void insert(Merchant merchant);
 
-    @Update("UPDATE user SET UserName = #{userName}, Gender = #{gender}, EcardID = #{ecardId}, Role = #{role}, Age = #{age}, Password = #{password} WHERE UserID = #{userId}")
-    void update(Merchant user);
+    @Update("UPDATE merchant SET merchantName = #{merchantName}, mainDishes = #{mainDishes}, address = #{address} WHERE merchantId = #{merchantId}")
+    void update(Merchant merchant);
 
-    @Delete("DELETE FROM merchant WHERE UserID = #{merchantId}")
-    void delete(Long id);
+    @Delete("DELETE FROM merchant WHERE merchantId = #{merchantId}")
+    void delete(Long merchantId);
 }

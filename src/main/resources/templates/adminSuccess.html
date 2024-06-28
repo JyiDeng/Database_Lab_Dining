@@ -6,8 +6,8 @@
 </head>
 <body>
 
-欢迎来到管理员索引页！<br>以下为操作示例：
-<br>-------------------<br>
+欢迎来到管理员索引页！<br><h2>以下为基础操作示例：</h2>
+
 查询所有用户列表：<br>
 <button onclick="redirectTo('/allUserList')">View All Users</button>
 <br>-------------------<br>
@@ -20,11 +20,23 @@
 删除id为4的用户（如果不存在这个id的用户会给出提示信息）：<br>
 <button onclick="redirectTo('/deleteUser/4')">Delete User 4</button>
 <br>-------------------<br>
-管理员增加商家：<br>
-
+查询所有商户列表：<br>
+<button onclick="redirectTo('/allMerchantList')">View All Merchants</button>
 <br>-------------------<br>
-查看id=3的商户所有菜品销量统计：<br>
-<button onclick="redirectTo('/sales?merchantId=3')">查看id=3的商户所有菜品销量统计</button>
+增加id为25的商家，名字为Ramenya，主要菜品为Ramen，地址为bentoRoadNo1（如果已有这个id的商户会给出提示信息）：<br>
+<button onclick="redirectTo('/addMerchant?id=25&merchantName=Ramenya&mainDishes=Ramen&address=bentoRoadNo1')">Add Merchant Ramenya</button>
+<br>-------------------<br>
+更新id为25的用户的名字为Kidtucky，主要菜品为ChickenNuggets，地址为FriedRoadNo2（如果不存在这个id的商户会给出提示信息）：<br>
+<button onclick="redirectTo('/updateMerchant?id=25&merchantName=Kidtucky&mainDishes=ChickenNuggets&address=FriedRoadNo2')">Update Merchant 25</button>
+<br>-------------------<br>
+删除id为25的用户（如果不存在这个id的用户会给出提示信息）：<br>
+<button onclick="redirectTo('/deleteMerchant/25')">Delete User 25</button>
+<br>-------------------<br>
+
+<h2>以下为进阶操作示例：</h2>
+
+查看id=5的商户所有菜品销量统计：<br>
+<button onclick="redirectTo('/sales?merchantId=5')">查看id=5的商户所有菜品销量统计</button>
 <br>-------------------<br>
 用户群体特征分析（评价习惯：评价的数量/评分给出的分数）：<br>
 <button onclick="redirectToJson('/user-characteristics/reviews')">用户群体特征分析（评价习惯：评价的数量/评分给出的分数）</button>
@@ -41,13 +53,24 @@
 查询用户id=3在3个月内的购买记录：<br>
 <button onclick="redirectToJson('/favoriteSales?userId=3&timePeriod=3')">查询用户id=3在3个月内的购买记录</button>
 <br>-------------------<br>
-
+查询id=3的菜品购买最多的商家：<br>
+<button onclick="redirectToJson('/dish/3/top-buyer')">查询用户id=3在3个月内的购买记录</button>
+<br>-------------------<br>
+查询id=3的商家的忠实用户（订单>2次）在3个月内的消费记录：<br>
+<button onclick="redirectToJson('/loyal-customers-distribution?merchantId=3&timePeriod=3&threshold=2')">查询id=3的商家的忠实用户（订单>2次）在3个月内的消费记录</button>
+<br>-------------------<br>
 
 <script>
     // Function to append the given path to the current URL and redirect
     function redirectTo(path) {
         const currentUrl = window.location.href;
         const newUrl = currentUrl + path;
+        window.location.href = newUrl;
+    }
+    function redirectToJson(path){
+        const currentUrl = window.location.href;
+        createOrderUrl = currentUrl.replace('/user', '/userAdvanced');
+        const newUrl = createOrderUrl + path;
         window.location.href = newUrl;
     }
 </script>

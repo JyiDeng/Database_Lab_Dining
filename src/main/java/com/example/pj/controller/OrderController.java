@@ -78,34 +78,34 @@ public class OrderController {
 //        return new SalesData(onlineSales, queueSales);
 //    }
 
-    @GetMapping("/dish/{dishId}/top-buyer")
-    public Map<String, Object> getTopBuyerForDish(@PathVariable Long dishId) {
-        return dishMapper.getTopBuyerForDish(dishId);
-    }
+//    @GetMapping("/dish/{dishId}/top-buyer")
+//    public Map<String, Object> getTopBuyerForDish(@PathVariable Long dishId) {
+//        return dishMapper.getTopBuyerForDish(dishId);
+//    }
 
-    public static class SalesData {
-        private int onlineSales;
-        private int queueSales;
-
-        public SalesData(int onlineSales, int queueSales) {
-            this.onlineSales = onlineSales;
-            this.queueSales = queueSales;
-        }
-
-        public int getOnlineSales() {
-            return onlineSales;
-        }
-
-        public void setOnlineSales(int onlineSales) {
-            this.onlineSales = onlineSales;
-        }
-
-        public int getQueueSales() {
-            return queueSales;
-        }
-
-        public void setQueueSales(int queueSales) {
-            this.queueSales = queueSales;
-        }
-    }
+//    public static class SalesData {
+//        private int onlineSales;
+//        private int queueSales;
+//
+//        public SalesData(int onlineSales, int queueSales) {
+//            this.onlineSales = onlineSales;
+//            this.queueSales = queueSales;
+//        }
+//
+//        public int getOnlineSales() {
+//            return onlineSales;
+//        }
+//
+//        public void setOnlineSales(int onlineSales) {
+//            this.onlineSales = onlineSales;
+//        }
+//
+//        public int getQueueSales() {
+//            return queueSales;
+//        }
+//
+//        public void setQueueSales(int queueSales) {
+//            this.queueSales = queueSales;
+//        }
+//    }
 }
