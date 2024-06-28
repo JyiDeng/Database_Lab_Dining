@@ -60,32 +60,32 @@ public class AdvancedUserController {
 //        return ResponseEntity.ok(sales);
     }
 
-    // 用户活跃度分析
-    public List<UserActivity> getWeeklyActivity(@PathVariable Long path, @RequestParam int timePeriod) {
-        return userMapper.getWeeklyActivity(path);
-//        return ResponseEntity.ok(activity);
-    }
-
-    @GetMapping("/{path}/user-activity/weekly")
-    public List<List<UserActivity>> getWeeklyActivityTrend(@PathVariable Long path, @RequestParam int timePeriod) {
-        List<List<UserActivity>> result = new ArrayList<>();
-        for (int i = 0; i < timePeriod; i++) {
-            result.add(getWeeklyActivity(path,i));
-        }
-        return result;
-    }
-
-    @GetMapping("/{path}/user-activity/monthly")
-    public List<UserActivity>getMonthlyActivity(@PathVariable Long path, @RequestParam int timePeriod) {
-        return userMapper.getMonthlyActivity(path);
-//        return ResponseEntity.ok(activity);
-    }
-
-    @GetMapping("/{path}/user-activity/yearly")
-    public List<UserActivity>getYearlyActivity(@PathVariable Long path, @RequestParam int timePeriod) {
-        return userMapper.getYearlyActivity(path);
-//        return ResponseEntity.ok(activity);
-    }
+//    // 用户活跃度分析
+//    public List<UserActivity> getWeeklyActivity(@PathVariable Long path, @RequestParam int timePeriod) {
+//        return userMapper.getWeeklyActivity(path);
+////        return ResponseEntity.ok(activity);
+//    }
+//
+//    @GetMapping("/{path}/user-activity/weekly")
+//    public List<List<UserActivity>> getWeeklyActivityTrend(@PathVariable Long path, @RequestParam int timePeriod) {
+//        List<List<UserActivity>> result = new ArrayList<>();
+//        for (int i = 0; i < timePeriod; i++) {
+//            result.add(getWeeklyActivity(path,i));
+//        }
+//        return result;
+//    }
+//
+//    @GetMapping("/{path}/user-activity/monthly")
+//    public List<UserActivity>getMonthlyActivity(@PathVariable Long path, @RequestParam int timePeriod) {
+//        return userMapper.getMonthlyActivity(path);
+////        return ResponseEntity.ok(activity);
+//    }
+//
+//    @GetMapping("/{path}/user-activity/yearly")
+//    public List<UserActivity>getYearlyActivity(@PathVariable Long path, @RequestParam int timePeriod) {
+//        return userMapper.getYearlyActivity(path);
+////        return ResponseEntity.ok(activity);
+//    }
 
 //    @GetMapping("/{path}/user-activity/timeOfDay")
 //    public List<UserActivity> getActivityByTimeOfDay(@PathVariable Long path) {

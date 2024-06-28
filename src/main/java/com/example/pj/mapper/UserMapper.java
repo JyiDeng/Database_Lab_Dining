@@ -38,59 +38,55 @@ public interface UserMapper {
             "    o.UserID," +
             "    YEARWEEK(o.OrderDate, 1) AS period," +
             "    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN 1 ELSE 0 END), 0) AS QueueCounts," +
-            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN 1 ELSE 0 END), 0) AS OnlineCounts" +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN 1 ELSE 0 END), 0) AS OnlineCounts " +
             "FROM MyOrder o " +
             "WHERE" +
             "    o.UserID = #{userId}" +
             "    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}+1 WEEK)" +
-            "    AND o.OrderDate < DATE_SUB(NOW(), INTERVAL #{timePeriod} WEEK)" +
+            "    AND o.OrderDate < DATE_SUB(NOW(), INTERVAL #{timePeriod} WEEK) " +
             "GROUP BY" +
             "    o.UserID," +
-            "    YEARWEEK(o.OrderDate, 1)" +
+            "    YEARWEEK(o.OrderDate, 1) " +
             "ORDER BY" +
             "    o.UserID," +
-            "    YEARWEEK(o.OrderDate, 1);")
-    List<UserActivity> getWeeklyActivity(Long userId);
+            "    YEARWEEK(o.OrderDate, 1); ")
+    List<UserActivity> getWeeklyActivity(Long userId,int timePeriod);
 
     @Select("SELECT" +
             "    o.UserID," +
             "    YEARWEEK(o.OrderDate, 1) AS period," +
             "    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN 1 ELSE 0 END), 0) AS QueueCounts," +
-            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN 1 ELSE 0 END), 0) AS OnlineCounts" +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN 1 ELSE 0 END), 0) AS OnlineCounts " +
             "FROM MyOrder o " +
             "WHERE" +
             "    o.UserID = #{userId}" +
             "    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}+1 MONTH)" +
-            "    AND o.OrderDate < DATE_SUB(NOW(), INTERVAL #{timePeriod} MONTH)" +
+            "    AND o.OrderDate < DATE_SUB(NOW(), INTERVAL #{timePeriod} MONTH) " +
             "GROUP BY" +
             "    o.UserID," +
-            "    YEARWEEK(o.OrderDate, 1)," +
-            "    d.DishID," +
-            "    d.DishName" +
+            "    YEARWEEK(o.OrderDate, 1) " +
             "ORDER BY" +
             "    o.UserID," +
-            "    YEARWEEK(o.OrderDate, 1);")
-    List<UserActivity> getMonthlyActivity(Long userId);
+            "    YEARWEEK(o.OrderDate, 1); ")
+    List<UserActivity> getMonthlyActivity(Long userId,int timePeriod);
 
     @Select("SELECT" +
             "    o.UserID," +
             "    YEARWEEK(o.OrderDate, 1) AS period," +
             "    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN 1 ELSE 0 END), 0) AS QueueCounts," +
-            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN 1 ELSE 0 END), 0) AS OnlineCounts" +
+            "    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN 1 ELSE 0 END), 0) AS OnlineCounts " +
             "FROM MyOrder o " +
             "WHERE" +
             "    o.UserID = #{userId}" +
             "    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}+1 YEAR)" +
-            "    AND o.OrderDate < DATE_SUB(NOW(), INTERVAL #{timePeriod} YEAR)" +
+            "    AND o.OrderDate < DATE_SUB(NOW(), INTERVAL #{timePeriod} YEAR) " +
             "GROUP BY" +
             "    o.UserID," +
-            "    YEARWEEK(o.OrderDate, 1)," +
-            "    d.DishID," +
-            "    d.DishName" +
+            "    YEARWEEK(o.OrderDate, 1) " +
             "ORDER BY" +
             "    o.UserID," +
-            "    YEARWEEK(o.OrderDate, 1);")
-    List<UserActivity> getYearlyActivity(Long userId);
+            "    YEARWEEK(o.OrderDate, 1); ")
+    List<UserActivity> getYearlyActivity(Long userId,int timePeriod);
 
     @Select("SELECT UserID, " +
             "CASE " +

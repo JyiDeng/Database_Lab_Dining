@@ -59,8 +59,17 @@
 查询id=3的商家的忠实用户（订单>2次）在3个月内的消费记录：<br>
 <button onclick="redirectToJson('/loyal-customers-distribution?merchantId=3&timePeriod=3&threshold=2')">查询id=3的商家的忠实用户（订单>2次）在3个月内的消费记录</button>
 <br>-------------------<br>
-查询id=1的用户在过去一周线上线下点单的消费情况：<br>
-<button onclick="redirectToJson('/user-activity/weekly?userId=1')">查询id=1的用户在过去一周线上线下点单的消费情况</button>
+<!--查询id=1的用户在过去一周线上线下点单的消费情况：<br>-->
+<!--<button onclick="redirectToJson('/user-activity/weekly?userId=1')">查询id=1的用户在过去一周线上线下点单的消费情况</button>-->
+<!--<br>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;<br>-->
+查询id=1用户在三周内不同点餐方式的点餐次数变化：<br>
+<button onclick="redirectToJson('/user-activity/weekly?timePeriod=3&userId=1')">查询当前用户在三周内不同点餐方式的点餐次数变化</button>
+<br>-------------------<br>
+查询id=1用户在五个月内不同点餐方式的点餐次数：<br>
+<button onclick="redirectToJson('/user-activity/monthly?timePeriod=5&userId=1')">查询当前用户在五个月内不同点餐方式的点餐次数</button>
+<br>-------------------<br>
+查询id=1用户在一年内不同点餐方式的点餐次数：<br>
+<button onclick="redirectToJson('/user-activity/yearly?timePeriod=1&userId=1')">查询当前用户在一年内不同点餐方式的点餐次数</button>
 <br>-------------------<br>
 
 <script>
