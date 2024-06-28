@@ -65,12 +65,15 @@ public interface DishMapper {
             "GROUP BY oi.DishID, d.dishName ;")
     List<Sales> getSales(Long merchantId);
 
-    @Select("SELECT oi.DishID, o.UserID, COUNT(*) as purchaseCount " +
-            "FROM OrderItem oi " +
-            "JOIN MyOrder o ON oi.OrderID = o.OrderID " +
-            "WHERE oi.DishID = #{dishId} " +
-            "GROUP BY o.UserID " +
-            "ORDER BY purchaseCount DESC " +
+    // 指定商户各个菜品购买次数最多的人
+    @Select("SELECT oi.DishID, o.UserID, COUNT(*) as purchaseCount" +
+            "FROM OrderItem oi" +
+            "JOIN MyOrder o ON oi.OrderID = o.OrderID" +
+            "JOIN Dish d ON oi.DishID = d.DishID" +
+            "WHERE d.MerchantID = #{merchantId}" +
+            "GROUP BY o.UserID, oi.DishID" +
+            "ORDER BY purchaseCount DESC" +
             "LIMIT 1")
     Map<String, Object> getTopBuyerForDish(Long dishId);
+
 }
