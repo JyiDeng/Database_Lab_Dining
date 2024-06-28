@@ -158,31 +158,24 @@ WHERE UserID = #{userId}
 
 ### 用户活跃度分析 - 每月活跃度
 
-通过按用户ID和订单日期的月份分组，计算每个用户每月的订单数量，并按照用户ID和月份排序。
+通过按用户ID和订单日期的月份分组，计算每个用户距今一个月的线上与线下订单数量，并按照用户ID和月份排序。
 ```sql
 SELECT
     o.UserID,
     YEARWEEK(o.OrderDate, 1) AS period,
-    d.DishID,
-    d.DishName,
-    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN oi.Quantity ELSE 0 END), 0) AS QueueSales,
-    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN oi.Quantity ELSE 0 END), 0) AS OnlineSales
-FROM
-    Dish d
-    JOIN OrderItem oi ON d.DishID = oi.DishID
-    JOIN MyOrder o ON oi.OrderID = o.OrderID
+    COALESCE(SUM(CASE WHEN o.OrderType = 'Queue' THEN 1 ELSE 0 END), 0) AS QueueCounts,
+    COALESCE(SUM(CASE WHEN o.OrderType = 'Online' THEN 1 ELSE 0 END), 0) AS OnlineCounts
+FROM MyOrder o 
 WHERE
     o.UserID = #{userId}
-    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL 1 MONTH)
+    AND o.OrderDate >= DATE_SUB(NOW(), INTERVAL #{timePeriod}+1 MONTH)
+    AND o.OrderDate < DATE_SUB(NOW(), INTERVAL #{timePeriod} MONTH)
 GROUP BY
     o.UserID,
-    YEARWEEK(o.OrderDate, 1),
-    d.DishID,
-    d.DishName
+    YEARWEEK(o.OrderDate, 1)
 ORDER BY
     o.UserID,
-    YEARWEEK(o.OrderDate, 1),
-    d.DishID;
+    YEARWEEK(o.OrderDate, 1);
 ```
 
 ### 用户活跃度分析 - 不同时间段活跃度

@@ -65,6 +65,7 @@ public interface DishMapper {
             "GROUP BY oi.DishID, d.dishName ;")
     List<Sales> getSales(Long merchantId);
 
+    // 指定商户各个菜品购买次数最多的人
     @Select("SELECT oi.DishID, o.UserID, COUNT(*) as purchaseCount" +
             "FROM OrderItem oi" +
             "JOIN MyOrder o ON oi.OrderID = o.OrderID" +
@@ -74,4 +75,5 @@ public interface DishMapper {
             "ORDER BY purchaseCount DESC" +
             "LIMIT 1")
     Map<String, Object> getTopBuyerForDish(Long dishId);
+
 }

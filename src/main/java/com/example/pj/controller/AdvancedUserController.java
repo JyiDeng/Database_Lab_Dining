@@ -61,19 +61,19 @@ public class AdvancedUserController {
 
     // 用户活跃度分析
     @GetMapping("/{path}/user-activity/weekly")
-    public List<UserActivity> getWeeklyActivity(@PathVariable Long path) {
+    public List<UserActivity> getWeeklyActivity(@PathVariable Long path, @RequestParam int timePeriod) {
         return userMapper.getWeeklyActivity(path);
 //        return ResponseEntity.ok(activity);
     }
 
     @GetMapping("/{path}/user-activity/monthly")
-    public List<UserActivity>getMonthlyActivity(@PathVariable Long path) {
+    public List<UserActivity>getMonthlyActivity(@PathVariable Long path, @RequestParam int timePeriod) {
         return userMapper.getMonthlyActivity(path);
 //        return ResponseEntity.ok(activity);
     }
 
     @GetMapping("/{path}/user-activity/yearly")
-    public List<UserActivity>getYearlyActivity(@PathVariable Long path) {
+    public List<UserActivity>getYearlyActivity(@PathVariable Long path, @RequestParam int timePeriod) {
         return userMapper.getYearlyActivity(path);
 //        return ResponseEntity.ok(activity);
     }
