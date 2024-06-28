@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -157,5 +158,48 @@ public class AdminController {
         @RequestParam Long threshold) {
         return userMapper.getLoyalCustomerDistribution(merchantId, timePeriod, threshold);
 //        return ResponseEntity.ok(distribution);
+    }
+
+//    @RequestMapping("/{path}/user-activity/weekly")
+//    public List<UserActivity> getWeeklyActivity( @PathVariable String path, @RequestParam Long userId) {
+//        return userMapper.getWeeklyActivity(userId);
+//
+//    }
+
+    public List<UserActivity> getWeeklyActivity(@PathVariable Long path, @RequestParam int timePeriod,Long userId) {
+        return userMapper.getWeeklyActivity(userId,timePeriod);
+//        return ResponseEntity.ok(activity);
+    }
+    @GetMapping("/{path}/user-activity/weekly")
+    public List<List<UserActivity>> getWeeklyActivityTrend(@PathVariable Long path, @RequestParam int timePeriod,Long userId) {
+        List<List<UserActivity>> result = new ArrayList<>();
+        for (int i = 0; i < timePeriod; i++) {
+            result.add(getWeeklyActivity(path,i,userId));
+        }
+        return result;
+    }
+    public List<UserActivity> getMonthlyActivity(@PathVariable Long path, @RequestParam int timePeriod,Long userId) {
+        return userMapper.getMonthlyActivity(userId,timePeriod);
+
+    }
+    @GetMapping("/{path}/user-activity/monthly")
+    public List<List<UserActivity>> getMonthlyActivityTrend(@PathVariable Long path, @RequestParam int timePeriod,Long userId) {
+        List<List<UserActivity>> result = new ArrayList<>();
+        for (int i = 0; i < timePeriod; i++) {
+            result.add(getMonthlyActivity(path,i,userId));
+        }
+        return result;
+    }
+    public List<UserActivity> getYearlyActivity(@PathVariable Long path, @RequestParam int timePeriod,Long userId) {
+        return userMapper.getYearlyActivity(userId,timePeriod);
+
+    }
+    @GetMapping("/{path}/user-activity/yearly")
+    public List<List<UserActivity>> getYearlyActivityTrend(@PathVariable Long path, @RequestParam int timePeriod,Long userId) {
+        List<List<UserActivity>> result = new ArrayList<>();
+        for (int i = 0; i < timePeriod; i++) {
+            result.add(getYearlyActivity(path,i,userId));
+        }
+        return result;
     }
 }

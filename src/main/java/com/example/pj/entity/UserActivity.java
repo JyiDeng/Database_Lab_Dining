@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 public class UserActivity {
     private Long userId;
     private String period; // Week or Month or TimeOfDay
-    private Long dishId;
-    private String dishName;
-    private Long queueSales;
-    private Long onlineSales;
+//    private Long dishId;
+//    private String dishName;
+    private Long queueCounts;
+    private Long onlineCounts;
 }

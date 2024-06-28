@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -301,6 +302,7 @@ public class UserController {
         model.addAttribute("reserves",reserves);
         return "reserve";
     }
+
 
     // 用户群体特征分析
 //    @GetMapping("/user-characteristics/age")
