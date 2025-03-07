@@ -33,7 +33,9 @@
 <!--查询menuId=1下有哪些菜：<br>-->
 <!--<button onclick="redirectTo('/allMenus')">查询已有的菜单</button>-->
 <!--<br>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;<br>-->
-添加dishId为2的菜品到该商家的菜单，设定价格为20，使这个菜单单品的id为5：<br>
+添加dishId为2的菜品到该商家的菜单，设定价格为20，使这个菜单单品的id为5（出现了外键报错）：<br>
+### Cause: java.sql.SQLIntegrityConstraintViolationException: Cannot add or update a child row: a foreign key constraint fails (`db_pj_dining`.`menuItem`, CONSTRAINT `menuItem_ibfk_1` FOREIGN KEY (`dishID`) REFERENCES `dish` (`dishID`) ON DELETE CASCADE)<br>
+2025-03-07 15:35:56 ; Cannot add or update a child row: a foreign key constraint fails (`db_pj_dining`.`menuItem`, CONSTRAINT `menuItem_ibfk_1` FOREIGN KEY (`dishID`) REFERENCES `dish` (`dishID`) ON DELETE CASCADE)] with root cause<br>
 <button onclick="redirectTo('/addMenuItem?dishId=2&menuItemId=5&price=20')">添加菜品到菜单</button>
 <br>-------------------<br>
 从菜单中删除菜品5：<br>
@@ -42,7 +44,7 @@
 修改菜品5的价格为18：<br>
 <button onclick="redirectTo('/updateMenuItemPrice/5?newPrice=18')">修改菜品价格</button>
 <br>-------------------<br>
-查询一段时间当前商户的忠实粉丝在该商户的消费分布：<br>
+查询一段时间当前商户的忠实粉丝在该商户的消费分布：(当时没做这个页面)<br>
 <button onclick="redirectToJson('/loyal-customers-distribution')">查询忠实粉丝消费分布</button>
 <br>-------------------<br>
 

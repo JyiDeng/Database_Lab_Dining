@@ -8,16 +8,16 @@ import java.util.List;
 
 @Mapper
 public interface MessageMapper {
-    @Select("SELECT * FROM message WHERE userId = #{userId} order by messageDate desc")
+    @Select("SELECT * FROM Message WHERE userId = #{userId} order by messageDate desc")
     List<Message> getMessagesByUserId(Long userId);
 
     // 预订确认
-    @Insert("INSERT INTO message (userId, content,messageDate) VALUES (#{userId},  #{msg}, #{now})")
+    @Insert("INSERT INTO Message (userId, content,messageDate) VALUES (#{userId},  #{msg}, #{now})")
     @Options(useGeneratedKeys = true, keyProperty = "messageId")
     void insertReserveConfirmation(Long userId,  String msg, LocalDateTime now);
 
     // 订单状态更新为 Completed
-    @Insert("INSERT INTO message (userId, content,messageDate) VALUES (#{userId}, #{msg},#{now})")
+    @Insert("INSERT INTO Message (userId, content,messageDate) VALUES (#{userId}, #{msg},#{now})")
     @Options(useGeneratedKeys = true, keyProperty = "messageId")
     void updateOrderStatus2Completed(Long userId, String msg, LocalDateTime now);
 
@@ -36,7 +36,7 @@ public interface MessageMapper {
     void deleteDuplicateMessages();
 
     // 订单状态更新为 Ended
-    @Insert("INSERT INTO message (userId, content,messageDate) VALUES (#{userId}, #{msg},#{now})")
+    @Insert("INSERT INTO Message (userId, content,messageDate) VALUES (#{userId}, #{msg},#{now})")
     @Options(useGeneratedKeys = true, keyProperty = "messageId")
     void updateOrderStatus2Ended(Long userId, String msg, LocalDateTime now);
 }

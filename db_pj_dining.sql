@@ -14,10 +14,10 @@ CREATE TABLE if not exists User (
     Age INT,
     Password VARCHAR(50) NOT NULL DEFAULT 12345
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `user` VALUES (1,'Alice1','Female',75,'Student',20,'12345');
-INSERT INTO `user` VALUES (2,'Tom1','Male',50,'Student',25,'54321');
-INSERT INTO `user` VALUES (3,'Octpus1','Other',25,'Staff',1,'11111');
-INSERT INTO `user` (UserName, Gender, EcardID, Role, Age, Password) VALUES
+INSERT INTO `User` VALUES (1,'Alice1','Female',75,'Student',20,'12345');
+INSERT INTO `User` VALUES (2,'Tom1','Male',50,'Student',25,'54321');
+INSERT INTO `User` VALUES (3,'Octpus1','Other',25,'Staff',1,'11111');
+INSERT INTO `User` (UserName, Gender, EcardID, Role, Age, Password) VALUES
 ('Bob1', 'Male', 65, 'Student', 22, 'password1'),
 ('Carol1', 'Female', 45, 'Staff', 30, 'password2'),
 ('Dave1', 'Male', 35, 'Student', 19, 'password3'),
@@ -184,7 +184,7 @@ CREATE TABLE FavoriteMerchant (
     userID INT,
     merchantID INT,
     FavoriteDate DATETIME NOT NULL,
-    FOREIGN KEY (userID) REFERENCES user(userID) ON DELETE CASCADE,
+    FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
     FOREIGN KEY (merchantID) REFERENCES merchant(merchantID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `FavoriteMerchant` VALUES (1,2,2,'2024-4-30 5:30:25');
@@ -211,7 +211,7 @@ CREATE TABLE FavoriteDish (
     userID INT,
     dishID INT,
     FavoriteDate DATETIME NOT NULL,
-    FOREIGN KEY (userID) REFERENCES user(userID) ON DELETE CASCADE,
+    FOREIGN KEY (userID) REFERENCES User(userID) ON DELETE CASCADE,
     FOREIGN KEY (dishID) REFERENCES Dish(dishID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `FavoriteDish` VALUES (1,2,1,'2024-5-30 15:30:25');
@@ -344,7 +344,7 @@ CREATE TABLE Admin (
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 INSERT INTO `Admin` VALUES (1,'root','root');
 
-DROP TABLE IF EXISTS `message`;
+DROP TABLE IF EXISTS `Message`;
 CREATE TABLE Message (
     MessageID INT PRIMARY KEY AUTO_INCREMENT,
     UserID INT,
@@ -354,9 +354,9 @@ CREATE TABLE Message (
     FOREIGN KEY (UserID) REFERENCES User(UserID) ON DELETE CASCADE,
     FOREIGN KEY (AdminID) REFERENCES Admin(AdminID) ON DELETE CASCADE
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
-INSERT INTO `message` VALUES(1,1,1,'Your meal is ready, please take it!','2024-5-15 22:39:10');
-INSERT INTO `message` VALUES(2,2,1,'How was your dining experience, dear? Click to fill in the Dining Experience->','2024-5-19 21:32:12');
-INSERT INTO `message` VALUES(3,3,1,'Thank you for your feedback, we are happy to serve you.','2024-5-21 19:35:19');
+INSERT INTO `Message` VALUES(1,1,1,'Your meal is ready, please take it!','2024-5-15 22:39:10');
+INSERT INTO `Message` VALUES(2,2,1,'How was your dining experience, dear? Click to fill in the Dining Experience->','2024-5-19 21:32:12');
+INSERT INTO `Message` VALUES(3,3,1,'Thank you for your feedback, we are happy to serve you.','2024-5-21 19:35:19');
 
 DROP TABLE IF EXISTS `AdminActionLog`;
 CREATE TABLE AdminActionLog (

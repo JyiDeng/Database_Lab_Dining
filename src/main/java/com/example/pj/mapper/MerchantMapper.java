@@ -7,30 +7,30 @@ import java.util.List;
 
 @Mapper
 public interface MerchantMapper {
-//    @Select("SELECT * FROM merchant")
+//    @Select("SELECT * FROM Merchant")
 //    List<User> findAll();
 
-    @Select("SELECT MerchantId, MerchantName, MainDishes FROM merchant WHERE MerchantName LIKE CONCAT('%', #{keyword}, '%') OR Address LIKE CONCAT('%', #{keyword}, '%')")
+    @Select("SELECT MerchantId, MerchantName, MainDishes FROM Merchant WHERE MerchantName LIKE CONCAT('%', #{keyword}, '%') OR Address LIKE CONCAT('%', #{keyword}, '%')")
     List<Merchant> searchMerchant(@Param("keyword") String keyword);
 
-    @Select("SELECT * FROM merchant WHERE MerchantID = #{merchantId}")
+    @Select("SELECT * FROM Merchant WHERE MerchantID = #{merchantId}")
     Merchant getMerchantByID(@Param("merchantId") Long merchantId);
 
-    @Select("SELECT * FROM merchant WHERE MerchantID = #{merchantId}")
+    @Select("SELECT * FROM Merchant WHERE MerchantID = #{merchantId}")
     Merchant getMerchantDetails(@Param("merchantId") Long merchantId);
 
 //    @Select("SELECT * FROM dish WHERE MerchantID = #{merchantId}")
 //    List<Dish> getDishesByMerchantID(@Param("merchantId") Long merchantId);
-    @Select("SELECT * FROM merchant")
+    @Select("SELECT * FROM Merchant")
     List<Merchant> findAll();
 
-    @Insert("INSERT INTO merchant (merchantId,merchantName,mainDishes,address) VALUES (#{merchantId},#{merchantName},#{mainDishes},#{address})")
+    @Insert("INSERT INTO Merchant (merchantId,merchantName,mainDishes,address) VALUES (#{merchantId},#{merchantName},#{mainDishes},#{address})")
 //    @Options(useGeneratedKeys = true, keyProperty = "merchantId")
     void insert(Merchant merchant);
 
-    @Update("UPDATE merchant SET merchantName = #{merchantName}, mainDishes = #{mainDishes}, address = #{address} WHERE merchantId = #{merchantId}")
+    @Update("UPDATE Merchant SET merchantName = #{merchantName}, mainDishes = #{mainDishes}, address = #{address} WHERE merchantId = #{merchantId}")
     void update(Merchant merchant);
 
-    @Delete("DELETE FROM merchant WHERE merchantId = #{merchantId}")
+    @Delete("DELETE FROM Merchant WHERE merchantId = #{merchantId}")
     void delete(Long merchantId);
 }

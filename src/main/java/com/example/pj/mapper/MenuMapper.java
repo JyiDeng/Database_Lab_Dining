@@ -37,7 +37,7 @@ public interface MenuMapper {
 //    @Options(useGeneratedKeys = true, keyProperty = "menuItemId")
 //    void insertMenuItem(MenuItem menuItem);
 
-    @Insert("INSERT INTO MenuItem(menuItemId,  dishId) VALUES (#{menuItemId}, #{dishId})")
+    @Insert("INSERT INTO menuItem(menuItemId,  dishId) VALUES (#{menuItemId}, #{dishId})")
 //    @Options(useGeneratedKeys = true, keyProperty = "menuItemId")
     void insertMenuItem(MenuItem menuItem);
 
@@ -71,7 +71,7 @@ public interface MenuMapper {
     @Select("SELECT mp.*, d.DishName AS dishName " +
             "FROM menuPrice mp " +
             "JOIN menuItem mi on mi.menuItemId = mp.menuItemId " +
-            "JOIN dish d on d.dishId = mi.dishId " +
+            "JOIN Dish d on d.dishId = mi.dishId " +
             "WHERE mi.menuItemId = #{menuItemId}")
     List<MenuPrice> findAllPriceByMenuItemId(Long menuItemId);
 

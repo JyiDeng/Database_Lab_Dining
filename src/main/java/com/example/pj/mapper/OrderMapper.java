@@ -18,7 +18,7 @@ public interface OrderMapper {
 //    @Insert("INSERT INTO OrderItem (OrderID, DishID, Quantity, Price) VALUES (#{orderId}, #{dishId}, #{quantity}, #{price})")
 //    void insertOrderItem(@Param("orderId") Long orderId, @Param("dishId") Long dishId, @Param("quantity") Long quantity, @Param("price") Float price);
 
-    @Select("SELECT COUNT(*) FROM myOrder " +
+    @Select("SELECT COUNT(*) FROM MyOrder " +
             "WHERE merchantID = #{merchantID} " +
             "AND userId = #{userId} " +
             "AND Status = 'Pending'")
@@ -26,7 +26,7 @@ public interface OrderMapper {
 
 
 
-    @Select("SELECT * FROM myOrder o LEFT JOIN OrderItem oi ON o.OrderID = oi.OrderID WHERE o.merchantID = #{merchantID}")
+    @Select("SELECT * FROM MyOrder o LEFT JOIN OrderItem oi ON o.OrderID = oi.OrderID WHERE o.merchantID = #{merchantID}")
     List<Map<String, Object>> getOrdersByMerchantId(@Param("merchantID") Long merchantId);
 
     // 查询订单
@@ -36,7 +36,7 @@ public interface OrderMapper {
     @Select("SELECT oi.*, mp.price AS price,d.dishName as dishName " +
             "FROM OrderItem oi " +
             "JOIN menuItem mi ON oi.dishID = mi.dishID " +
-            "left JOIN dish d ON oi.dishID = d.dishID " +
+            "left JOIN Dish d ON oi.dishID = d.dishID " +
             "JOIN menuPrice mp ON mi.menuItemId = mp.menuItemID " +
             "WHERE oi.OrderID = #{orderId} " +
             "AND mp.effectiveDate = " +
@@ -52,7 +52,7 @@ public interface OrderMapper {
     @Select("SELECT d.dishName as dishName, d.dishId as dishId " +
             "FROM OrderItem oi " +
             "JOIN menuItem mi ON oi.dishID = mi.dishID " +
-            "left JOIN dish d ON oi.dishID = d.dishID " +
+            "left JOIN Dish d ON oi.dishID = d.dishID " +
             "JOIN menuPrice mp ON mi.menuItemId = mp.menuItemID " +
             "WHERE oi.OrderID = #{orderId} " +
             "AND mp.effectiveDate = " +
@@ -118,19 +118,19 @@ public interface OrderMapper {
     int confirmNoDuplicateEnded(Long orderId);
 
 
-    @Insert("INSERT INTO review (userId,  dishId, rating, content, reviewDate) " +
+    @Insert("INSERT INTO Review (userId,  dishId, rating, content, reviewDate) " +
             "VALUES (#{userId},  #{dishId}, #{rating}, #{content}, #{reviewDate})")
     @Options(useGeneratedKeys = true, keyProperty = "reviewId")
     void reviewSuccess(Long userId, Long dishId, Float rating, String content, LocalDateTime reviewDate);
 
-    @Insert("INSERT INTO reserve (userId,  merchantId) " +
+    @Insert("INSERT INTO Reserve (userId,  merchantId) " +
             "VALUES (#{userId}, #{merchantId})")
     @Options(useGeneratedKeys = true, keyProperty = "reserveId")
     void reserve(Long userId, Long merchantId);
 
     @Select("Select r.*, m.merchantName " +
-            "from reserve r " +
-            "join merchant m on r.merchantId = m.merchantId " +
+            "from Reserve r " +
+            "join Merchant m on r.merchantId = m.merchantId " +
             "and r.userId = #{userId}")
     List<Reserve> reserveDetail(Long userId);
 }

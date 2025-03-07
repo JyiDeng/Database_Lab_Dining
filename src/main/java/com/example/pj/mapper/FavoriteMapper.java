@@ -12,7 +12,7 @@ public interface FavoriteMapper {
     // 收藏菜品
     @Select("SELECT fd.*, d.dishName as dishName " +
             "FROM FavoriteDish fd " +
-            "JOIN dish d ON fd.dishId = d.dishId " +
+            "JOIN Dish d ON fd.dishId = d.dishId " +
             "WHERE fd.userId = #{userId} ")
     List<UserFavoriteDish> findAllFavoriteDish(@Param("userId") Long userId);
 

@@ -9,28 +9,28 @@ import java.util.Map;
 
 @Mapper
 public interface DishMapper {
-    @Select("SELECT * FROM dish WHERE merchantId = #{merchantId} AND dishName LIKE CONCAT('%', #{keyword}, '%')")
+    @Select("SELECT * FROM Dish WHERE merchantId = #{merchantId} AND dishName LIKE CONCAT('%', #{keyword}, '%')")
     List<Dish> searchDishes(@Param("merchantId") Long merchantId, @Param("keyword") String keyword);
 
     @Select("SELECT r.*, d.dishName " +
             "FROM Review r " +
-            "JOIN dish d on d.dishId = r.dishId " +
+            "JOIN Dish d on d.dishId = r.dishId " +
             "WHERE r.dishId = #{dishId}")
     List<Review> dishReview(@Param("dishId") Long dishId);
 
-    @Select("SELECT * FROM dish")
+    @Select("SELECT * FROM Dish")
     List<Dish> getAllDishes();
 
-    @Select("SELECT DishID, DishName, Description FROM dish WHERE DishID = #{dishId}")
+    @Select("SELECT DishID, DishName, Description FROM Dish WHERE DishID = #{dishId}")
     Dish getDishById(@Param("dishId") Long dishId);
 
-    @Select("SELECT DishID, DishName, category, picture, Description FROM dish WHERE DishName LIKE CONCAT('%', #{dishName}, '%') and merchantId = #{merchantId}")
+    @Select("SELECT DishID, DishName, category, picture, Description FROM Dish WHERE DishName LIKE CONCAT('%', #{dishName}, '%') and merchantId = #{merchantId}")
     List<Dish> getDishByName(@Param("dishName") String dishName, @Param("merchantId")Long merchantId);
 
-    @Select("SELECT * FROM dish WHERE merchantId = #{merchantId}")
+    @Select("SELECT * FROM Dish WHERE merchantId = #{merchantId}")
     List<Dish> getDishByMerchantId(Long merchantId);
 
-    @Select("SELECT * FROM dish WHERE dishId = #{dishId}")
+    @Select("SELECT * FROM Dish WHERE dishId = #{dishId}")
     Dish getDishDetails(@Param("dishId") Long dishId);
 
     @Update("UPDATE Dish SET Category = #{category} WHERE DishID = #{dishId}")
@@ -60,19 +60,19 @@ public interface DishMapper {
             "FROM MyOrder o " +
             "JOIN OrderItem oi ON o.OrderID = oi.OrderID " +
             "JOIN Dish d ON oi.DishID = d.DishID " +
-            "LEFT JOIN merchant m on d.merchantId = m.merchantId " +
+            "LEFT JOIN Merchant m on d.merchantId = m.merchantId " +
             "WHERE m.merchantId = #{merchantId} " +
             "GROUP BY oi.DishID, d.dishName ;")
     List<Sales> getSales(Long merchantId);
 
     // 指定商户各个菜品购买次数最多的人
-    @Select("SELECT oi.DishID, o.UserID, COUNT(*) as purchaseCount" +
-            "FROM OrderItem oi" +
-            "JOIN MyOrder o ON oi.OrderID = o.OrderID" +
-            "JOIN Dish d ON oi.DishID = d.DishID" +
-            "WHERE d.MerchantID = #{merchantId}" +
-            "GROUP BY o.UserID, oi.DishID" +
-            "ORDER BY purchaseCount DESC" +
+    @Select("SELECT oi.DishID, o.UserID, COUNT(*) as purchaseCount " +
+            "FROM OrderItem oi " +
+            "JOIN MyOrder o ON oi.OrderID = o.OrderID " +
+            "JOIN Dish d ON oi.DishID = d.DishID " +
+            "WHERE d.MerchantID = #{merchantId} " +
+            "GROUP BY o.UserID, oi.DishID " +
+            "ORDER BY purchaseCount DESC " +
             "LIMIT 1")
     Map<String, Object> getTopBuyerForDish(Long dishId);
 

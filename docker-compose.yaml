@@ -1,0 +1,27 @@
+#version: '3'
+services:
+  mysql:
+    image: mysql:8.4
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: db_pj_dining
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./db_pj_dining.sql:/docker-entrypoint-initdb.d/db_pj_dining.sql  # 挂载本地备份文件
+
+  springboot-app:
+    build: .
+    ports:
+      - "8014:8014"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/db_pj_dining?allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=UTF-8&useSSL=false&zeroDateTimeBehavior=convertToNull&allowMultiQueries=true&serverTimezone=PRC&useSSL=false
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: 123456
+    depends_on:
+      - mysql
+
+volumes:
+  mysql-data:
